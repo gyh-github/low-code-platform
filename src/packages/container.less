@@ -1,0 +1,49 @@
+.container {
+    &-top {
+        position: absolute;
+        top: 20px;
+        left: 240px;
+        right: 240px;
+        height: 90px;
+        background-color: aquamarine;
+    }
+
+    &-left,
+    &-right {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 220px;
+        background-color: antiquewhite;
+    }
+
+    &-left {
+        left: 0;
+    }
+
+    &-right {
+        right: 0;
+    }
+
+    &-center {
+        position: absolute;
+        top: 130px;
+        left: 240px;
+        right: 240px;
+        bottom: 0;
+        overflow: auto;
+
+        &-container {
+            height: 1500px;
+            width: 1500px;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &-workspace {
+                background: rgba(10, 162, 227, 0.9);
+            }
+        }
+    }
+}

@@ -1,30 +1,33 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import container from './packages/container.vue';
+import data from './packages/data.json';
+import plateConfig from './packages/utils/plateConfig';
+import { provide, reactive } from 'vue';
+
+const state = reactive(data);
+const { componentList, componentMap, register } = plateConfig();
+
+register({
+  label: '文本',
+  preview: () => "文本",
+  render: () => "<span>渲染文本</span>",
+  key: "text"
+})
+register({
+  label: '按钮',
+  preview: () => "<button>按钮</button>",
+  render: () => "<button>按钮</button>",
+  key: "button"
+})
+
+
+provide('componentList', componentList)
+provide('componentMap', componentMap)
+
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  <container v-model="state"></container>
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
+<style scoped></style>
