@@ -1,8 +1,11 @@
 <script setup>
 import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue';
 import Plates from './components/Plates/index.vue';
+import ELem from './components/ELem/index.vue';
 const props = defineProps(['modelValue']);
-const emits = defineEmits(['update:modelValue'])
+const emits = defineEmits(['update:modelValue']);
+
+const currentElem = ref(null);
 
 const containerCenter = ref(null);
 const containerCenterC = ref(null);
@@ -30,6 +33,26 @@ const changeSize = () => {
     })
 }
 
+const dropFn = (e) => {
+    e.preventDefault();
+    console.log(e, currentElem);
+    data.value.plates.push({
+        ...currentElem.value,
+        style: {
+            position: 'absolute',
+            top: e.layerY + 'px',
+            left: e.layerX + 'px',
+            zIndex: 9999,
+            border: 'thin solid #dcdcdc'
+        }
+    });
+}
+const dragoverFn = (e) => {
+    e.preventDefault();
+    // console.log(e)
+
+}
+
 
 onMounted(() => {
     changeSize()
@@ -45,13 +68,17 @@ onBeforeUnmount(() => {
     <div class="container">
         <div class="container-top"></div>
         <div class="container-left">
-            <Plates></Plates>
+            <Plates v-model="currentElem"></Plates>
         </div>
         <div class="container-right"></div>
         <div class="container-center" ref="containerCenter">
             <div class="container-center-container" ref="containerCenterC">
-                <div class="container-center-container-workspace" :style="workspaceStyle">
-                    内容区域{{ JSON.stringify(data) }}
+                <div class="container-center-container-workspace" :style="workspaceStyle" @dragover="dragoverFn"
+                    @drop="dropFn">
+                    内容区域
+                    <template v-for="ele in data.plates" :key="ele.key">
+                        <ELem :data="ele"></ELem>
+                    </template>
                 </div>
             </div>
         </div>
