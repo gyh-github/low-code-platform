@@ -15,10 +15,32 @@
         bottom: 0;
         width: 220px;
         background-color: antiquewhite;
+        padding: 0 20px 20px;
     }
 
     &-left {
         left: 0;
+
+        &-item {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+            width: 100%;
+            border: thin solid #dcdcdc;
+            margin-top: 20px;
+
+            &>span {
+                position: absolute;
+                top: 0;
+                left: 0;
+                background-color: aqua;
+                color: #fff;
+                padding: 5px 10px;
+
+            }
+        }
     }
 
     &-right {

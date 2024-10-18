@@ -12,17 +12,3 @@ export default function createEditConfig() {
         }
     }
 }
-
-// const registerConfig = createEditConfig();
-// registerConfig.register({
-//     label: '文本',
-//     preview: () => "文本",
-//     render: () => "渲染文本",
-//     key: "text"
-// })
-// registerConfig.register({
-//     label: '按钮',
-//     preview: () => "<button>按钮</button>",
-//     render: () => "<button>按钮</button>",
-//     key: "button"
-// })
