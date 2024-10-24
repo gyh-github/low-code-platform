@@ -1,0 +1,28 @@
+.scaleY {
+    border-left: 0.2px solid #a19898;
+    height: 2000px;
+    width: 50px;
+    overflow: hidden;
+    background: rgba(72, 72, 78, 0.5);
+    position: absolute;
+    top: 0;
+    left: 2px;
+    z-index: 2;
+
+    &-item {
+        width: 10px;
+        position: relative;
+
+        &>i {
+            display: block;
+            border-top: 0.1px solid #a19898;
+        }
+
+        &>span {
+            color: #a19898;
+            font-size: 12px;
+            position: absolute;
+            top: -10px;
+        }
+    }
+}

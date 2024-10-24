@@ -3,28 +3,27 @@ import './index.less';
 
 export default defineComponent({
     props: ['data'],
-    setup({ data }) {
+    setup(props) {
         const itemRef = ref(null);
         const itemStyle = computed(() => ({
-            top: data.top + 'px',
-            left: data.left + 'px',
-            zIndex: data.zIndex,
+            top: props.data.top + 'px',
+            left: props.data.left + 'px',
+            zIndex: props.data.zIndex,
             position: 'absolute'
         }))
         onMounted(() => {
             const { offsetWidth, offsetHeight } = itemRef.value;
-            data.top = data.top - offsetHeight / 2;
-            data.left = data.left - offsetWidth / 2;
+            props.data.top = props.data.top - offsetHeight / 2;
+            props.data.left = props.data.left - offsetWidth / 2;
         })
-        const component = inject('componentMap')[data.key];
+        const component = inject('componentMap')[props.data.key];
 
         const mousemoveFn = (e) => {
             e.preventDefault();
-            e.stopPropagation();
         }
 
-        return () => (<div ref={itemRef} onMousemove={mousemoveFn} style={{ ...itemStyle.value }} className={data.focused ? 'item focused' : 'item'}>
-            {component.render()}
+        return () => (<div ref={itemRef} onMousemove={mousemoveFn} style={{ ...itemStyle.value }} className={props.data.focused ? 'item focused' : 'item'} >
+            {component.render(component.style)}
         </div>)
     }
 })

@@ -1,11 +1,13 @@
 .container {
+    overflow: hidden;
+
     &-top {
         position: absolute;
-        top: 20px;
-        left: 240px;
-        right: 240px;
+        top: 0;
+        left: 0;
+        right: 0;
         height: 90px;
-        background-color: aquamarine;
+        background-color: rgb(24, 24, 28);
     }
 
     &-left,
@@ -14,8 +16,9 @@
         top: 0;
         bottom: 0;
         width: 220px;
-        background-color: antiquewhite;
+        background-color: rgb(72, 72, 78);
         padding: 0 20px 20px;
+        transition-duration: 0.2s;
     }
 
     &-left {
@@ -49,23 +52,88 @@
 
     &-center {
         position: absolute;
-        top: 130px;
-        left: 240px;
-        right: 240px;
+        top: 90px;
+        left: 260px;
+        right: 260px;
         bottom: 0;
         overflow: auto;
+        background-color: rgb(16, 16, 20);
 
         &-container {
-            height: 1500px;
-            width: 1500px;
-            background: rgba(255, 255, 255, 0.2);
+            height: 2000px;
+            width: 2000px;
             display: flex;
             justify-content: center;
             align-items: center;
 
             &-workspace {
-                background: rgba(10, 162, 227, 0.9);
                 position: relative;
+                background-color: rgb(24, 24, 28);
+            }
+        }
+    }
+
+    .line {
+        position: absolute;
+        z-index: 2;
+
+        &.h {
+            width: 100vw;
+            height: 0;
+            left: 0;
+            right: 0;
+            border-top: 0.1px dashed #b1f583;
+        }
+
+        &.v {
+            width: 0;
+            height: 100vh;
+            top: 0;
+            bottom: 0;
+            border-left: 0.1px dashed #b1f583;
+        }
+    }
+
+    .direction {
+        position: absolute;
+        top: 50%;
+        z-index: 2;
+        height: 40px;
+        width: 15px;
+        background-color: aquamarine;
+        transform: translate(0, -50%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition-duration: 0.2s;
+        cursor: pointer;
+
+        &>span {
+            display: block;
+        }
+
+        &.left {
+            left: 260px;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        &.right {
+            right: 260px;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+
+        &.top {
+            top: 100px;
+            left: 50%;
+            height: 15px;
+            width: 40px;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+
+            &>span {
+                transform: translate(50%, 0);
             }
         }
     }
