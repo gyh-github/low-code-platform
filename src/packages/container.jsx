@@ -8,6 +8,8 @@ import ScaleY from "./components/ScaleY";
 import useWorkspace from "./utils/useWorkspace";
 import usePlateDrag from "./utils/usePlateDrag";
 import defaultImg from './static/imgs/default.jpg';
+import useGuide from "./utils/useGuide";
+import { previewFn } from './utils/index.js'
 
 
 export default defineComponent({
@@ -69,21 +71,21 @@ export default defineComponent({
         const containerCenter = ref(null);
         const containerCenterC = ref(null);
         const workspace = ref(null);
-        const topShow = ref(false);
         const leftShow = ref(true);
         const rightShow = ref(true);
-        const scaleTop = ref(2);
-        const scaleLeft = ref(2);
+        const scaleTop = ref(2);//顶部标尺
+        const scaleLeft = ref(2);//左侧标尺
         const plateData = reactive({
             focused: [],
             unFocused: []
-        })
+        });//已选中、未选中元素信息
         const lineData = reactive({
             hTop: 0,
             vLeft: 0,
             hType: '',
             vType: '',
-        })
+        });//指示线信息
+        const guideData = ref([]);//辅助线信息
 
         const workspaceStyle = {
             width: state.container?.width + 'px',
@@ -101,16 +103,12 @@ export default defineComponent({
         }
         //监听滚动条滚动
         const handleScrollFn = (e) => {
-            console.log(e.target.scrollTop);
             scaleTop.value = e.target.scrollTop;
             scaleLeft.value = e.target.scrollLeft;
         }
         // 操作栏展开收起
         const handleActionFn = (key) => {
             switch (key) {
-                case 'top':
-                    topShow.value = !topShow.value;
-                    break;
                 case 'left':
                     leftShow.value = !leftShow.value;
                     break;
@@ -125,21 +123,31 @@ export default defineComponent({
 
         const { dragstartFn, dragendFn } = usePlateDrag(plates, workspace);
         const { mousedownFn, mouseupFn } = useWorkspace(plates, plateData, workspace, lineData);
+        const { addGuideFn, selectGuideFn, releaseGuideFn } = useGuide(guideData, containerCenterC);
 
         onMounted(() => {
             changeSize()
             window.addEventListener('resize', changeSize);
             containerCenter.value.addEventListener('scroll', handleScrollFn);
+            window.addEventListener('mouseup', releaseGuideFn);
         })
 
         onBeforeUnmount(() => {
             window.removeEventListener('resize', changeSize);
             containerCenter.value.removeEventListener('scroll', handleScrollFn);
+            window.removeEventListener('mouseup', releaseGuideFn)
+
         })
 
         return () => (<div className="container">
+            <div class="container-top">
+                <div className="container-top-actions">
+                    <button onClick={() => addGuideFn('h')}>+添加横向辅助线</button>
+                    <button onClick={() => addGuideFn('v')}>+添加纵向辅助线</button>
+                    <button onClick={() => previewFn(state)}>导出</button>
 
-            <div class="container-top" style={{ height: topShow.value ? '90px' : 0 }}></div>
+                </div>
+            </div>
             <div className="container-left" style={{ left: leftShow.value ? 0 : '-260px' }}>
                 {componentList.map(item => (<div
                     className="container-left-item"
@@ -151,7 +159,7 @@ export default defineComponent({
                     <div>{item.preview()}</div>
                 </div>))}
             </div>
-            <div className="container-center" ref={containerCenter} style={{ top: topShow.value ? '90px' : 0, left: leftShow.value ? '260px' : 0, right: rightShow.value ? '260px' : 0 }}>
+            <div className="container-center" ref={containerCenter} style={{ left: leftShow.value ? '260px' : 0, right: rightShow.value ? '260px' : 0 }}>
                 <div className="container-center-container" ref={containerCenterC}>
                     <ScaleX top={scaleTop} />
                     <ScaleY left={scaleLeft} />
@@ -161,15 +169,17 @@ export default defineComponent({
                             plates.value.map(item =>
                                 <EditPlate data={item} onmousedown={(e) => mousedownFn(e, item)} onmouseup={mouseupFn}
                                 ></EditPlate>)}
-                        {lineData.hType && <div className="line h" style={{ top: lineData.hTop + 'px' }}></div>}
-                        {lineData.vType && <div className="line v" style={{ left: lineData.vLeft + 'px' }}></div>}
                     </div>
+                    {lineData.hType && <div className="line h" style={{ top: lineData.hTop + 'px' }}></div>}
+                    {lineData.vType && <div className="line v" style={{ left: lineData.vLeft + 'px' }}></div>}
+                    {
+                        guideData.value.map(item => (item.type === 'h' ?
+                            <div className="line h" style={{ top: item.top + 'px' }} onmousedown={(e) => selectGuideFn(e, item)}></div>
+                            : <div className="line v" style={{ left: item.left + 'px' }} onmousedown={(e) => selectGuideFn(e, item)} ></div>))
+                    }
                 </div>
             </div>
             <div className="container-right" style={{ right: rightShow.value ? 0 : '-260px' }}></div>
-
-            <div className="direction top" style={{ top: topShow.value ? '90px' : 0 }} onClick={() => handleActionFn('top')}>
-                <span style={{ transform: `rotate(90deg)` }}> {'>'} </span></div>
             <div className="direction left" style={{ left: leftShow.value ? '260px' : 0 }} onClick={() => handleActionFn('left')}>
                 <span> {'>'} </span></div>
             <div className="direction right" style={{ right: rightShow.value ? '260px' : 0 }} onClick={() => handleActionFn('right')}>

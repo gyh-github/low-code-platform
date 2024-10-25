@@ -9,17 +9,17 @@ export default defineComponent({
         ) {
             if (i % 100 === 0) {
                 scales.push({
-                    size: 10,
+                    size: 5,
                     label: i
                 })
             } else if (i % 100 != 0 && i % 50 === 0) {
                 scales.push({
-                    size: 5,
+                    size: 3,
                     label: i
                 })
             } else if (i % 100 != 0 && i % 50 != 0 && i % 5 === 0) {
                 scales.push({
-                    size: 2,
+                    size: 1,
                     label: ''
                 })
             } else {
