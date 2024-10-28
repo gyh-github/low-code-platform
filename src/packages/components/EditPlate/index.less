@@ -2,12 +2,14 @@
     &.focused {
         &::after {
             content: '';
+            display: block;
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            border: .2px dashed hsl(288, 100%, 47%);
+            z-index: 10;
+            border: 2px solid hsl(288, 100%, 47%);
         }
     }
 

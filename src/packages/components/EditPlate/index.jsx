@@ -8,6 +8,8 @@ export default defineComponent({
         const itemStyle = computed(() => ({
             top: props.data.top + 'px',
             left: props.data.left + 'px',
+            width: props.data.width + 'px',
+            height: props.data.height + 'px',
             zIndex: props.data.zIndex,
             position: 'absolute'
         }))

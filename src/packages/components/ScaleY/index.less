@@ -8,24 +8,24 @@
     display: flex;
     flex-direction: column;
     top: 0;
-    left: 2px;
+    left: -2px;
     z-index: 2;
 
     &-item {
-        width: 10px;
         flex: 1 1 auto;
         position: relative;
+        transform: scale(0.5);
+        left: -7px;
 
         &>i {
             display: block;
-            border-top: 0.1px solid #a19898;
+            border-top: 0.1px solid #dfdada;
         }
 
         &>span {
-            color: #a19898;
-            font-size: 12px;
+            color: #dfdada;
             position: absolute;
-            top: -10px;
+            top: -9px;
         }
     }
 }

@@ -5,6 +5,7 @@ import './container.less'
 import EditPlate from "./components/EditPlate";
 import ScaleX from "./components/ScaleX";
 import ScaleY from "./components/ScaleY";
+import Attribute from "./components/Attribute";
 import useWorkspace from "./utils/useWorkspace";
 import usePlateDrag from "./utils/usePlateDrag";
 import defaultImg from './static/imgs/default.jpg';
@@ -26,7 +27,8 @@ export default defineComponent({
             style: {
                 width: '100px',
                 height: '25px',
-                color: 'green'
+                color: 'green',
+                position: 'absolute'
             }
         })
         register({
@@ -38,7 +40,8 @@ export default defineComponent({
                 width: '100px',
                 height: '30px',
                 background: 'bule',
-                color: '#fff'
+                color: '#fff',
+                position: 'absolute'
             }
         })
         register({
@@ -49,7 +52,8 @@ export default defineComponent({
             style: {
                 width: '100px',
                 height: '30px',
-                color: '#333'
+                color: '#333',
+                position: 'absolute'
             }
         })
         register({
@@ -60,7 +64,8 @@ export default defineComponent({
             style: {
                 width: '150px',
                 height: '150px',
-                border: 'thin solid #dcdcdc'
+                border: 'thin solid #dcdcdc',
+                position: 'absolute'
             }
         })
 
@@ -144,7 +149,7 @@ export default defineComponent({
                 <div className="container-top-actions">
                     <button onClick={() => addGuideFn('h')}>+添加横向辅助线</button>
                     <button onClick={() => addGuideFn('v')}>+添加纵向辅助线</button>
-                    <button onClick={() => previewFn(state)}>导出</button>
+                    <button onClick={() => previewFn(state, componentMap)}>导出</button>
 
                 </div>
             </div>
@@ -179,7 +184,9 @@ export default defineComponent({
                     }
                 </div>
             </div>
-            <div className="container-right" style={{ right: rightShow.value ? 0 : '-260px' }}></div>
+            <div className="container-right" style={{ right: rightShow.value ? 0 : '-260px' }}>
+                <Attribute />
+            </div>
             <div className="direction left" style={{ left: leftShow.value ? '260px' : 0 }} onClick={() => handleActionFn('left')}>
                 <span> {'>'} </span></div>
             <div className="direction right" style={{ right: rightShow.value ? '260px' : 0 }} onClick={() => handleActionFn('right')}>

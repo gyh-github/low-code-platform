@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+</head>
+
+<body>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const _html = JSON.parse(sessionStorage.getItem('html'));
+        const _htmlStyle = JSON.parse(sessionStorage.getItem('htmlStyle'));
+        console.log(_html, _htmlStyle)
+        document.body.innerHTML = `<div id='app' style="position:relative;height:${_htmlStyle.height}px;width:${_htmlStyle.width}px"></div>`
+        const { createApp, defineComponent, reactive } = Vue;
+        const com = defineComponent({
+            setup() {
+                const appStyle = reactive({
+                    height: '500px',
+                    width: '500px'
+                });
+                return {
+                    appStyle
+                }
+            },
+            render() {
+                return [..._html]
+            }
+        })
+        createApp(com).mount('#app');
+    </script>
+</body>
+
+</html>
