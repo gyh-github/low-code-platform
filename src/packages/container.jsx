@@ -24,9 +24,9 @@ export default defineComponent({
             preview: () => "文本",
             render: (style) => <span style={style}>渲染文本</span>,
             key: "text",
-            style: {
-                width: '100px',
-                height: '25px',
+            attribute: {
+                width: 100,
+                height: 25,
                 color: 'green',
                 position: 'absolute'
             }
@@ -36,9 +36,9 @@ export default defineComponent({
             preview: () => <button>按钮</button>,
             render: (style) => <button style={style}>按钮</button>,
             key: "button",
-            style: {
-                width: '100px',
-                height: '30px',
+            attribute: {
+                width: 100,
+                height: 30,
                 background: 'bule',
                 color: '#fff',
                 position: 'absolute'
@@ -49,9 +49,9 @@ export default defineComponent({
             preview: () => <input placeholder="请输入" />,
             render: (style) => <input style={style} placeholder="请输入" />,
             key: "input",
-            style: {
-                width: '100px',
-                height: '30px',
+            attribute: {
+                width: 100,
+                height: 30,
                 color: '#333',
                 position: 'absolute'
             }
@@ -61,9 +61,9 @@ export default defineComponent({
             preview: () => <img alt="图片" style="width:100px" src={defaultImg} />,
             render: (style) => <img style={style} alt="图片" src={defaultImg} />,
             key: "img",
-            style: {
-                width: '150px',
-                height: '150px',
+            attribute: {
+                width: 150,
+                height: 150,
                 border: 'thin solid #dcdcdc',
                 position: 'absolute'
             }
@@ -174,6 +174,7 @@ export default defineComponent({
                             plates.value.map(item =>
                                 <EditPlate data={item} onmousedown={(e) => mousedownFn(e, item)} onmouseup={mouseupFn}
                                 ></EditPlate>)}
+                        {JSON.stringify(state.plates)}
                     </div>
                     {lineData.hType && <div className="line h" style={{ top: lineData.hTop + 'px' }}></div>}
                     {lineData.vType && <div className="line v" style={{ left: lineData.vLeft + 'px' }}></div>}
@@ -185,7 +186,7 @@ export default defineComponent({
                 </div>
             </div>
             <div className="container-right" style={{ right: rightShow.value ? 0 : '-260px' }}>
-                <Attribute />
+                <Attribute v-model={plates} />
             </div>
             <div className="direction left" style={{ left: leftShow.value ? '260px' : 0 }} onClick={() => handleActionFn('left')}>
                 <span> {'>'} </span></div>

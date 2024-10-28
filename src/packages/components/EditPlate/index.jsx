@@ -8,8 +8,8 @@ export default defineComponent({
         const itemStyle = computed(() => ({
             top: props.data.top + 'px',
             left: props.data.left + 'px',
-            width: props.data.width + 'px',
-            height: props.data.height + 'px',
+            width: props.data.attribute.width + 'px',
+            height: props.data.attribute.height + 'px',
             zIndex: props.data.zIndex,
             position: 'absolute'
         }))
@@ -25,7 +25,8 @@ export default defineComponent({
         }
 
         return () => (<div ref={itemRef} onMousemove={mousemoveFn} style={{ ...itemStyle.value }} className={props.data.focused ? 'item focused' : 'item'} >
-            {component.render(component.style)}
+            {component.render({ ...props.data.attribute, height: props.data.attribute.height + 'px', width: props.data.attribute.width + 'px' })}
+            {props.data}
         </div>)
     }
 })

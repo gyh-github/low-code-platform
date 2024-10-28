@@ -20,13 +20,15 @@ export default function (plates, workspace) {
         plates.value = [...plates.value, {
             top: e.layerY,
             left: e.layerX,
-            height: Number.parseFloat(_cur.style.height.replace('px', '')),
-            width: Number.parseFloat(_cur.style.width.replace('px', '')),
             zIndex: 2,
             alignCenter: true,
             key: _cur.key,
             id: new Date().getTime().toString(),
             focused: false,
+            attribute: {
+                height: Number.parseFloat(_cur.attribute.height),
+                width: Number.parseFloat(_cur.attribute.width),
+            }
         }];
     }
 
