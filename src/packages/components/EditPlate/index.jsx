@@ -26,7 +26,6 @@ export default defineComponent({
 
         return () => (<div ref={itemRef} onMousemove={mousemoveFn} style={{ ...itemStyle.value }} className={props.data.focused ? 'item focused' : 'item'} >
             {component.render({ ...props.data.attribute, height: props.data.attribute.height + 'px', width: props.data.attribute.width + 'px' })}
-            {props.data}
         </div>)
     }
 })

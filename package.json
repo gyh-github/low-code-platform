@@ -11,6 +11,7 @@
   "dependencies": {
     "json2html": "^0.0.8",
     "lodash": "^4.17.21",
+    "vant": "^4.9.8",
     "vue": "^3.4.37"
   },
   "devDependencies": {

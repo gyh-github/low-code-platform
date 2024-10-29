@@ -13,6 +13,8 @@ export default (plates, plateData, workspace, lineData) => {
 
     const clearFocusFn = () => {
         plates.value.forEach(item => item.focused = false);
+        plateData.focused = [];
+        plateData.unFocused = [];
     }
 
     const workspaceMousedownFn = (e) => {

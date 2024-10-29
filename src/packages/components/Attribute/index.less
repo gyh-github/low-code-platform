@@ -1,0 +1,38 @@
+@bg-color: rgba(255, 255, 255, 0.1);
+@active-bg-color: rgba(255, 255, 255, 0.2);
+@color: rgba(255, 255, 255, 0.9);
+@font-size: 12px;
+
+.attribute {
+    width: 100%;
+
+    &-item {
+        &-title {
+            border-top: thin solid @color;
+            border-bottom: thin solid @color;
+            line-height: 35px;
+        }
+    }
+}
+
+.tab {
+    background: @bg-color;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &>button {
+        background: none;
+        border: none;
+        color: @color;
+        height: 35px;
+        font-size: @font-size;
+        border-radius: 4px;
+        width: 25%;
+
+        &.active {
+            background: @active-bg-color;
+        }
+    }
+}
