@@ -18,10 +18,10 @@ export default defineComponent({
                     {state['plates'].filter(item => item.focused).map(item => {
                         return <div className="attribute-item">
                             <div className="attribute-item-title">元素id:{item.id}</div>
-                            {Object.keys(item.attribute).map((attr) => (
+                            {Object.keys(item.attribute.style).map((attr) => (
                                 <div>
                                     <span>{keyLabel[attr]}:</span>
-                                    <input type="text" v-model={item.attribute[attr]} />
+                                    <input type="text" v-model={item.attribute.style[attr]} />
                                 </div>
                             ))}
                         </div>

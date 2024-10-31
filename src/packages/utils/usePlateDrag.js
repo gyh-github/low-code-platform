@@ -1,3 +1,6 @@
+
+import { componentMap } from './plateConfig';
+
 export default function (plates, workspace) {
     let _cur = null;
 
@@ -17,6 +20,7 @@ export default function (plates, workspace) {
     const dropFn = (e) => {
         e.stopPropagation();
         if (!_cur) return;
+        console.log(componentMap)
         plates.value = [...plates.value, {
             top: e.layerY,
             left: e.layerX,
@@ -26,8 +30,7 @@ export default function (plates, workspace) {
             id: new Date().getTime().toString(),
             focused: false,
             attribute: {
-                height: Number.parseFloat(_cur.attribute.height),
-                width: Number.parseFloat(_cur.attribute.width),
+                ...componentMap[_cur.key]?.attribute
             }
         }];
     }

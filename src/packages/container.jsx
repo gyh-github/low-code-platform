@@ -16,7 +16,7 @@ import useWorkspace from "./utils/useWorkspace";
 import usePlateDrag from "./utils/usePlateDrag";
 import defaultImg from './static/imgs/default.jpg';
 import useGuide from "./utils/useGuide";
-import { previewFn } from './utils/index.js';
+import { previewFn, exportJSONFn } from './utils/index.js';
 
 
 export default defineComponent({
@@ -31,23 +31,27 @@ export default defineComponent({
             render: (style) => <span style={style}>渲染文本</span>,
             key: "text",
             attribute: {
-                width: 100,
-                height: 25,
-                color: 'green',
-                position: 'absolute'
+                style: {
+                    width: 100,
+                    height: 25,
+                    color: 'green',
+                    position: 'absolute'
+                }
             }
         })
         register({
             label: '按钮',
             preview: () => <button>按钮</button>,
-            render: (style) => <button style={style}>按钮</button>,
+            render: (style, props) => <button style={style} {...props}>按钮</button>,
             key: "button",
             attribute: {
-                width: 100,
-                height: 30,
-                background: 'bule',
-                color: '#fff',
-                position: 'absolute'
+                style: {
+                    width: 100,
+                    height: 30,
+                    background: 'bule',
+                    color: '#fff',
+                    position: 'absolute'
+                }
             }
         })
         register({
@@ -56,10 +60,12 @@ export default defineComponent({
             render: (style) => <input style={style} placeholder="请输入" />,
             key: "input",
             attribute: {
-                width: 100,
-                height: 30,
-                color: '#333',
-                position: 'absolute'
+                style: {
+                    width: 100,
+                    height: 30,
+                    color: '#333',
+                    position: 'absolute'
+                }
             }
         })
         register({
@@ -68,22 +74,26 @@ export default defineComponent({
             render: (style) => <img style={style} alt="图片" src={defaultImg} />,
             key: "img",
             attribute: {
-                width: 150,
-                height: 150,
-                border: 'thin solid #dcdcdc',
-                position: 'absolute'
+                style: {
+                    width: 150,
+                    height: 150,
+                    border: 'thin solid #dcdcdc',
+                    position: 'absolute'
+                }
             }
         })
         register({
             label: 'vant-button',
             preview: () => <van-button>vant按钮</van-button>,
-            render: (style) => <van-button style={style}>vant按钮</van-button>,
+            render: (style, props) => <van-button style={style} {...props}></van-button>,
             key: "vant-button",
             attribute: {
-                width: 100,
-                height: 50,
-                border: 'thin solid #dcdcdc',
-                position: 'absolute'
+                style: {
+                    width: 100,
+                    height: 50,
+                    border: 'thin solid #dcdcdc',
+                    position: 'absolute'
+                }
             }
         })
 
@@ -178,7 +188,8 @@ export default defineComponent({
                     <button className={detailShow.value && 'active'} onClick={() => (detailShow.value = !detailShow.value)}>详情</button>
                     <button onClick={() => addGuideFn('h')}>+添加横向辅助线</button>
                     <button onClick={() => addGuideFn('v')}>+添加纵向辅助线</button>
-                    <button onClick={() => previewFn(state, componentMap)}>导出</button>
+                    <button onClick={() => exportJSONFn(state)}>导出</button>
+                    <button onClick={() => previewFn(state, componentMap)}>预览</button>
 
                 </div>
             </div>

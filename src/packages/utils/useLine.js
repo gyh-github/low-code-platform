@@ -11,39 +11,39 @@ export default (plateData, callback) => {
         hType = '';
         vType = '';
         for (let i = 0; i < plateData.unFocused.length; i++) {
-            if (Math.abs(plateData.unFocused[i]?.top - curMoveItem?.top - curMoveItem?.attribute.height) < 5) {
+            if (Math.abs(plateData.unFocused[i]?.top - curMoveItem?.top - curMoveItem?.attribute.style.height) < 5) {
                 y = plateData.unFocused[i].top;
                 hType = 'bottom-top';
             } else if (Math.abs(plateData.unFocused[i]?.top - curMoveItem?.top) < 5) {
                 y = plateData.unFocused[i]?.top;
                 hType = 'top-top';
-            } else if (Math.abs(plateData.unFocused[i]?.top + plateData.unFocused[i]?.attribute.height / 2 - curMoveItem?.top - curMoveItem?.attribute.height / 2) < 5) {
-                y = plateData.unFocused[i]?.top + plateData.unFocused[i]?.attribute.height / 2;
+            } else if (Math.abs(plateData.unFocused[i]?.top + plateData.unFocused[i]?.attribute.style.height / 2 - curMoveItem?.top - curMoveItem?.attribute.style.height / 2) < 5) {
+                y = plateData.unFocused[i]?.top + plateData.unFocused[i]?.attribute.style.height / 2;
                 hType = 'middle-middle';
-            } else if (Math.abs(plateData.unFocused[i]?.top + plateData.unFocused[i]?.attribute.height - curMoveItem?.top - curMoveItem?.attribute.height) < 5) {
-                y = plateData.unFocused[i]?.top + plateData.unFocused[i]?.attribute.height;
+            } else if (Math.abs(plateData.unFocused[i]?.top + plateData.unFocused[i]?.attribute.style.height - curMoveItem?.top - curMoveItem?.attribute.style.height) < 5) {
+                y = plateData.unFocused[i]?.top + plateData.unFocused[i]?.attribute.style.height;
                 hType = 'bottom-bottom';
-            } else if (Math.abs(plateData.unFocused[i]?.top + plateData.unFocused[i]?.attribute.height - curMoveItem?.top) < 5) {
-                y = plateData.unFocused[i]?.top + plateData.unFocused[i]?.attribute.height;
+            } else if (Math.abs(plateData.unFocused[i]?.top + plateData.unFocused[i]?.attribute.style.height - curMoveItem?.top) < 5) {
+                y = plateData.unFocused[i]?.top + plateData.unFocused[i]?.attribute.style.height;
                 hType = 'top-bottom';
             } else {
                 y = 0;
                 hType = '';
             }
-            if (Math.abs(plateData.unFocused[i]?.left - curMoveItem?.left - curMoveItem?.attribute.width) < 5) {
+            if (Math.abs(plateData.unFocused[i]?.left - curMoveItem?.left - curMoveItem?.attribute.style.width) < 5) {
                 x = plateData.unFocused[i]?.left;
                 vType = 'right-left';
             } else if (Math.abs(plateData.unFocused[i]?.left - curMoveItem?.left) < 5) {
                 x = plateData.unFocused[i]?.left;
                 vType = 'left-left';
-            } else if (Math.abs(plateData.unFocused[i]?.left + plateData.unFocused[i]?.attribute.width / 2 - curMoveItem?.left - curMoveItem?.attribute.width / 2) < 5) {
-                x = plateData.unFocused[i]?.left + plateData.unFocused[i]?.attribute.width / 2;
+            } else if (Math.abs(plateData.unFocused[i]?.left + plateData.unFocused[i]?.attribute.style.width / 2 - curMoveItem?.left - curMoveItem?.attribute.style.width / 2) < 5) {
+                x = plateData.unFocused[i]?.left + plateData.unFocused[i]?.attribute.style.width / 2;
                 vType = 'middle-middle';
-            } else if (Math.abs(plateData.unFocused[i]?.left + plateData.unFocused[i]?.attribute.width - curMoveItem?.left - curMoveItem?.attribute.width) < 5) {
-                x = plateData.unFocused[i]?.left + plateData.unFocused[i]?.attribute.width;
+            } else if (Math.abs(plateData.unFocused[i]?.left + plateData.unFocused[i]?.attribute.style.width - curMoveItem?.left - curMoveItem?.attribute.style.width) < 5) {
+                x = plateData.unFocused[i]?.left + plateData.unFocused[i]?.attribute.style.width;
                 vType = 'right-right';
-            } else if (Math.abs(plateData.unFocused[i]?.left + plateData.unFocused[i]?.attribute.width - curMoveItem?.left) < 5) {
-                x = plateData.unFocused[i]?.left + plateData.unFocused[i]?.attribute.width;
+            } else if (Math.abs(plateData.unFocused[i]?.left + plateData.unFocused[i]?.attribute.style.width - curMoveItem?.left) < 5) {
+                x = plateData.unFocused[i]?.left + plateData.unFocused[i]?.attribute.style.width;
                 vType = 'left-right';
             } else {
                 x = 0;
