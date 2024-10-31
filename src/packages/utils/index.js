@@ -1,4 +1,5 @@
 
+import fs from 'node:fs';
 //导出数据
 export function exportJSONFn(data) {
     console.log(data)
@@ -17,5 +18,6 @@ export function previewFn(data, componentMap) {
             })));
     sessionStorage.setItem('html', JSON.stringify(html))
     sessionStorage.setItem('htmlStyle', JSON.stringify({ ...data.container }))
-    window.open('./../../../public/test.html')
+    window.open('./../../../test/index.html')
+    console.log(fs)
 }

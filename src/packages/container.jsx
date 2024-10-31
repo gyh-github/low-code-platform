@@ -1,4 +1,7 @@
-import { defineComponent, ref, provide, reactive, onMounted, onBeforeUnmount, nextTick, toRef, computed } from "vue";
+import {
+    defineComponent, ref, provide, reactive, onMounted,
+    onBeforeUnmount, nextTick, toRef, computed
+} from "vue";
 import plateConfig from './../packages/utils/plateConfig';
 import data from './../packages/data.json';
 import './container.less'
@@ -71,9 +74,22 @@ export default defineComponent({
                 position: 'absolute'
             }
         })
+        register({
+            label: 'vant-button',
+            preview: () => <van-button>vant按钮</van-button>,
+            render: (style) => <van-button style={style}>vant按钮</van-button>,
+            key: "vant-button",
+            attribute: {
+                width: 100,
+                height: 50,
+                border: 'thin solid #dcdcdc',
+                position: 'absolute'
+            }
+        })
 
         provide('componentList', componentList)
         provide('componentMap', componentMap)
+        provide('state', state)
 
         const plates = toRef(state, 'plates');
         const containerCenter = ref(null);
@@ -102,10 +118,13 @@ export default defineComponent({
             return _l + _d + 60;
         })
 
-        const workspaceStyle = {
-            width: state.container?.width + 'px',
-            height: state.container?.height + 'px'
-        }
+        const workspaceStyle = computed(() => {
+            return {
+                background: state.container?.background,
+                width: state.container?.width + 'px',
+                height: state.container?.height + 'px'
+            }
+        })
 
         const changeSize = () => {
             nextTick(() => {
@@ -136,8 +155,6 @@ export default defineComponent({
         const { dragstartFn, dragendFn } = usePlateDrag(plates, workspace);
         const { mousedownFn, mouseupFn } = useWorkspace(plates, plateData, workspace, lineData);
         const { addGuideFn, selectGuideFn, releaseGuideFn } = useGuide(guideData, containerCenterC);
-
-
         onMounted(() => {
             changeSize()
             window.addEventListener('resize', changeSize);
@@ -183,16 +200,16 @@ export default defineComponent({
                             <div>{item.preview()}</div>
                         </div>))}
                     </div>}
-                    {layerShow.value && <Layer />}
+                    {layerShow.value && <Layer v-model={plates} />}
                 </div>
             </div>
-            <div className="container-center" ref={containerCenter} style={{ left: centerContainerLeft.value + 'px', right: detailShow.value ? '260px' : 0 }}>
+            <div className="container-center" ref={containerCenter} style={{ left: centerContainerLeft.value + 'px', right: detailShow.value ? '300px' : 0 }}>
                 <div className="container-center-container" ref={containerCenterC}>
                     <ScaleX top={scaleTop} />
                     <ScaleY left={scaleLeft} />
                     <div className="container-center-container-workspace"
                         ref={workspace}
-                        style={workspaceStyle}> {
+                        style={workspaceStyle.value}> {
                             plates.value.map(item =>
                                 <EditPlate data={item} onmousedown={(e) => mousedownFn(e, item)} onmouseup={mouseupFn}
                                 ></EditPlate>)}
@@ -206,10 +223,10 @@ export default defineComponent({
                     }
                 </div>
             </div>
-            <div className="container-right" style={{ right: detailShow.value ? 0 : '-260px' }}>
-                <Attribute v-model={state} />
+            <div className="container-right" style={{ right: detailShow.value ? 0 : '-300px' }}>
+                <Attribute />
             </div>
-            <div className="direction right" style={{ right: detailShow.value ? '260px' : 0 }} onClick={() => handleActionFn('right')}>
+            <div className="direction right" style={{ right: detailShow.value ? '300px' : 0 }} onClick={() => handleActionFn('right')}>
                 <span> {'<'} </span></div>
         </div >)
     }

@@ -1,38 +1,83 @@
-@bg-color: rgba(255, 255, 255, 0.1);
-@active-bg-color: rgba(255, 255, 255, 0.2);
-@color: rgba(255, 255, 255, 0.9);
-@font-size: 12px;
-
 .attribute {
-    width: 100%;
+    padding: 5px;
 
     &-item {
         &-title {
-            border-top: thin solid @color;
-            border-bottom: thin solid @color;
+            border-top: thin solid var(--lcp-color);
+            border-bottom: thin solid var(--lcp-color);
             line-height: 35px;
         }
     }
 }
 
+//详情板块公告样式
+.label {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+//vant - style 样式重置
+.van-row {
+    padding: 10px 0;
+}
+
+.van-stepper {
+
+    &>button {
+        background: var(--lcp-active-bg-color);
+        color: var(--lcp-color);
+    }
+
+    &>input {
+        background: var(--lcp-active-bg-color);
+        color: var(--lcp-color);
+    }
+}
+
+.van-empty {
+    padding-bottom: 0 !important;
+}
+
+//工作区背景样式
+.background {
+    color: var(--lcp-color);
+    font-size: var(--lcp-font-size);
+
+    &-bg-img {
+        height: 150px;
+        width: 100%;
+        border: thin dashed var(--lcp-bg-color);
+        border-radius: var(--lcp-border-radius);
+        text-align: center;
+
+        &:hover {
+            border: thin dashed var(--lcp-hover-color);
+        }
+    }
+}
+
+//顶部tab样式
 .tab {
-    background: @bg-color;
+    background: var(--lcp-bg-color);
     padding: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: var(--lcp-border-radius);
 
     &>button {
         background: none;
         border: none;
-        color: @color;
+        color: var(--lcp-color);
         height: 35px;
-        font-size: @font-size;
-        border-radius: 4px;
+        font-size: var(--lcp-font-size);
+        border-radius: var(--lcp-border-radius);
         width: 25%;
+        flex: 1 0 auto;
 
         &.active {
-            background: @active-bg-color;
+            background: var(--lcp-active-bg-color);
         }
     }
 }

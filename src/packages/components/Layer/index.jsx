@@ -1,16 +1,15 @@
-import { defineComponent, ref } from 'vue';
+import { defineComponent, inject, ref } from 'vue';
 import './index.less';
 export default defineComponent({
-
-    setup() {
-        const layers = [
-
-        ];
+    props: ['modelValue'],
+    setup(props) {
+        const componentMap = inject(['componentMap']);
         const active = ref('');
         return () => (<div className='layer'>
             <h3>图层</h3>
-            {layers?.map(item => (<div className={active.value === item.key ? 'layer-item active' : 'layer-item'} onClick={() => (active.value = item.key)}>
-                <span>{item.label}</span>
+            {props.modelValue.value?.map(item => (<div className={active.value === item.id ? 'layer-item active' : 'layer-item'} onClick={() => (active.value = item.id)}>
+                <span>{componentMap[item.key].label}</span>
+                {componentMap[item.key].preview()}
             </div>))}
         </div>)
     }
