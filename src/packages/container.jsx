@@ -11,6 +11,7 @@ import ScaleY from "./components/ScaleY";
 import Attribute from "./components/Attribute";
 import NavCom from "./components/NavCom";
 import SmallNavCom from "./components/SmallNavCom";
+import Xterm from "./components/XtermCom";
 import Layer from "./components/Layer";
 import useWorkspace from "./utils/useWorkspace";
 import usePlateDrag from "./utils/usePlateDrag";
@@ -28,7 +29,7 @@ export default defineComponent({
         register({
             label: '文本',
             preview: () => "文本",
-            render: (style) => <span style={style}>渲染文本</span>,
+            render: (props) => <span {...props}></span>,
             key: "text",
             attribute: {
                 style: {
@@ -36,13 +37,14 @@ export default defineComponent({
                     height: 25,
                     color: 'green',
                     position: 'absolute'
-                }
+                },
+                innerText: '渲染文本'
             }
         })
         register({
             label: '按钮',
             preview: () => <button>按钮</button>,
-            render: (style, props) => <button style={style} {...props}>按钮</button>,
+            render: (props) => <button {...props}></button>,
             key: "button",
             attribute: {
                 style: {
@@ -51,13 +53,14 @@ export default defineComponent({
                     background: 'bule',
                     color: '#fff',
                     position: 'absolute'
-                }
+                },
+                innerText: '按钮'
             }
         })
         register({
             label: '输入框',
             preview: () => <input placeholder="请输入" style="width:70px" />,
-            render: (style) => <input style={style} placeholder="请输入" />,
+            render: (props) => <input {...props} placeholder="请输入" />,
             key: "input",
             attribute: {
                 style: {
@@ -71,7 +74,7 @@ export default defineComponent({
         register({
             label: '图片',
             preview: () => <img alt="图片" style="width:60px" src={defaultImg} />,
-            render: (style) => <img style={style} alt="图片" src={defaultImg} />,
+            render: (props) => <img {...props} />,
             key: "img",
             attribute: {
                 style: {
@@ -79,13 +82,15 @@ export default defineComponent({
                     height: 150,
                     border: 'thin solid #dcdcdc',
                     position: 'absolute'
-                }
+                },
+                alt: '图片',
+                src: defaultImg
             }
         })
         register({
             label: 'vant-button',
             preview: () => <van-button>vant按钮</van-button>,
-            render: (style, props) => <van-button style={style} {...props}></van-button>,
+            render: (props) => <van-button  {...props}></van-button>,
             key: "vant-button",
             attribute: {
                 style: {
@@ -93,7 +98,8 @@ export default defineComponent({
                     height: 50,
                     border: 'thin solid #dcdcdc',
                     position: 'absolute'
-                }
+                },
+                innerText: 'vant按钮'
             }
         })
 
@@ -104,6 +110,7 @@ export default defineComponent({
         const plates = toRef(state, 'plates');
         const containerCenter = ref(null);
         const containerCenterC = ref(null);
+        const xtermShow = ref(false);
         const workspace = ref(null);
         const layerShow = ref(false);
         const dragShow = ref(true);
@@ -162,7 +169,12 @@ export default defineComponent({
             changeSize();
         }
 
-        const { dragstartFn, dragendFn } = usePlateDrag(plates, workspace);
+        //发版
+        const publishFn = () => {
+            xtermShow.value = true;
+        }
+
+        const { dragstartFn, dragendFn } = usePlateDrag(plates, workspace, componentMap);
         const { mousedownFn, mouseupFn } = useWorkspace(plates, plateData, workspace, lineData);
         const { addGuideFn, selectGuideFn, releaseGuideFn } = useGuide(guideData, containerCenterC);
         onMounted(() => {
@@ -182,7 +194,7 @@ export default defineComponent({
         return () => (<div className="container">
             <div class="container-top">
                 <div className="container-top-actions">
-                    <button onClick={() => addGuideFn('h')}>首页</button>
+                    <button onClick={() => (location.href = '/')}>首页</button>
                     <button className={dragShow.value && 'active'} onClick={() => (dragShow.value = !dragShow.value)}>组件</button>
                     <button className={layerShow.value && 'active'} onClick={() => (layerShow.value = !layerShow.value)}>图层</button>
                     <button className={detailShow.value && 'active'} onClick={() => (detailShow.value = !detailShow.value)}>详情</button>
@@ -190,6 +202,7 @@ export default defineComponent({
                     <button onClick={() => addGuideFn('v')}>+添加纵向辅助线</button>
                     <button onClick={() => exportJSONFn(state)}>导出</button>
                     <button onClick={() => previewFn(state, componentMap)}>预览</button>
+                    <button onClick={() => publishFn()}>发布</button>
 
                 </div>
             </div>
@@ -239,6 +252,7 @@ export default defineComponent({
             </div>
             <div className="direction right" style={{ right: detailShow.value ? '300px' : 0 }} onClick={() => handleActionFn('right')}>
                 <span> {'<'} </span></div>
+            {xtermShow.value && <Xterm />}
         </div >)
     }
 })

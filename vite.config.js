@@ -7,9 +7,15 @@ export default defineConfig({
   plugins: [vue(), vueJsx()],
   server: {
     port: 8091,
-    open: true
+    open: true,
+    proxy: 'http://localhost:3000/'
   },
   resolve: {
     alias: { "@": "/src" }
   },
+  build: {
+    rollupOptions: {
+      input: 'test.html'
+    }
+  }
 })

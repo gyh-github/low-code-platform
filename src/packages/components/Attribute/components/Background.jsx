@@ -59,6 +59,7 @@ export default defineComponent({
                     reupload max-count="1"
                     after-read={afterReadFn}
                     before-delete={beforeDeleteFn}
+                    preview-size={['150px', '150px']}
                 >
                     <van-empty description="界面背景图" image-size="69" />
                 </van-uploader>

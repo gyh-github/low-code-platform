@@ -1,4 +1,3 @@
-
 export default function createEditConfig() {
     let componentList = [];
     let componentMap = {};

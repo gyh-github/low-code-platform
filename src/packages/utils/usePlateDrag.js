@@ -1,7 +1,4 @@
-
-import { componentMap } from './plateConfig';
-
-export default function (plates, workspace) {
+export default function (plates, workspace, componentMap) {
     let _cur = null;
 
     const dragstartFn = (_, plate) => {

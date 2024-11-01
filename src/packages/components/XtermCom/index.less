@@ -1,0 +1,28 @@
+.xterm-com {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &-main {
+        background: #000;
+        height: 400px;
+        width: 600px;
+        padding: 10px;
+        border-radius: 10px;
+        border: thin solid #000;
+        box-shadow: 0 0 10px #fff;
+    }
+}
+
+.xterm-viewport {
+    height: 400px !important;
+    width: 600px !important;
+    overflow: hidden !important;
+}
