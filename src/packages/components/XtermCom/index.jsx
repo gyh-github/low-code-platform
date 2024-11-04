@@ -1,11 +1,19 @@
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent, onMounted, ref, watch } from "vue";
 import { Terminal } from 'xterm';
 import "xterm/css/xterm.css";
 import './index.less';
 
 export default defineComponent({
-    setup() {
+    props: ['modelValue'],
+    emits: ['update:modelValue'],
+    setup({ modelValue }, { emit }) {
         const termRef = ref(null);
+        const hideFn = () => {
+            emit('update:modelValue', false)
+        };
+        watch(() => modelValue, (val) => {
+            console.log(val)
+        })
         onMounted(() => {
             var term = new Terminal({
                 cols: 79,
@@ -34,10 +42,12 @@ export default defineComponent({
                 if (val.length > 1) term.write(val)
             });
         })
-        return () => (<div className="xterm-com">
-            <div className="xterm-com-main">
-                <div ref={termRef}></div>
-            </div>
-        </div>)
+        return () => (<>
+            {modelValue.value && <div className="xterm-com" onClick={() => hideFn()}>
+                <div className="xterm-com-main">
+                    <div ref={termRef}></div>
+                </div>
+            </div>}
+        </>)
     }
 })

@@ -252,7 +252,7 @@ export default defineComponent({
             </div>
             <div className="direction right" style={{ right: detailShow.value ? '300px' : 0 }} onClick={() => handleActionFn('right')}>
                 <span> {'<'} </span></div>
-            {xtermShow.value && <Xterm />}
+            <Xterm v-model={xtermShow} />
         </div >)
     }
 })
