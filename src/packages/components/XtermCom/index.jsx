@@ -8,12 +8,24 @@ export default defineComponent({
     emits: ['update:modelValue'],
     setup({ modelValue }, { emit }) {
         const termRef = ref(null);
+        const terminalSocket = ref(null);
         const hideFn = () => {
             emit('update:modelValue', false)
         };
         watch(() => modelValue, (val) => {
             console.log(val)
         })
+        const createWS = () => {
+            terminalSocket.value = new WebSocket("/api/socketTest/");
+            console.log(terminalSocket.value)
+            terminalSocket.value.onopen = () => {
+                console.log('123')
+                terminalSocket.value.send('可以了吧')
+            }
+            terminalSocket.value.onmessage = (msg) => {
+                console.log(msg)
+            }
+        };
         onMounted(() => {
             var term = new Terminal({
                 cols: 79,
@@ -23,7 +35,7 @@ export default defineComponent({
                     background: '#000'
                 }
             });
-            term.open(termRef.value);
+            termRef.value && term.open(termRef.value);
             // 添加事件监听器，支持输入方法
             term.onKey(e => {
                 const printable = !e.domEvent.altKey && !e.domEvent.altGraphKey && !e.domEvent.ctrlKey && !e.domEvent.metaKey
@@ -41,6 +53,7 @@ export default defineComponent({
             term.onData((val) => {
                 if (val.length > 1) term.write(val)
             });
+            createWS();
         })
         return () => (<>
             {modelValue.value && <div className="xterm-com" onClick={() => hideFn()}>

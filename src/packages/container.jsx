@@ -11,13 +11,14 @@ import ScaleY from "./components/ScaleY";
 import Attribute from "./components/Attribute";
 import NavCom from "./components/NavCom";
 import SmallNavCom from "./components/SmallNavCom";
-import Xterm from "./components/XtermCom";
+// import Xterm from "./components/XtermCom";
 import Layer from "./components/Layer";
 import useWorkspace from "./utils/useWorkspace";
 import usePlateDrag from "./utils/usePlateDrag";
 import defaultImg from './static/imgs/default.jpg';
 import useGuide from "./utils/useGuide";
 import { previewFn, exportJSONFn } from './utils/index.js';
+import { generateCode } from "@/packages/utils/apis";
 
 
 export default defineComponent({
@@ -110,7 +111,7 @@ export default defineComponent({
         const plates = toRef(state, 'plates');
         const containerCenter = ref(null);
         const containerCenterC = ref(null);
-        const xtermShow = ref(false);
+        // const xtermShow = ref(false);
         const workspace = ref(null);
         const layerShow = ref(false);
         const dragShow = ref(true);
@@ -170,8 +171,9 @@ export default defineComponent({
         }
 
         //发版
-        const publishFn = () => {
-            xtermShow.value = true;
+        const publishFn = async () => {
+            // xtermShow.value = true;
+            const res = await generateCode(state);
         }
 
         const { dragstartFn, dragendFn } = usePlateDrag(plates, workspace, componentMap);
@@ -252,7 +254,7 @@ export default defineComponent({
             </div>
             <div className="direction right" style={{ right: detailShow.value ? '300px' : 0 }} onClick={() => handleActionFn('right')}>
                 <span> {'<'} </span></div>
-            <Xterm v-model={xtermShow} />
+            {/* <Xterm v-model={xtermShow} /> */}
         </div >)
     }
 })
