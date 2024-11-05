@@ -18,7 +18,7 @@ import usePlateDrag from "./utils/usePlateDrag";
 import defaultImg from './static/imgs/default.jpg';
 import useGuide from "./utils/useGuide";
 import { previewFn, exportJSONFn } from './utils/index.js';
-import { generateCode } from "@/packages/utils/apis";
+import { dataProcessing } from "@/packages/utils/apis";
 
 
 export default defineComponent({
@@ -173,7 +173,10 @@ export default defineComponent({
         //发版
         const publishFn = async () => {
             // xtermShow.value = true;
-            const res = await generateCode(state);
+            const res = await dataProcessing(state);
+            if (res) {
+                console.log(res)
+            }
         }
 
         const { dragstartFn, dragendFn } = usePlateDrag(plates, workspace, componentMap);

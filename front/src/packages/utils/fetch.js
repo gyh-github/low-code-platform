@@ -1,4 +1,4 @@
-export default function (url, method, body) {
+export default function (url = "", method = "GET", body = {}) {
     return new Promise((resolve, reject) => {
         console.log(body)
         try {

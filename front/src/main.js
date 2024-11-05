@@ -1,10 +1,11 @@
 import { createApp } from 'vue'
 import './style.less'
 import App from './App.vue'
-import Preview from './views/preview/index.jsx'
+import Preview from './views/preview/index.jsx';
 import { Button, Icon, Stepper, Row, Col, Empty, Uploader, Dialog } from 'vant'
 import 'vant/lib/index.css';
-const flag = false;
+console.log(import.meta.env.VITE_MODE)
+const flag = import.meta.env.VITE_MODE === 'generate';
 if (flag) {
     createApp(Preview).
         use(Button).

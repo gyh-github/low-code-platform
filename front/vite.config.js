@@ -18,10 +18,5 @@ export default defineConfig({
   },
   resolve: {
     alias: { "@": "/src" }
-  },
-  build: {
-    rollupOptions: {
-      input: 'test.html'
-    }
   }
 })
