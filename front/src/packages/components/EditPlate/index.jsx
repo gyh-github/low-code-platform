@@ -20,7 +20,6 @@ export default defineComponent({
             for (let key in _props.style) {
                 _props.style[key] = arr.includes(key) ? _props.style[key] + 'px' : _props.style[key];
             }
-            console.log(_props)
 
             return {
                 ..._props
@@ -37,7 +36,7 @@ export default defineComponent({
             e.preventDefault();
         }
 
-        return () => (<div ref={itemRef} onMousemove={mousemoveFn} style={{ ...itemStyle.value }} className={props.data.focused ? 'item focused' : 'item'} >
+        return () => (<div ref={itemRef} onMousemove={mousemoveFn} style={{ ...itemStyle.value, display: props.data.show ? 'block' : 'none' }} className={props.data.focused ? 'item focused' : 'item'} >
             {component.render({ ...renderProps.value })}
         </div>)
     }

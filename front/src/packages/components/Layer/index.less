@@ -1,11 +1,11 @@
 .layer {
-    width: 150px;
+    width: 140px;
     height: 100%;
     padding: 5px;
     background: #2a2929;
     flex: 1 0 auto;
 
-    &-title {
+    &-action {
         line-height: 45px;
         color: #f8f5f5;
         text-align: center;
@@ -14,10 +14,27 @@
     &-item {
         text-align: center;
         color: #f8f5f5;
-        padding: 15px 0;
+        padding: 0 5px;
+        height: 70px;
+        margin-bottom: 5px;
         cursor: pointer;
         border-radius: 4px;
         font-size: 12px;
+        flex: 1 0 auto;
+
+        &-label {
+            display: inline-block;
+            vertical-align: middle;
+            width: 30%;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        &>.van-row {
+            padding: 0;
+            height: 100%;
+        }
 
         &:hover,
         &.active {

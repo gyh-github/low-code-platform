@@ -17,7 +17,6 @@ export default function (plates, workspace, componentMap) {
     const dropFn = (e) => {
         e.stopPropagation();
         if (!_cur) return;
-        console.log(componentMap)
         plates.value = [...plates.value, {
             top: e.layerY,
             left: e.layerX,
@@ -26,6 +25,8 @@ export default function (plates, workspace, componentMap) {
             key: _cur.key,
             id: new Date().getTime().toString(),
             focused: false,
+            show: true,
+            lock: false,
             attribute: {
                 ...componentMap[_cur.key]?.attribute
             }

@@ -11,7 +11,6 @@ import ScaleY from "./components/ScaleY";
 import Attribute from "./components/Attribute";
 import NavCom from "./components/NavCom";
 import SmallNavCom from "./components/SmallNavCom";
-// import Xterm from "./components/XtermCom";
 import Layer from "./components/Layer";
 import useWorkspace from "./utils/useWorkspace";
 import usePlateDrag from "./utils/usePlateDrag";
@@ -111,7 +110,6 @@ export default defineComponent({
         const plates = toRef(state, 'plates');
         const containerCenter = ref(null);
         const containerCenterC = ref(null);
-        // const xtermShow = ref(false);
         const workspace = ref(null);
         const layerShow = ref(false);
         const dragShow = ref(true);
@@ -172,7 +170,6 @@ export default defineComponent({
 
         //发版
         const publishFn = async () => {
-            // xtermShow.value = true;
             const res = await dataProcessing(state);
             if (res) {
                 console.log(res)
@@ -257,7 +254,6 @@ export default defineComponent({
             </div>
             <div className="direction right" style={{ right: detailShow.value ? '300px' : 0 }} onClick={() => handleActionFn('right')}>
                 <span> {'<'} </span></div>
-            {/* <Xterm v-model={xtermShow} /> */}
         </div >)
     }
 })
