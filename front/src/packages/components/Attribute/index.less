@@ -8,13 +8,34 @@
             line-height: 35px;
         }
     }
+
+    .small-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .font-size-select {
+        width: 100%;
+        padding: 8px 10px;
+        border: none;
+        color: var(--lcp-color);
+        background: var(--lcp-bg-color);
+        border-radius: var(--lcp-border-radius);
+
+        option {
+            color: var(--lcp-hover-color);
+            background: var(--lcp-bg-color) !important;
+        }
+    }
 }
 
-//详情板块公告样式
+//详情板块公共样式
 .label {
     display: inline-block;
     vertical-align: middle;
     margin-right: 5px;
+    color: var(--lcp-color);
 }
 
 //vant - style 样式重置

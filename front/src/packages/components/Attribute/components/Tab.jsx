@@ -1,13 +1,15 @@
 import { defineComponent, ref } from "vue";
 import './../index.less';
+import Custom from "./Custom";
 
 export default defineComponent({
-    props: ['flag'],
-    setup(props) {
+    props: ['modelValue'],
+    emits: ['update:modelValue'],
+    setup() {
         const arr = [
             {
                 label: '定制',
-                key: 'customized'
+                key: 'custom'
             },
             {
                 label: '动画',
@@ -22,10 +24,14 @@ export default defineComponent({
                 key: 'event'
             }
         ];
-        const active = ref('customized');
-        return () => (<div className="tab">
-            {props.flag === 'bg' && <van-button className="active">背景设置</van-button>}
-            {props.flag != 'bg' && arr.map(item => (<van-button className={active.value === item.key && "active"} onClick={() => active.value = item.key}>{item.label}</van-button>))}
-        </div>)
+        const active = ref('custom');
+        return () => (<>
+            <div className="tab">
+                {arr.map(item => (
+                    <van-button className={active.value === item.key && "active"}
+                        onClick={() => active.value = item.key}>{item.label}</van-button>))}
+            </div>
+            {active.value === 'custom' && <Custom />}
+        </>)
     }
 })

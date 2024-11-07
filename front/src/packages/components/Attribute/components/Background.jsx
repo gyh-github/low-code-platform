@@ -33,7 +33,6 @@ export default defineComponent({
             return true;
         };
         return () => <div className="background">
-            <Tab flag="bg" />
             <van-row>
                 <van-col>
                     <span className="label">界面尺寸</span>

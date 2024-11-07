@@ -35,7 +35,7 @@ export default defineComponent({
         const workspace = ref(null);
         const layerShow = ref(false);
         const dragShow = ref(true);
-        const detailShow = ref(false);
+        const detailShow = ref(true);
         const scaleTop = ref(2);//顶部标尺
         const scaleLeft = ref(2);//左侧标尺
         const plateData = reactive({

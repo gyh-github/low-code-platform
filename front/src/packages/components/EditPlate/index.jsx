@@ -17,12 +17,11 @@ export default defineComponent({
             position: 'absolute'
         }))
         const renderProps = computed(() => {
-            const arr = ['width', 'height', 'top', 'left', 'bottom', 'right'];
+            const arr = ['width', 'height', 'top', 'left', 'bottom', 'right', 'font-size'];
             let _attribute = _.cloneDeep(props.data.attribute);
             for (let key in _attribute.style) {
                 _attribute.style[key] = arr.includes(key) ? _attribute.style[key] + 'px' : _attribute.style[key];
             }
-            // console.log(_attribute)
             component.value = componentMap[props.data.key];
             return {
                 ..._attribute
