@@ -1,6 +1,6 @@
 import {
     defineComponent, ref, provide, reactive, onMounted,
-    onBeforeUnmount, nextTick, toRef, computed
+    onBeforeUnmount, nextTick, toRef, computed, watch
 } from "vue";
 import plateConfig from './../packages/utils/plateConfig';
 import data from './../packages/data.json';
@@ -50,7 +50,7 @@ export default defineComponent({
                 style: {
                     width: 100,
                     height: 30,
-                    background: 'bule',
+                    background: 'blue',
                     color: '#fff',
                     position: 'absolute'
                 },
@@ -179,6 +179,14 @@ export default defineComponent({
         const { dragstartFn, dragendFn } = usePlateDrag(plates, workspace, componentMap);
         const { mousedownFn, mouseupFn } = useWorkspace(plates, plateData, workspace, lineData);
         const { addGuideFn, selectGuideFn, releaseGuideFn } = useGuide(guideData, containerCenterC);
+
+
+        // watch(() => plates, (val) => {
+        //     console.log(val)
+        // }, {
+        //     deep: true
+        // })
+
         onMounted(() => {
             changeSize()
             window.addEventListener('resize', changeSize);
@@ -235,7 +243,8 @@ export default defineComponent({
                     <ScaleY left={scaleLeft} />
                     <div className="container-center-container-workspace"
                         ref={workspace}
-                        style={workspaceStyle.value}> {
+                        style={workspaceStyle.value}>
+                        {
                             plates.value.map(item =>
                                 <EditPlate data={item} onmousedown={(e) => mousedownFn(e, item)} onmouseup={mouseupFn}
                                 ></EditPlate>)}

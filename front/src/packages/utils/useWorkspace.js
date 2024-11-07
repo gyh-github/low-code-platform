@@ -1,5 +1,6 @@
 import { onBeforeUnmount, onMounted } from "vue";
 import useLine from "./useLine";
+import _ from 'lodash';
 
 export default (plates, plateData, workspace, lineData) => {
     let altCode = null;
@@ -12,7 +13,11 @@ export default (plates, plateData, workspace, lineData) => {
     });
 
     const clearFocusFn = () => {
-        plates.value.forEach(item => item.focused = false);
+        plates.value = plates.value.map(item => {
+            const _item = _.cloneDeep(item);
+            _item.focused = false;
+            return _item;
+        });
         plateData.focused = [];
         plateData.unFocused = [];
     }
@@ -31,17 +36,20 @@ export default (plates, plateData, workspace, lineData) => {
         plateData.focused = [];
         plateData.unFocused = [];
         plates.value = plates.value.map(ite => ite.id === item.id ? { ...ite, focused: true } : { ...ite });
-        plates.value.forEach(ite => {
+        plates.value = plates.value.map(ite => {
             ite.focused ? plateData.focused.push(ite) : plateData.unFocused.push(ite);
+            return ite;
         })
     }
     const mousemoveFn = (e) => {
-        plates.value.forEach(item => {
+        plates.value = plates.value.map(item => {
             const _item = plateData.focused.find(ele => ele.id === item.id);
+            let _cloneItem = _.cloneDeep(item);
             if (_item) {
-                item.top = item.top + e.movementY;
-                item.left = item.left + e.movementX;
+                _cloneItem.top = _cloneItem.top + e.movementY;
+                _cloneItem.left = _cloneItem.left + e.movementX;
             }
+            return _cloneItem;
         });
         handleLineFn();
     }
@@ -52,7 +60,7 @@ export default (plates, plateData, workspace, lineData) => {
         workspace.value.removeEventListener('mousemove', mousemoveFn);
     }
     const handlePositionFn = () => {
-        console.log(lineData)
+        // console.log(lineData)
         const hTypes = ['bottom-top', 'top-top', 'middle-middle', 'top-bottom', 'bottom-bottom'];
         const vTypes = ['right-left', 'left-left', 'middle-middle', 'right-right', 'left-right'];
         if (hTypes.includes(lineData.hType) || vTypes.includes(lineData.vType)) {
@@ -98,13 +106,15 @@ export default (plates, plateData, workspace, lineData) => {
                     _distanceLeft = 0;
                     break;
             }
-            plates.value.forEach(item => {
+            plates.value = plates.value.map(item => {
                 const _item = plateData.focused.find(ele => ele.id === item.id);
                 if (_item) {
                     item.top = item.top + _distanceTop;
                     item.left = item.left + _distanceLeft;
                 }
+                return item;
             });
+
         }
     }
     const keydownFn = (e) => {
