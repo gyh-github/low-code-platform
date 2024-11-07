@@ -2,9 +2,9 @@ import {
     defineComponent, ref, provide, reactive, onMounted,
     onBeforeUnmount, nextTick, toRef, computed, watch
 } from "vue";
-import plateConfig from './../packages/utils/plateConfig';
+import plateConfig from './../packages/utils/plateConfig.jsx';
 import data from './../packages/data.json';
-import './container.less'
+import './container.less';
 import EditPlate from "./components/EditPlate";
 import ScaleX from "./components/ScaleX";
 import ScaleY from "./components/ScaleY";
@@ -14,7 +14,6 @@ import SmallNavCom from "./components/SmallNavCom";
 import Layer from "./components/Layer";
 import useWorkspace from "./utils/useWorkspace";
 import usePlateDrag from "./utils/usePlateDrag";
-import defaultImg from './static/imgs/default.jpg';
 import useGuide from "./utils/useGuide";
 import { previewFn, exportJSONFn } from './utils/index.js';
 import { dataProcessing } from "@/packages/utils/apis";
@@ -24,84 +23,7 @@ export default defineComponent({
 
     setup() {
         const state = reactive(data);
-        const { componentList, componentMap, register } = plateConfig();
-
-        register({
-            label: '文本',
-            preview: () => "文本",
-            render: (props) => <span {...props}></span>,
-            key: "text",
-            attribute: {
-                style: {
-                    width: 100,
-                    height: 25,
-                    color: 'green',
-                    position: 'absolute'
-                },
-                innerText: '渲染文本'
-            }
-        })
-        register({
-            label: '按钮',
-            preview: () => <button>按钮</button>,
-            render: (props) => <button {...props}></button>,
-            key: "button",
-            attribute: {
-                style: {
-                    width: 100,
-                    height: 30,
-                    background: 'blue',
-                    color: '#fff',
-                    position: 'absolute'
-                },
-                innerText: '按钮'
-            }
-        })
-        register({
-            label: '输入框',
-            preview: () => <input placeholder="请输入" style="width:70px" />,
-            render: (props) => <input {...props} placeholder="请输入" />,
-            key: "input",
-            attribute: {
-                style: {
-                    width: 100,
-                    height: 30,
-                    color: '#333',
-                    position: 'absolute'
-                }
-            }
-        })
-        register({
-            label: '图片',
-            preview: () => <img alt="图片" style="width:60px" src={defaultImg} />,
-            render: (props) => <img {...props} />,
-            key: "img",
-            attribute: {
-                style: {
-                    width: 150,
-                    height: 150,
-                    border: 'thin solid #dcdcdc',
-                    position: 'absolute'
-                },
-                alt: '图片',
-                src: defaultImg
-            }
-        })
-        register({
-            label: 'vant-button',
-            preview: () => <van-button>vant按钮</van-button>,
-            render: (props) => <van-button  {...props}></van-button>,
-            key: "vant-button",
-            attribute: {
-                style: {
-                    width: 100,
-                    height: 50,
-                    border: 'thin solid #dcdcdc',
-                    position: 'absolute'
-                },
-                innerText: 'vant按钮'
-            }
-        })
+        const { componentList, componentMap } = plateConfig();
 
         provide('componentList', componentList)
         provide('componentMap', componentMap)
