@@ -24,26 +24,10 @@ export default function createEditConfig() {
         }
     })
     register({
-        label: '按钮',
-        preview: () => <button>按钮</button>,
-        render: (props) => <button {...props}></button>,
-        key: "button",
-        attribute: {
-            style: {
-                width: 100,
-                height: 30,
-                background: 'blue',
-                color: '#fff',
-                position: 'absolute'
-            },
-            innerText: '按钮'
-        }
-    })
-    register({
         label: '输入框',
-        preview: () => <input placeholder="请输入" style="width:70px" />,
-        render: (props) => <input {...props} placeholder="请输入" />,
-        key: "input",
+        preview: () => <van-field placeholder="请输入" style="width:70px" />,
+        render: (props) => <van-field {...props} placeholder="请输入" />,
+        key: "van-field",
         attribute: {
             style: {
                 width: 100,
@@ -55,9 +39,9 @@ export default function createEditConfig() {
     })
     register({
         label: '图片',
-        preview: () => <img alt="图片" style="width:60px" src={defaultImg} />,
-        render: (props) => <img {...props} />,
-        key: "img",
+        preview: () => <van-image alt="图片" style="width:60px" src={defaultImg} />,
+        render: (props) => <van-image {...props} />,
+        key: "van-image",
         attribute: {
             style: {
                 width: 150,
@@ -73,7 +57,7 @@ export default function createEditConfig() {
         label: 'vant-button',
         preview: () => <van-button>vant按钮</van-button>,
         render: (props) => <van-button  {...props}></van-button>,
-        key: "vant-button",
+        key: "van-button",
         attribute: {
             style: {
                 width: 100,

@@ -16,15 +16,24 @@ export default defineComponent({
                     <van-field v-model={plate.value.attribute['innerText']} /></van-col>
             </van-row>
             <van-row align="center" justify="space-between">
-                <van-col span={6}>
-                    <span className="label">字体大小</span>
-                </van-col>
-                <van-col span={18}>
-                    <select name="fontSize" id="fontSize" v-model={plate.value.attribute.style['font-size']}
-                        className="font-size-select">
-                        {fontSizeList.map(item => <option value={item} >{item}px</option>)}
+                <van-col span={12}>
+                    <van-row align="center" justify="space-between">
+                        <van-col>
+                            <span className="label">字体大小</span></van-col>
+                        <van-col>
+                            <select name="fontSize" id="fontSize" v-model={plate.value.attribute.style['font-size']}
+                                className="font-size-select">
+                                {fontSizeList.map(item => <option value={item} >{item}px</option>)}
 
-                    </select></van-col>
+                            </select></van-col>
+                    </van-row></van-col>
+                <van-col span={12}>
+                    <van-row align="center" justify="space-between">
+                        <van-col>
+                            <span className="label">&nbsp;&nbsp;&nbsp;字体颜色</span></van-col>
+                        <van-col>
+                            <input type="color" v-model={plate.value.attribute.style['color']} style="width:60px !important" /></van-col>
+                    </van-row></van-col>
             </van-row>
             <van-row align="center" justify="space-between">
                 <van-col span={4}>
@@ -32,9 +41,9 @@ export default defineComponent({
                 </van-col>
                 <van-col span={20} >
                     <div className="small-row">
-                        <span>宽</span><van-stepper v-model={plate.value.attribute.style['width']}
+                        <span className="label">宽</span><van-stepper v-model={plate.value.attribute.style['width']}
                             input-width="40px" button-size="25px" />
-                        <span>高</span><van-stepper v-model={plate.value.attribute.style['height']}
+                        <span className="label">高</span><van-stepper v-model={plate.value.attribute.style['height']}
                             input-width="40px" button-size="25px" />
                     </div>
                 </van-col>
