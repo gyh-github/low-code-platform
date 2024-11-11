@@ -14,9 +14,8 @@ export default (plates, plateData, workspace, lineData) => {
 
     const clearFocusFn = () => {
         plates.value = plates.value.map(item => {
-            const _item = _.cloneDeep(item);
-            _item.focused = false;
-            return _item;
+            item.focused = false;
+            return item;
         });
         plateData.focused = [];
         plateData.unFocused = [];

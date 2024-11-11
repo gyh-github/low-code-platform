@@ -24,7 +24,7 @@ export default defineComponent({
     setup() {
         const state = reactive(data);
         const { componentList, componentMap } = plateConfig();
-
+        console.log(componentList)
         provide('componentList', componentList)
         provide('componentMap', componentMap)
         provide('state', state)

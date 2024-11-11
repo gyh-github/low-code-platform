@@ -1,5 +1,4 @@
 import { defineComponent, inject, ref } from "vue";
-import Tab from "./Tab";
 
 export default defineComponent({
     props: ['modelValue'],

@@ -31,6 +31,7 @@ export default function (plates, workspace, componentMap) {
                 ...componentMap[_cur.key]?.attribute
             }
         }];
+        console.log(plates.value)
     }
 
 

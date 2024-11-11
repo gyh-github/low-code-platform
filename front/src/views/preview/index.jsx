@@ -1,5 +1,5 @@
 import { defineComponent, reactive } from "vue";
-import plateConfig from '@/packages/utils/componentConfig.jsx';
+import plateConfig from '@/packages/utils/plateConfig.jsx';
 const flag = import.meta.env.VITE_MODE === 'generate';
 import _ from 'lodash';
 
@@ -34,10 +34,12 @@ export default defineComponent({
         const renderProps = (ele) => {
             const arr = ['width', 'height', 'top', 'left', 'bottom', 'right'];
             let _props = _.cloneDeep(ele.attribute);
-            _props.style.top = ele.top - 1000 + _state.container.height / 2;
-            _props.style.left = ele.left - 1000 + _state.container.width / 2;
-            for (let key in _props.style) {
-                _props.style[key] = arr.includes(key) ? _props.style[key] + 'px' : _props.style[key];
+            if (_props.style) {
+                _props.style.top = ele.top - 1000 + _state.container.height / 2;
+                _props.style.left = ele.left - 1000 + _state.container.width / 2;
+                for (let key in _props.style) {
+                    _props.style[key] = arr.includes(key) ? _props.style[key] + 'px' : _props.style[key];
+                }
             }
             return {
                 ..._props
