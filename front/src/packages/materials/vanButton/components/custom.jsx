@@ -7,7 +7,6 @@ export default defineComponent({
     setup() {
         const state = inject('state');
         const plate = computed(() => state.plates.find(item => item.focused));
-        console.log(plate.value.attribute.style.backgroundImage);
         const fileList = ref([]);
         const afterReadFn = (file, plate) => {
             plate.value.attribute.style.backgroundImage = `url(${file.content})`;
