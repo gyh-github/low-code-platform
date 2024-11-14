@@ -1,12 +1,12 @@
 import { defineComponent, reactive } from "vue";
-import plateConfig from '@/packages/utils/plateConfig.jsx';
+import useMaterialsStore from "../../packages/store/materials";
 const flag = import.meta.env.VITE_MODE === 'generate';
 import _ from 'lodash';
 
 export default defineComponent({
     setup() {
         document.title = flag ? "H5" : "预览";
-        const { componentMap } = plateConfig();
+        const { componentMap } = useMaterialsStore();
         const _state = reactive({ container: {}, plates: [] });
         const mainStyle = reactive({
             width: '',

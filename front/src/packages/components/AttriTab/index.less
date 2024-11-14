@@ -1,0 +1,23 @@
+.tab {
+    background: var(--lcp-bg-color);
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--lcp-border-radius);
+
+    &>button {
+        background: none;
+        border: none;
+        color: var(--lcp-color);
+        height: 35px;
+        font-size: var(--lcp-font-size);
+        border-radius: var(--lcp-border-radius);
+        width: 25%;
+        flex: 1 0 auto;
+
+        &.active {
+            background: var(--lcp-active-bg-color);
+        }
+    }
+}

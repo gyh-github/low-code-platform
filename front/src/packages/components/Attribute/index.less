@@ -84,9 +84,19 @@
         border: thin dashed var(--lcp-bg-color);
         border-radius: var(--lcp-border-radius);
         text-align: center;
+        position: relative;
 
         &:hover {
             border: thin dashed var(--lcp-hover-color);
+        }
+
+        .default-img {
+            height: 100%;
+            width: 100%;
+            background-color: aqua;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
     }
 }

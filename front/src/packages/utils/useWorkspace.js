@@ -59,20 +59,21 @@ export default (plates, plateData, workspace, lineData) => {
     const handlePositionFn = () => {
         const hTypes = ['bottom-top', 'top-top', 'middle-middle', 'top-bottom', 'bottom-bottom'];
         const vTypes = ['right-left', 'left-left', 'middle-middle', 'right-right', 'left-right'];
-        if (hTypes.includes(lineData.hType) || vTypes.includes(lineData.vType)) {
+        console.log(lineData)
+        if (hTypes.includes(lineData.hType)) {
             let _distanceTop = 0;
             switch (lineData.hType) {
                 case 'bottom-top':
-                    _distanceTop = lineData.hTop - plateData.focused[plateData.focused.length - 1].top - plateData.focused[plateData.focused.length - 1].height;
+                    _distanceTop = lineData.hTop - plateData.focused[plateData.focused.length - 1].top - plateData.focused[plateData.focused.length - 1].attribute.style.height;
                     break;
                 case 'top-top':
                     _distanceTop = lineData.hTop - plateData.focused[plateData.focused.length - 1].top;
                     break;
                 case 'middle-middle':
-                    _distanceTop = lineData.hTop - plateData.focused[plateData.focused.length - 1].top - plateData.focused[plateData.focused.length - 1].height / 2;
+                    _distanceTop = lineData.hTop - plateData.focused[plateData.focused.length - 1].top - plateData.focused[plateData.focused.length - 1].attribute.style.height / 2;
                     break;
                 case 'bottom-bottom':
-                    _distanceTop = lineData.hTop - plateData.focused[plateData.focused.length - 1].top - plateData.focused[plateData.focused.length - 1].height;
+                    _distanceTop = lineData.hTop - plateData.focused[plateData.focused.length - 1].top - plateData.focused[plateData.focused.length - 1].attribute.style.height;
                     break;
                 case 'top-bottom':
                     _distanceTop = lineData.hTop - plateData.focused[plateData.focused.length - 1].top;
@@ -81,19 +82,27 @@ export default (plates, plateData, workspace, lineData) => {
                     _distanceTop = 0;
                     return;
             }
+            plates.value = plates.value.map(item => {
+                const _item = plateData.focused.find(ele => ele.id === item.id);
+                item.top = _item ? _item.top + _distanceTop : item.top;
+                return item;
+            });
+
+        }
+        if (vTypes.includes(lineData.vType)) {
             let _distanceLeft = 0;
             switch (lineData.vType) {
                 case 'right-left':
-                    _distanceLeft = lineData.vLeft - plateData.focused[plateData.focused.length - 1].left - plateData.focused[plateData.focused.length - 1].width;
+                    _distanceLeft = lineData.vLeft - plateData.focused[plateData.focused.length - 1].left - plateData.focused[plateData.focused.length - 1].attribute.style.width;
                     break;
                 case 'left-left':
                     _distanceLeft = lineData.vLeft - plateData.focused[plateData.focused.length - 1].left;
                     break;
                 case 'middle-middle':
-                    _distanceLeft = lineData.vLeft - plateData.focused[plateData.focused.length - 1].left - plateData.focused[plateData.focused.length - 1].width / 2;
+                    _distanceLeft = lineData.vLeft - plateData.focused[plateData.focused.length - 1].left - plateData.focused[plateData.focused.length - 1].attribute.style.width / 2;
                     break;
                 case 'right-right':
-                    _distanceLeft = lineData.vLeft - plateData.focused[plateData.focused.length - 1].left - plateData.focused[plateData.focused.length - 1].width;
+                    _distanceLeft = lineData.vLeft - plateData.focused[plateData.focused.length - 1].left - plateData.focused[plateData.focused.length - 1].attribute.style.width;
                     break;
                 case 'left-right':
                     _distanceLeft = lineData.vLeft - plateData.focused[plateData.focused.length - 1].left;
@@ -105,7 +114,6 @@ export default (plates, plateData, workspace, lineData) => {
             plates.value = plates.value.map(item => {
                 const _item = plateData.focused.find(ele => ele.id === item.id);
                 if (_item) {
-                    item.top = item.top + _distanceTop;
                     item.left = item.left + _distanceLeft;
                 }
                 return item;

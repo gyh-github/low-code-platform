@@ -1,19 +1,18 @@
-import { computed, defineComponent, inject } from "vue";
+import { computed, defineAsyncComponent, defineComponent, inject } from "vue";
 import './index.less';
 import Background from "./components/Background";
-import Tab from "./components/Tab";
+import LoadingComponent from "../LoadingComponent";
 export default defineComponent({
     setup() {
         const state = inject(['state']);
-        const keyLabel = {
-            width: '宽度',
-            height: '高度',
-            background: '背景色'
-        };
-        const hideBg = computed(() => (state.plates.find(item => item.focused)))
+        const plate = computed(() => (state.plates.find(item => item.focused)));
+        const AttributeCom = defineAsyncComponent({
+            loader: () => import(`./../../materials/${plate.value.key}/components/attribute.jsx`),
+            loadingComponent: LoadingComponent
+        })
         return () => (<div className="attribute">
-            {!hideBg.value && <Background />}
-            {hideBg.value && <Tab />}
+            {!plate.value && <Background />}
+            {plate.value && <AttributeCom />}
 
         </div>)
     }

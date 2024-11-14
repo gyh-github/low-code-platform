@@ -1,11 +1,10 @@
 import { defineComponent, ref } from "vue";
-import './../index.less';
-import Custom from "./Custom";
+import './index.less';
 
 export default defineComponent({
     props: ['modelValue'],
     emits: ['update:modelValue'],
-    setup() {
+    setup(props, { emit }) {
         const arr = [
             {
                 label: '定制',
@@ -24,14 +23,16 @@ export default defineComponent({
                 key: 'event'
             }
         ];
-        const active = ref('custom');
+        const changeActiveFn = (key) => {
+            console.log(key)
+            emit('update:modelValue', key)
+        }
         return () => (<>
             <div className="tab">
                 {arr.map(item => (
-                    <van-button className={active.value === item.key && "active"}
-                        onClick={() => active.value = item.key}>{item.label}</van-button>))}
+                    <van-button className={props.modelValue === item.key && "active"}
+                        onClick={() => changeActiveFn(item.key)}>{item.label}</van-button>))}
             </div>
-            {active.value === 'custom' && <Custom />}
         </>)
     }
 })

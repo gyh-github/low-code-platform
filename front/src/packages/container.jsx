@@ -1,8 +1,7 @@
 import {
     defineComponent, ref, provide, reactive, onMounted,
-    onBeforeUnmount, nextTick, toRef, computed, watch
+    onBeforeUnmount, nextTick, toRef, computed
 } from "vue";
-import plateConfig from './../packages/utils/plateConfig.jsx';
 import data from './../packages/data.json';
 import './container.less';
 import EditPlate from "./components/EditPlate";
@@ -17,16 +16,14 @@ import usePlateDrag from "./utils/usePlateDrag";
 import useGuide from "./utils/useGuide";
 import { previewFn, exportJSONFn } from './utils/index.js';
 import { dataProcessing } from "@/packages/utils/apis";
+import useMaterialsStore from "./store/materials.js";
 
 
 export default defineComponent({
 
     setup() {
         const state = reactive(data);
-        const { componentList, componentMap } = plateConfig();
-        console.log(componentList)
-        provide('componentList', componentList)
-        provide('componentMap', componentMap)
+        const { componentList } = useMaterialsStore();
         provide('state', state)
 
         const plates = toRef(state, 'plates');
@@ -98,16 +95,9 @@ export default defineComponent({
             }
         }
 
-        const { dragstartFn, dragendFn } = usePlateDrag(plates, workspace, componentMap);
+        const { dragstartFn, dragendFn } = usePlateDrag(plates, workspace);
         const { mousedownFn, mouseupFn } = useWorkspace(plates, plateData, workspace, lineData);
         const { addGuideFn, selectGuideFn, releaseGuideFn } = useGuide(guideData, containerCenterC);
-
-
-        // watch(() => plates, (val) => {
-        //     console.log(val)
-        // }, {
-        //     deep: true
-        // })
 
         onMounted(() => {
             changeSize()
@@ -133,7 +123,7 @@ export default defineComponent({
                     <button onClick={() => addGuideFn('h')}>+添加横向辅助线</button>
                     <button onClick={() => addGuideFn('v')}>+添加纵向辅助线</button>
                     <button onClick={() => exportJSONFn(state)}>导出</button>
-                    <button onClick={() => previewFn(state, componentMap)}>预览</button>
+                    <button onClick={() => previewFn(state)}>预览</button>
                     <button onClick={() => publishFn()}>发布</button>
 
                 </div>

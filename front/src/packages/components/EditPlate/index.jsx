@@ -1,12 +1,13 @@
 import { computed, defineComponent, inject, onMounted, ref } from "vue";
 import './index.less';
 import _ from 'lodash';
+import useMaterialsStore from "@/packages/store/materials";
 
 export default defineComponent({
     props: ['data'],
     setup(props) {
         const itemRef = ref(null);
-        const componentMap = inject('componentMap')
+        const { componentMap } = useMaterialsStore();
         const component = ref(componentMap[props.data.key]);
         const itemStyle = computed(() => ({
             top: props.data.top + 'px',

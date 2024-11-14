@@ -17,6 +17,6 @@ export default defineConfig({
     }
   },
   resolve: {
-    alias: { "@": "/src" }
+    alias: { "@": "/src", "@materials": '/src/packages/materials' }
   }
 })

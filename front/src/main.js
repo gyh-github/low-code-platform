@@ -5,12 +5,12 @@ import Preview from './views/preview/index.jsx';
 import ClickOutside from './packages/directives/ClickOutside.js';
 import { Button, Icon, Stepper, Row, Col, Empty, Uploader, Dialog, Field, Image as VanImage, Swipe, SwipeItem } from 'vant';
 import 'vant/lib/index.css';
-import materials from "@/packages/materials/index";
-console.log(import.meta.env.VITE_MODE)
-materials();
+import './packages/materials/index.js';
+import pinia from './packages/store/index.js';
 const flag = import.meta.env.VITE_MODE === 'generate';
 const app = flag ? createApp(Preview) : createApp(App);
 app.directive('ClickOutside', ClickOutside);
+app.use(pinia);
 app.use(Button).
     use(Icon).
     use(Stepper).

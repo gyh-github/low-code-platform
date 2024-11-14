@@ -1,4 +1,6 @@
-export default function (plates, workspace, componentMap) {
+import useMaterialsStore from "@/packages/store/materials";
+export default function (plates, workspace) {
+    const { componentMap } = useMaterialsStore();
     let _cur = null;
 
     const dragstartFn = (_, plate) => {
@@ -31,7 +33,6 @@ export default function (plates, workspace, componentMap) {
                 ...componentMap[_cur.key]?.attribute
             }
         }];
-        console.log(plates.value)
     }
 
 
