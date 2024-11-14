@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
-import './style.less'
+import './style.less';
+import 'animate.css';
 import App from './App.vue';
 import Preview from './views/preview/index.jsx';
 import ClickOutside from './packages/directives/ClickOutside.js';

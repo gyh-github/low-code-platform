@@ -15,7 +15,7 @@ import useWorkspace from "./utils/useWorkspace";
 import usePlateDrag from "./utils/usePlateDrag";
 import useGuide from "./utils/useGuide";
 import { previewFn, exportJSONFn } from './utils/index.js';
-import { dataProcessing } from "@/packages/utils/apis";
+import { dataProcessing, generate } from "@/packages/utils/apis";
 import useMaterialsStore from "./store/materials.js";
 
 
@@ -90,8 +90,10 @@ export default defineComponent({
         //发版
         const publishFn = async () => {
             const res = await dataProcessing(state);
-            if (res) {
+            if (res?.code === 'T0001') {
                 console.log(res)
+                const resG = await generate({ xxx: 'as' });
+                console.log(resG)
             }
         }
 

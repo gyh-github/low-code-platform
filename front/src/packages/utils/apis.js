@@ -9,5 +9,5 @@ export function dataProcessing(data) {
  * 打包生成项目代码
 */
 export function generate(data) {
-    return server('/api/code/generate', 'POST', data)
+    return server('/api/code/generate', 'GET', data)
 }

@@ -389,6 +389,9 @@
     "@vue/compiler-dom" "3.5.9"
     "@vue/shared" "3.5.9"
 
+"@vue/devtools-api@^6.0.0-beta.18":
+  version "6.6.4"
+
 "@vue/reactivity@3.5.9":
   version "3.5.9"
   resolved "https://registry.npmjs.org/@vue/reactivity/-/reactivity-3.5.9.tgz"
@@ -436,6 +439,11 @@
   version "5.5.0"
   resolved "https://registry.npmjs.org/@xterm/xterm/-/xterm-5.5.0.tgz"
   integrity sha512-hqJHYaQb5OptNunnyAnkHyM8aCjZ1MEIDTQu1iIbbTD/xops91NB5yq1ZK/dC2JDbVWtF23zUtl9JE2NqwT87A==
+
+animate.css@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.npmjs.org/animate.css/-/animate.css-4.1.1.tgz"
+  integrity sha512-+mRmCTv6SbCmtYJCN4faJMNFVNN5EuCTTprDTAo7YzIGji2KADmakjVA3+8mVDkZ2Bf09vayB35lSQIex2+QaQ==
 
 ansi-styles@^3.2.1:
   version "3.2.1"
@@ -721,6 +729,14 @@ pify@^4.0.1:
   resolved "https://registry.npmjs.org/pify/-/pify-4.0.1.tgz"
   integrity sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==
 
+pinia@^2.0.0-rc.10:
+  version "2.0.0-rc.10"
+  resolved "https://registry.npmjs.org/pinia/-/pinia-2.0.0-rc.10.tgz"
+  integrity sha512-WY0KQoHxSBylhGc6aBQKPFfAupYHWpI1QBQKJSyK9btwwMTVQpwCdePgPho+ZoEMl832jb7RwfI5TN1srV5VEA==
+  dependencies:
+    "@vue/devtools-api" "^6.0.0-beta.18"
+    vue-demi "*"
+
 postcss@^8.4.43, postcss@^8.4.47:
   version "8.4.47"
   resolved "https://registry.npmjs.org/postcss/-/postcss-8.4.47.tgz"
@@ -845,7 +861,10 @@ vite@^5.0.0, vite@^5.4.1:
   optionalDependencies:
     fsevents "~2.3.3"
 
-vue@^3.0.0, vue@^3.2.25, vue@^3.4.37, vue@3.5.9:
+vue-demi@*:
+  version "0.14.10"
+
+"vue@^2.6.14 || ^3.2.0", vue@^3.0.0, "vue@^3.0.0-0 || ^2.6.0", vue@^3.2.25, vue@^3.4.37, vue@3.5.9:
   version "3.5.9"
   resolved "https://registry.npmjs.org/vue/-/vue-3.5.9.tgz"
   integrity sha512-nHzQhZ5cjFKynAY2beAm7XtJ5C13VKAFTLTgRYXy+Id1KEKBeiK6hO2RcW1hUjdbHMadz1YzxyHgQigOC54wug==

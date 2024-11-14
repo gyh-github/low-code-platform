@@ -24,7 +24,6 @@ export default defineComponent({
             }
         ];
         const changeActiveFn = (key) => {
-            console.log(key)
             emit('update:modelValue', key)
         }
         return () => (<>
