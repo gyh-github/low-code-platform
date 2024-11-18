@@ -19,7 +19,7 @@ const vanSwipe = {
                 <div style={{ background: `url(${swipe}) no-repeat center`, backgroundSize: 'cover', height: props.height + 'px', width: props.width + 'px' }}></div>
             </van-swipe-item>))}
         </van-swipe>,
-    key: "van-swipe",
+    key: "vanSwipe",
     attribute: {
         height: 150,
         width: 300,

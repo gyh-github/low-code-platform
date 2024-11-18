@@ -1,12 +1,16 @@
 export default function (url = "", method = "GET", body = {}) {
     return new Promise((resolve, reject) => {
-        console.log(body)
+        console.log(body);
+        const config = ['GET', 'get'].includes(method) ? {
+            method,
+            headers: { "Content-Type": "application/json", }
+        } : {
+            method,
+            body: JSON.stringify(body),
+            headers: { "Content-Type": "application/json", }
+        }
         try {
-            fetch(url, {
-                method,
-                body: JSON.stringify(body),
-                headers: { "Content-Type": "application/json", }
-            }).then((response) => response.json()).then(res => {
+            fetch(url, { ...config }).then((response) => response.json()).then(res => {
                 console.log(res)
                 resolve(res)
             }).catch(err => {

@@ -19,7 +19,7 @@ router.get('/generate', (req, res) => {
     const child = exec('npm run build:generate', {
         cwd: '../front'
     });
-    console.log(req, res, child)
+    console.log(child)
     child.stdout.on('data', (data) => {
         console.log(`stdout:${data}`)
     });
@@ -29,7 +29,7 @@ router.get('/generate', (req, res) => {
     child.on('close', (code) => {
         console.log(`子进程退出，退出码${code}`)
     })
-
+    res.send({ code: 'T0001' })
 });
 
 

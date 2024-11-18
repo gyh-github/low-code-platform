@@ -7,8 +7,8 @@
     "start": "vite --mode development",
     "staging": "vite --mode staging",
     "pro": "vite --mode production",
-    "generate": "vite --mode generate",
     "build": "vite build",
+    "build:generate": "vite build --mode generate",
     "preview": "vite preview"
   },
   "dependencies": {

@@ -15,7 +15,7 @@ export default defineComponent({
         });
         if (flag) {
             import('./../../generate-data.json').then(res => {
-                const _def = JSON.parse(JSON.stringify(res.default))
+                const _def = JSON.parse(JSON.stringify(res.default));
                 _state.container = _def.container;
                 _state.plates = _def.plates;
                 mainStyle.width = _state?.container.width + 'px';
