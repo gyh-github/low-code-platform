@@ -11,3 +11,9 @@ export function dataProcessing(data) {
 export function generate(data) {
     return server('/api/code/generate', 'GET', data)
 }
+/**
+ * 文件上传
+*/
+export function uploadFile(data) {
+    return server('/api/upload/file', 'POST', data)
+}

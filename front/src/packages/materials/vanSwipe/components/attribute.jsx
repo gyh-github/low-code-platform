@@ -8,8 +8,10 @@ export default defineComponent({
         const active = ref('custom');
         return () => (<>
             <AttriTab v-model={active.value} />
-            {active.value === 'custom' && <Custom />}
-            {active.value === 'animation' && <Animation />}
+            <div className="attribute-content">
+                {active.value === 'custom' && <Custom />}
+                {active.value === 'animation' && <Animation />}
+            </div>
         </>)
     }
 })

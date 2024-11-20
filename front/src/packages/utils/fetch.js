@@ -1,7 +1,10 @@
 export default function (url = "", method = "GET", body = {}) {
     return new Promise((resolve, reject) => {
         console.log(body);
-        const config = ['GET', 'get'].includes(method) ? {
+        const config = url.includes('file') ? {
+            method,
+            body
+        } : ['GET', 'get'].includes(method) ? {
             method,
             headers: { "Content-Type": "application/json", }
         } : {

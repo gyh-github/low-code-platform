@@ -1,14 +1,13 @@
 
 import _ from 'lodash';
+import { dataProcessing } from './apis';
 //导出数据
-export function exportJSONFn(data) {
+export async function exportJSONFn(data) {
     console.log(data)
-    fetch("/test", {
-        method: "post",
-        body: JSON.stringify(data)
-    })
-        .then((response) => response.json())
-        .then((data) => console.log(data));
+    const res = await dataProcessing(data);
+    if (res) {
+        alert('导出成功！')
+    }
 
 };
 

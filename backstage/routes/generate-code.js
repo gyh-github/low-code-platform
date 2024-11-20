@@ -9,7 +9,7 @@ router.post('/dataProcessing', function (req, res) {
         if (err) {
             console.log(err)
         } else {
-            res.send(JSON.stringify({ code: 'T0001' }));
+            res.send({ code: 'T0001' });
             console.log('success!!!')
         }
     })

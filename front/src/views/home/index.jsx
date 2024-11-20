@@ -8,6 +8,6 @@ export default defineComponent({
 
         return () => (<>
             <van-button onClick={newProject}>新建项目</van-button>
-            home</>)
+        </>)
     }
 })

@@ -1,13 +1,12 @@
 import { defineComponent, inject, computed, ref } from "vue";
 import '@/packages/components/Attribute/index.less';
-import Uploader from "@/packages/components/Uploader";
+import UploadImage from "@/packages/components/UploadImage";
 
 export default defineComponent({
     setup() {
         const state = inject('state');
         const plate = computed(() => state.plates.find(item => item.focused));
         const uploadCallbackFn = (file) => {
-            console.log(file, 'index=========')
             plate.value.attribute.swipes = plate.value.attribute.swipes.map(
                 (item, ind) => ind === file.index ? file.url : item);
         };
@@ -27,10 +26,18 @@ export default defineComponent({
                 </van-col>
             </van-row>
             {plate.value.attribute.swipes.map((item, index) => (
-                <div className="background-bg-img">
-                    {index}
-                    <Uploader file={{ url: item, index }} onCallback={(value) => uploadCallbackFn(value)} />
-                </div>))}
+                <van-row>
+                    <van-col span={5}>
+                        <span className="label">图片-{index + 1}</span>
+                    </van-col>
+                    <van-col span={19}><div className="">
+                        <div className="background-bg-img">
+                            <UploadImage file={{ url: item, index }} onCallback={(value) => uploadCallbackFn(value)} />
+                        </div>
+                    </div>
+                    </van-col>
+                </van-row>
+            ))}
         </>)
     }
 })
