@@ -17,7 +17,7 @@ const mobileTable = {
                 prop: 'lie1',
                 key: 'lie1',
                 fixed: 'left',
-                // width: '100px',
+                width: 100,
                 render: () => { }
             },
             {
@@ -39,27 +39,27 @@ const mobileTable = {
                 prop: 'lie4',
                 key: 'lie4',
                 fixed: 'right',
-                // width: '100px',
+                width: 100,
                 render: () => { }
             }],
         tableData: [
             {
-                lie1: '小明1',
-                lie2: '小明2',
-                lie3: '小明3',
-                lie4: '小明4',
+                lie1: '小明',
+                lie2: '19',
+                lie3: '北京',
+                lie4: '大一',
             },
             {
-                lie1: '小明1',
-                lie2: '小明2',
-                lie3: '小明3',
-                lie4: '小明4',
+                lie1: '小芳',
+                lie2: '18',
+                lie3: '上海',
+                lie4: '高三',
             },
             {
-                lie1: '小明1',
-                lie2: '小明2',
-                lie3: '小明3',
-                lie4: '小明4',
+                lie1: '小艾',
+                lie2: '20',
+                lie3: '天津',
+                lie4: '大二',
             }],
         style: {
             height: 150,

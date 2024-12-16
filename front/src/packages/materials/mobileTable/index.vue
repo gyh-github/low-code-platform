@@ -1,6 +1,6 @@
 <template>
     <div class="mobile-table">
-        <div class="mobile-table-left">
+        <div class="mobile-table-left" :style="{ width: fixedLeftWidth + 'px' }">
             <div class="mobile-table-header">
                 <div class="mobile-table-td" v-for="item in leftColumn" :key="item.prop" :style="{ width: item.width }">
                     {{ item.label }}</div>
@@ -11,7 +11,7 @@
                 </div>
             </div>
         </div>
-        <div class="mobile-table-center">
+        <div class="mobile-table-center" :style="{ width: `calc(100% - ${fixedLeftWidth + fixedRightWidth}px)` }">
             <div class="mobile-table-header scrollbar-hidden" ref="centerHeaderRef" @scroll="scrollCenterHeaderFn"
                 style="overflow: auto;">
                 <div class="mobile-table-td" style="flex: 1 0 auto;" v-for="item in centerColumn" :key="item.prop"
@@ -24,7 +24,7 @@
                 </div>
             </div>
         </div>
-        <div class="mobile-table-right">
+        <div class="mobile-table-right" :style="{ width: fixedRightWidth + 'px' }">
             <div class="mobile-table-header">
                 <div class="mobile-table-td" v-for="item in rightColumn" :key="item.prop"
                     :style="{ width: item.width }">{{ item.label }}</div>
@@ -35,7 +35,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </template>
 <script>
@@ -93,18 +92,21 @@ export default {
                     lie2: '小明2',
                     lie3: '小明3',
                     lie4: '小明4',
+                    lie5: '小明5',
                 },
                 {
                     lie1: '小明1',
                     lie2: '小明2',
                     lie3: '小明3',
                     lie4: '小明4',
+                    lie5: '小明5',
                 },
                 {
                     lie1: '小明1',
                     lie2: '小明2',
                     lie3: '小明3',
                     lie4: '小明4',
+                    lie5: '小明5',
                 }
             ]
         }
@@ -157,6 +159,20 @@ export default {
                 return _arr;
             });
             return _data;
+        },
+        fixedLeftWidth: function () {
+            const _widthArr = this.tableColumn?.filter(item => item.fixed === 'left').map(item => (item.width - 0));
+            const result = _widthArr.reduce((pre, cur) => {
+                return pre + cur
+            }, 0)
+            return result;
+        },
+        fixedRightWidth: function () {
+            const _widthArr = this.tableColumn?.filter(item => item.fixed === 'right').map(item => (item.width - 0));
+            const result = _widthArr.reduce((pre, cur) => {
+                return pre + cur
+            }, 0)
+            return result;
         }
     },
     data() {
@@ -199,8 +215,6 @@ export default {
                 this.$refs.centerRef.scrollTo({ top: _top });
             }
         },
-
-
     },
     mounted() {
         document.addEventListener('touchstart', (e) => this.mouseFn(e));

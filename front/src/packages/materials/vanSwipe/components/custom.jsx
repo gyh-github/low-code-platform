@@ -7,7 +7,7 @@ export default defineComponent({
         const state = inject('state');
         const plate = computed(() => state.plates.find(item => item.focused));
         const uploadCallbackFn = (file) => {
-            plate.value.attribute.swipes = plate.value.attribute.swipes.map(
+            plate.value.attribute.swipes = plate.value.attribute?.swipes.map(
                 (item, ind) => ind === file.index ? file.url : item);
         };
 
@@ -25,7 +25,7 @@ export default defineComponent({
                     </div>
                 </van-col>
             </van-row>
-            {plate.value.attribute.swipes.map((item, index) => (
+            {plate.value.attribute.swipes && plate.value.attribute?.swipes?.map((item, index) => (
                 <van-row>
                     <van-col span={5}>
                         <span className="label">图片-{index + 1}</span>
