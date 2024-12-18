@@ -4,7 +4,7 @@ import vueJsx from "@vitejs/plugin-vue-jsx";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
-  console.log(env.VITE_MODE, '--------------------------------------')
+  console.log('------------------环境变量:', env.VITE_MODE, '--------------------')
   return {
     plugins: [vue(), vueJsx()],
     base: env.VITE_MODE === 'generate' ? './' : '/',

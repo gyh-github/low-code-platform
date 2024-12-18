@@ -1,11 +1,13 @@
 import { defineComponent } from "vue";
+import NavCom from './components/NavCom';
 import './index.less';
-import NavCom from "../../components/NavCom";
 
 export default defineComponent({
+
     setup() {
-        return () => (<div className="login">
+        return () => (<div className="layout">
             <NavCom />
-            登陆</div>)
+            <RouterView />
+        </div>)
     }
 })

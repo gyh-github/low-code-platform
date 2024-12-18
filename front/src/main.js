@@ -8,10 +8,12 @@ import { Button, Icon, Stepper, Row, Col, Empty, Uploader, Dialog, Field, Image 
 import 'vant/lib/index.css';
 import './packages/materials/index.js';
 import pinia from './packages/store/index.js';
+import router from '@/router';
 const flag = import.meta.env.VITE_MODE === 'generate';
 const app = flag ? createApp(Preview) : createApp(App);
 app.directive('ClickOutside', ClickOutside);
 app.use(pinia);
+app.use(router);
 app.use(Button).
     use(Icon).
     use(Stepper).

@@ -19,6 +19,7 @@
     "pinia": "^2.0.0-rc.10",
     "vant": "^4.9.8",
     "vue": "^3.4.37",
+    "vue-router": "^4.5.0",
     "xterm": "^5.3.0"
   },
   "devDependencies": {

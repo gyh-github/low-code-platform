@@ -1,0 +1,50 @@
+.navs {
+    background: rgba(0, 0, 0, 0.1);
+    position: relative;
+
+    &-content {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 60%;
+        margin: 0 auto;
+        position: relative;
+
+        &-item {
+            line-height: 45px;
+            width: 100px;
+            height: 45px;
+            flex: 1 1 auto;
+            color: #fff;
+            font-size: 12px;
+            text-align: center;
+            position: relative;
+            cursor: pointer;
+
+            &:hover,
+            &.active {
+                font-weight: 600;
+                font-size: 14px;
+            }
+
+            &::after {
+                content: '';
+                display: block;
+                position: absolute;
+                height: 16px;
+                width: 2px;
+                top: 15px;
+                left: 99%;
+                border-radius: 4px;
+                background: #fff;
+            }
+
+            &:nth-last-child(1) {
+                &::after {
+                    content: none;
+                }
+            }
+        }
+
+    }
+}
