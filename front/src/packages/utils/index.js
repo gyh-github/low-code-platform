@@ -13,9 +13,8 @@ export async function exportJSONFn(data) {
 
 //预览
 export function previewFn(data, componentMap) {
-
     sessionStorage.setItem('state', JSON.stringify(data));
     sessionStorage.setItem('componentMap', componentMap);
-    window.open('http://localhost:8091/#/preview')
     if (!data) return;
+    window.open('http://localhost:8091/#/preview')
 }

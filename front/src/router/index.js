@@ -1,4 +1,4 @@
-import { createMemoryHistory, createRouter } from 'vue-router'
+import { createWebHashHistory, createRouter } from 'vue-router'
 const routes = [
     {
         path: '/',
@@ -29,12 +29,12 @@ const routes = [
     },
     {
         path: '/preview',
-        component: () => import('@/views/preview')
+        component: () => import('@/views/preview/index.jsx')
     }
 ]
 
 const router = createRouter({
-    history: createMemoryHistory(),
+    history: createWebHashHistory(),
     routes
 });
 

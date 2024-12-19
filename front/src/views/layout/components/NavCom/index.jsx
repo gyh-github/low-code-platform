@@ -12,6 +12,10 @@ const navs = [
         value: '/find'
     },
     {
+        label: '工作台',
+        value: '/container'
+    },
+    {
         label: '关于',
         value: '/about'
     },
