@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var json = express.json({ type: "*/json" });
 
+var authMiddleware = require('./middlewares/authMiddleware');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -10,6 +11,7 @@ var uploadRouter = require('./routes/upload');
 
 var app = express();
 
+app.use(authMiddleware);
 
 app.use(json);
 app.use(bodyParser.urlencoded({ extended: false }));

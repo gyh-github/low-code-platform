@@ -7,7 +7,9 @@ export default defineComponent({
     setup() {
         return () => (<div className="layout">
             <NavCom />
-            <RouterView />
+            <div className="layout-content">
+                <RouterView />
+            </div>
         </div>)
     }
 })

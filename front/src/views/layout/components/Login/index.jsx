@@ -1,10 +1,10 @@
-import { defineComponent, reactive, ref } from "vue";
+import { defineComponent, reactive, ref, defineExpose } from "vue";
 import './index.less';
 import { message } from 'ant-design-vue';
 import { parseInt } from "lodash";
 
 export default defineComponent({
-    setup() {
+    setup(_, { expose }) {
         const showLogin = ref(false);
         const flag = ref('login');
         const interval = ref(null);
@@ -15,6 +15,9 @@ export default defineComponent({
             password: '',
             code: ''
         })
+        expose({
+            showLogin
+        });
 
         //获取验证码
         const getCodeFn = () => {
@@ -39,8 +42,18 @@ export default defineComponent({
             }
             console.info(loginInfo)
             message.success('登录成功！');
+            clearInterval(interval.value);
+            interval.value = null;
+            times.value = 120;
             showLogin.value = false;
-        }
+        };
+        //取消
+        const cancelFn = () => {
+            showLogin.value = false;
+            clearInterval(interval.value);
+            interval.value = null;
+            times.value = 120;
+        };
 
         return () => (<>
             <button className="btn" onClick={() => (showLogin.value = true)}>登录 / 注册</button>
@@ -68,7 +81,7 @@ export default defineComponent({
                             <div className="row btns">
                                 {flag.value === 'login' && <button className="backg" onClick={() => loginFn()}>登录</button>}
                                 {flag.value === 'register' && <button className="backg">确定</button>}
-                                <button onClick={() => showLogin.value = false}>取消</button>
+                                <button onClick={() => cancelFn()}>取消</button>
                             </div>
                         </div>
                     </div>
