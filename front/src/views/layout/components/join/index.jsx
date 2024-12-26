@@ -26,9 +26,11 @@ export default defineComponent({
                 return;
             }
             const res = await addUser(userInfo);
-            if (res) {
+            if (res?.code === 'T0000') {
                 message.success('注册成功！');
                 current.value = 2;
+            } else { 
+                message.error('注册失败！');
             }
         };
         //下一步
@@ -95,7 +97,6 @@ export default defineComponent({
             {
                 current.value === 2 && <div className="join-result">注册成功</div>
             }
-
             <div className="join-btns">
                 {
                     current.value <= 1 && <button onClick={() => confirmFn()}>确认注册</button>

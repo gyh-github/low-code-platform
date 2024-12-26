@@ -1,7 +1,8 @@
-import { defineComponent, reactive, ref, defineExpose } from "vue";
+import { defineComponent, reactive, ref } from "vue";
 import './index.less';
 import { message } from 'ant-design-vue';
 import { parseInt } from "lodash";
+import { login, getUsersAll } from "@/apis/user";
 
 export default defineComponent({
     setup(_, { expose }) {
@@ -11,8 +12,8 @@ export default defineComponent({
         const times = ref(120);
         const code = ref('');
         const loginInfo = reactive({
-            username: '',
-            password: '',
+            username: 'test1',
+            password: 'test',
             code: ''
         })
         expose({
@@ -35,17 +36,20 @@ export default defineComponent({
             message.success('验证码为：' + code.value);
         };
         //登录
-        const loginFn = () => {
+        const loginFn = async () => {
             if (code.value != loginInfo.code) {
                 message.error('验证码输入错误，请重新输入！' + code.value);
                 return;
             }
-            console.info(loginInfo)
-            message.success('登录成功！');
+            const params = { user_name: loginInfo.username, user_password: loginInfo.password };
+            const res = await login(params);
+            sessionStorage.setItem('accessToken', res?.accessToken);
+            sessionStorage.setItem('refreshToken', res?.refreshToken);
             clearInterval(interval.value);
             interval.value = null;
             times.value = 120;
             showLogin.value = false;
+            testFn();
         };
         //取消
         const cancelFn = () => {
@@ -53,6 +57,10 @@ export default defineComponent({
             clearInterval(interval.value);
             interval.value = null;
             times.value = 120;
+        };
+        //test
+        const testFn = async () => {
+            await getUsersAll();
         };
 
         return () => (<>

@@ -1,9 +1,13 @@
-import server from '@/packages/utils/fetch';
+import server from '@/utils/service';
 //获取所有用户信息
 export function getUsersAll() {
-    return server('/api/users/all', 'GET')
+    return server.get('/users/all');
 }
 //新增用户信息
 export function addUser(params) {
-    return server('/api/users/add', 'POST', params)
+    return server.post('/users/add', params);
 }
+//登陆
+export function login(params) {
+    return server.post('/users/login', params);
+};

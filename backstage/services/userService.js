@@ -8,4 +8,8 @@ const getUsersAll = async () => {
 const addUser = async (data) => {
     return await userModel.add(data)
 }
-module.exports = { getUsersAll, addUser };
+//获取单个用户信息
+const getUserInfo = async (data) => {
+    return await userModel.info(data);
+};
+module.exports = { getUsersAll, addUser, getUserInfo };
