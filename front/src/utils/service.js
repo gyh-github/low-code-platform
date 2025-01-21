@@ -31,8 +31,8 @@ service.interceptors.request.use(config => {
 
 //响应拦截
 service.interceptors.response.use(res => {
+    message.destroy();
     const { data: { code, msg, data } } = res;
-    console.log(res, '-------res----------')
     if (code === 'T0000') {
         message.success(msg);
         return data;
@@ -42,7 +42,7 @@ service.interceptors.response.use(res => {
         return null;
     }
 }, error => {
-    console.log(error)
+    message.error('接口服务异常！请联系工作人员处理！');
     return Promise.reject(error);
 });
 export default service;

@@ -1,24 +1,34 @@
 const jwt = require('jsonwebtoken');
-const { secret } = require('../utils/token');
+const { secret, setAccessToken } = require('../utils/token');
 const whiteList = ['/users/login', '/refresh'];
 const isWhiteList = (url) => {
     return whiteList.find(item => item === url);
 };
 const checkAuth = async (req, res, next) => {
-    console.log(req.url, '---req.url');
     if (isWhiteList(req.url)) {
         return await next();
     }
-    const token = req.headers?.authorization;
-    console.log(req.headers['authorization'], '---token');
+    const token = req.headers['authorization'];
+    const refreshToken = req.headers['x-refresh-token'];
     if (token) {
         await jwt.verify(token, secret, async error => {
             if (error) {
-                return res.send({
-                    code: 'T0003',
-                    msg: 'accessToken失效！',
-                    data: null
-                });
+                if (refreshToken) {
+                    jwt.verify(refreshToken, secret, async (refreshError, refreshInfo) => {
+                        if (refreshError) {
+                            return res.send({
+                                code: 'T0003',
+                                msg: 'token失效！',
+                                data: null
+                            });
+
+                        } else {
+                            const newAccessToken = setAccessToken(refreshInfo);
+                            res.setHeaders('Authorization', newAccessToken);
+                            return await next();
+                        }
+                    })
+                }
             } else {
                 return await next();
             }
@@ -26,7 +36,7 @@ const checkAuth = async (req, res, next) => {
     } else {
         return res.send({
             code: 'T0003',
-            msg: 'accessToken失效！',
+            msg: 'token缺失！接口异常！',
             data: null
         });
     }

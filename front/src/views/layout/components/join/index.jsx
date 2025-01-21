@@ -16,7 +16,7 @@ export default defineComponent({
             user_real_name: '',
             user_self_introduction: ''
         });
-        const current = ref(2);
+        const current = ref(0);
         const loginRef = ref(null);
         //确认注册
         const confirmFn = async () => {

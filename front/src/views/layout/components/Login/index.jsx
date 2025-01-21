@@ -2,7 +2,7 @@ import { defineComponent, reactive, ref } from "vue";
 import './index.less';
 import { message } from 'ant-design-vue';
 import { parseInt } from "lodash";
-import { login, getUsersAll } from "@/apis/user";
+import { login } from "@/apis/user";
 
 export default defineComponent({
     setup(_, { expose }) {
@@ -49,7 +49,6 @@ export default defineComponent({
             interval.value = null;
             times.value = 120;
             showLogin.value = false;
-            testFn();
         };
         //取消
         const cancelFn = () => {
@@ -57,10 +56,6 @@ export default defineComponent({
             clearInterval(interval.value);
             interval.value = null;
             times.value = 120;
-        };
-        //test
-        const testFn = async () => {
-            await getUsersAll();
         };
 
         return () => (<>
