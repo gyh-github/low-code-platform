@@ -1,4 +1,4 @@
-import { computed, defineComponent, inject, onMounted, ref } from "vue";
+import { computed, defineComponent, onMounted, ref } from "vue";
 import './index.less';
 import _ from 'lodash';
 import useMaterialsStore from "@/packages/store/materials";

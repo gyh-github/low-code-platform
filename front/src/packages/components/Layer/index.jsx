@@ -1,13 +1,13 @@
-import { defineComponent, inject, ref } from 'vue';
+import { defineComponent } from 'vue';
 import './index.less';
 import useDropmenu from '@/packages/utils/useDropmenu';
+import useMaterialsStore from "@/packages/store/materials";
 export default defineComponent({
     props: ['modelValue'],
     setup(props) {
-        const componentMap = inject(['componentMap']);
+        const { componentMap } = useMaterialsStore();
 
         const { contextmenuFn } = useDropmenu(props.modelValue);
-
 
         const itemClickFn = (item) => {
             props.modelValue.value = props.modelValue.value.map(ele => {
@@ -17,12 +17,12 @@ export default defineComponent({
         }
 
         return () => (<div className='layer'>
-            {props.modelValue.value?.map(item => (<div v-click-outside="dropmenu"
+            {props.modelValue?.value?.map(item => (<div v-click-outside="dropmenu"
                 className={item.focused ? 'layer-item active' : 'layer-item'}
                 onClick={() => itemClickFn(item)} onContextmenu={(e) => contextmenuFn(e, item)} >
                 <van-row justify="space-between" align="center">
                     <van-col span={18}>
-                        {componentMap[item.key].preview()}
+                        {componentMap[item.key]?.preview()}
                     </van-col>
                     <van-col span={6}>
                         <van-icon onClick={() => (item.show = !item.show)} name={item.show ? "eye-o" : "closed-eye"} />

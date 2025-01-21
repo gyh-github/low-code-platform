@@ -20,6 +20,10 @@ const routes = [
             {
                 path: '/join',
                 component: () => import('@/views/layout/components/join')
+            },
+            {
+                path: '/materials',
+                component: () => import('@/views/layout/components/materials')
             }
         ]
     },

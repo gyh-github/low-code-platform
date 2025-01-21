@@ -23,6 +23,10 @@ const navs = [
         label: '加入我们',
         value: '/join'
     },
+    {
+        label: '物料管理',
+        value: '/materials'
+    },
 ];
 
 export default defineComponent({
