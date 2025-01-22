@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { secret, setAccessToken } = require('../utils/token');
+const { secret, setAccessToken, setRefreshToken } = require('../utils/token');
 const whiteList = ['/users/login', '/refresh'];
 const isWhiteList = (url) => {
     return whiteList.find(item => item === url);
@@ -23,8 +23,12 @@ const checkAuth = async (req, res, next) => {
                             });
 
                         } else {
+                            delete refreshInfo.iat;
+                            delete refreshInfo.exp;
                             const newAccessToken = setAccessToken(refreshInfo);
-                            res.setHeaders('Authorization', newAccessToken);
+                            const newRefreshToken = setRefreshToken(refreshInfo);
+                            res.setHeader('Authorization', newAccessToken);
+                            res.setHeader('X-Refresh-Token', newRefreshToken);
                             return await next();
                         }
                     })

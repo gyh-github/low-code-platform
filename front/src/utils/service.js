@@ -1,5 +1,6 @@
 import Axios from 'axios';
 import { message } from 'ant-design-vue';
+import { setToken,getToken,setRefreshToken,getRefreshToken } from './sessionStor'
 
 const service = Axios.create({
     baseURL: '/api',
@@ -10,8 +11,8 @@ const whiteUrls = [''];
 
 // 请求拦截
 service.interceptors.request.use(config => {
-    const token = sessionStorage.getItem('accessToken');
-    const refreshToken = sessionStorage.getItem('refreshToken');
+    const token = getToken();
+    const refreshToken = getRefreshToken();
     if (['get', 'GET'].includes(config.method)) {
         const url = config.url;
         const t = new Date().getTime();
@@ -32,12 +33,16 @@ service.interceptors.request.use(config => {
 //响应拦截
 service.interceptors.response.use(res => {
     message.destroy();
-    const { data: { code, msg, data } } = res;
+    const { data: { code, msg, data },headers } = res;
+    if (headers['authorization']) {
+        setToken(headers['authorization']);
+        setRefreshToken(headers['x-refresh-token']);
+    }
+    
     if (code === 'T0000') {
-        message.success(msg);
         return data;
     }
-    if (code === 'T0003') {
+    if (['T0001','T0003'].includes(code)) {
         message.error(msg);
         return null;
     }

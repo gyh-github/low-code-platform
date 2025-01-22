@@ -2,11 +2,13 @@ import { defineComponent, reactive, ref } from "vue";
 import './index.less';
 import { message } from 'ant-design-vue';
 import { parseInt } from "lodash";
-import { login } from "@/apis/user";
+import { login, getUserByToken } from "@/apis/user";
+import { setUser,setToken,setRefreshToken} from '@/utils/sessionStor'
 
 export default defineComponent({
     setup(_, { expose }) {
         const showLogin = ref(false);
+        const role = ref('normal');
         const flag = ref('login');
         const interval = ref(null);
         const times = ref(120);
@@ -17,7 +19,8 @@ export default defineComponent({
             code: ''
         })
         expose({
-            showLogin
+            showLogin,
+            role
         });
 
         //获取验证码
@@ -43,12 +46,18 @@ export default defineComponent({
             }
             const params = { user_name: loginInfo.username, user_password: loginInfo.password };
             const res = await login(params);
-            sessionStorage.setItem('accessToken', res?.accessToken);
-            sessionStorage.setItem('refreshToken', res?.refreshToken);
-            clearInterval(interval.value);
-            interval.value = null;
-            times.value = 120;
-            showLogin.value = false;
+            if (res) {
+                setToken(res?.accessToken);
+                setRefreshToken( res?.refreshToken); 
+                const userInfo = await getUserByToken();
+                setUser(userInfo)
+                clearInterval(interval.value);
+                interval.value = null;
+                times.value = 120;
+                showLogin.value = false;
+                userInfo && location.reload();
+            }
+
         };
         //取消
         const cancelFn = () => {

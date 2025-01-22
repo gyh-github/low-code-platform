@@ -33,6 +33,7 @@ export default function (plates, workspace) {
                 ...componentMap[_cur.key]?.attribute
             }
         }];
+        console.log(plates)
     }
 
 

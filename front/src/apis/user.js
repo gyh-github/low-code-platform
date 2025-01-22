@@ -11,3 +11,7 @@ export function addUser(params) {
 export function login(params) {
     return server.post('/users/login', params);
 };
+//通过token获取登录用户信息
+export function getUserByToken() {
+    return server.get('/users/getUserByToken');
+};

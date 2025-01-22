@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var json = express.json({ type: "*/json" });
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+const { secret } = require('./utils/token');
 
 var authMiddleware = require('./middlewares/authMiddleware');
 
@@ -22,7 +23,7 @@ app.use(express.static('./public'));
 app.use(cookieParser());//开启session
 //配置session
 app.use(session({
-    secret: 'low-code-session-zxcvbnm',
+    secret,
     cookie: { maxAge: 80 * 1000 },
     resave: true,
     saveUninitialized: false

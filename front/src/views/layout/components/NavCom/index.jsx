@@ -1,6 +1,7 @@
-import { defineComponent, ref } from "vue";
+import { defineComponent, reactive,onMounted } from "vue";
 import './index.less';
 import { useRouter, useRoute } from "vue-router";
+import {getUser } from '@/utils/sessionStor'
 import Login from "../Login";
 const navs = [
     {
@@ -33,24 +34,31 @@ export default defineComponent({
     setup() {
         const router = useRouter();
         const route = useRoute();
+        const user = reactive({
+            role:''
+        });
         //导航跳转
         const handleClickFn = (item) => {
             router.push({
                 path: item.value
             })
         };
-        return () => (<>
+        onMounted(() => { 
+            const userInfo = getUser();
+            user.role = userInfo?.userRole;
+        })
+
+        return () => (
             <div className="navs">
                 <div className="navs-content">
                     {
-                        navs.map((item) => (
+                         (user.role ==='admin' ? [...navs] : navs.filter(item => item.value != '/materials')).map((item) => (
                             <div className={route.path === item.value ? 'active navs-content-item' : "navs-content-item"} onClick={() => handleClickFn(item)}>
                                 <span>{item.label}</span>
                             </div>))
                     }
                 </div>
                 <Login />
-            </div>
-        </>)
+            </div>)
     }
 })
