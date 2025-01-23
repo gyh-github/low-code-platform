@@ -27,3 +27,8 @@ export const setRefreshToken = (str) => {
 export const getRefreshToken = () => {
    return decryptFn(sessStor.getItem('refreshToken')) || ""
 }
+
+//清除缓存
+export const clearSessStor = () => { 
+    sessStor.clear();
+}

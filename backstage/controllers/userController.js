@@ -14,6 +14,20 @@ const getUsersAll = async (req, res) => {
         res.status(500).json({ code: 'T0001', msg: '查询失败!' });
     }
 }
+//获取用户数据
+const getUserById = async (req, res) => {
+    try {
+        const {user_id} = req.query;
+        const resService = await userService.getUserById(user_id);
+        res.send({
+            code: 'T0000',
+            msg: '查询成功！',
+            data: resService?.[0]
+        });
+    } catch (error) {
+        res.status(500).json({ code: 'T0001', msg: '查询失败!' });
+    }
+}
 //新增
 const addUser = async (req, res) => {
     try {
@@ -29,17 +43,30 @@ const addUser = async (req, res) => {
         res.status(500).json({ code: 'T0001', msg: '添加失败!' });
     }
 };
+//修改
+const editUser = async (req, res) => {
+    try {
+        const params = req.body;
+        await userService.editUser(params);
+        res.status(200).json({
+            code: 'T0000',
+            msg: '修改成功！',
+            data: true
+
+        });
+    } catch (error) {
+        res.status(500).json({ code: 'T0001', msg: '修改失败!' });
+    }
+};
 //登录
 const login = async (req, res) => {
     try {
         const params = req.body;
         const resUserInfo = await userService.getUserInfo(Object.values(params));
+        console.log(resUserInfo)
         if (resUserInfo.length > 0) {
-            const info = {
-                userName: resUserInfo[0].user_name,
-                userRole: resUserInfo[0].user_role,
-                userPhone: resUserInfo[0].user_phone,
-            };
+            delete resUserInfo[0]['user_password'];
+            const info = {...resUserInfo[0]};
             res.status(200).json({
                 code: 'T0000',
                 msg: '登录成功！',
@@ -77,5 +104,5 @@ const getUserByToken = async (req, res) => {
 }
 
 module.exports = {
-    getUsersAll, addUser, login, getUserByToken
+    getUsersAll, addUser, editUser, login, getUserByToken, getUserById
 };

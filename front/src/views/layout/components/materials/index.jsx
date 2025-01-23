@@ -1,4 +1,5 @@
-import { defineComponent,ref } from "vue";
+import { defineComponent, ref } from "vue";
+import './index.less';
 export default defineComponent({
     setup() {
         const navs = [
@@ -38,22 +39,29 @@ export default defineComponent({
 ])
 
         return () => (<div className="materials">
-            物料管理
+            <div className="materials-search">
+                
+            </div>
+            
             <van-row>
-                <van-col span={ 4}>
-                    {navs.map(item => (
+                <van-col span={4}>
+                    <div className="materials-left">
+                        {navs.map(item => (
                         <div className="materials-item">
                             <span>{ item.label}</span>
                         </div>
                     ))}
+                    </div>
                 </van-col>
                 <van-col span={20}>
+                    <div className="materials-right">
+                        
                     {materials.value.map(item => (
                         <div className="materials-item">
                             <span>{ item.label}</span>
                         </div>
                     ))}
-                    
+                    </div>
                 </van-col>
             </van-row>
         </div>)

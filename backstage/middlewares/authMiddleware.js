@@ -5,7 +5,7 @@ const isWhiteList = (url) => {
     return whiteList.find(item => item === url);
 };
 const checkAuth = async (req, res, next) => {
-    if (isWhiteList(req.url)) {
+    if (isWhiteList(req.url) || req.url.indexOf('/uploads') != -1) {
         return await next();
     }
     const token = req.headers['authorization'];

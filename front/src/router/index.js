@@ -10,8 +10,8 @@ const routes = [
                 component: () => import('@/views/layout/components/home')
             },
             {
-                path: '/find',
-                component: () => import('@/views/layout/components/find')
+                path: '/personalCenter',
+                component: () => import('@/views/layout/components/personalCenter')
             },
             {
                 path: '/about',

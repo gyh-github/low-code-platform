@@ -3,14 +3,33 @@ import './index.less';
 import { useRouter, useRoute } from "vue-router";
 import {getUser } from '@/utils/sessionStor'
 import Login from "../Login";
-const navs = [
+const generalNavs = [
     {
         label: '首页',
         value: '/home'
     },
     {
         label: '发现',
-        value: '/find'
+        value: '/materials'
+    },
+    {
+        label: '关于',
+        value: '/about'
+    },
+    {
+        label: '加入我们',
+        value: '/join'
+    },
+];
+
+const memberNav = [
+    {
+        label: '首页',
+        value: '/home'
+    },
+    {
+        label: '发现',
+        value: '/materials'
     },
     {
         label: '工作台',
@@ -21,21 +40,16 @@ const navs = [
         value: '/about'
     },
     {
-        label: '加入我们',
-        value: '/join'
-    },
-    {
-        label: '物料管理',
-        value: '/materials'
-    },
-];
+        label: '个人中心',
+        value: '/personalCenter'
+    },]
 
 export default defineComponent({
     setup() {
         const router = useRouter();
         const route = useRoute();
         const user = reactive({
-            role:''
+            user_name:''
         });
         //导航跳转
         const handleClickFn = (item) => {
@@ -45,14 +59,14 @@ export default defineComponent({
         };
         onMounted(() => { 
             const userInfo = getUser();
-            user.role = userInfo?.userRole;
+            user.user_name = userInfo?.user_name;
         })
 
         return () => (
             <div className="navs">
                 <div className="navs-content">
                     {
-                         (user.role ==='admin' ? [...navs] : navs.filter(item => item.value != '/materials')).map((item) => (
+                         (user.user_name ? [...memberNav] : [...generalNavs]).map((item) => (
                             <div className={route.path === item.value ? 'active navs-content-item' : "navs-content-item"} onClick={() => handleClickFn(item)}>
                                 <span>{item.label}</span>
                             </div>))

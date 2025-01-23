@@ -26,6 +26,19 @@ const add = (params) => {
         })
     })
 }
+//修改
+const edit = (params) => {
+    return new Promise((resolve, reject) => {
+        connection.query(`update users set ${params['column_key']}='${params[params['column_key']]}' where user_id=${params['user_id']}`, (error, data) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(data);
+            }
+
+        })
+    })
+}
 //根据登录信息查询用户信息
 const info = (params) => {
     return new Promise((resolve, reject) => {
@@ -39,5 +52,17 @@ const info = (params) => {
         })
     })
 }
+//根据用户id查询用户信息
+const infoById = (params) => {
+    return new Promise((resolve, reject) => {
+        connection.query("select * from users where user_id=?", params, (error, data) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(data);
+            }
+        })
+    })
+}
 
-module.exports = { query, add, info };
+module.exports = { query, add, info, edit, infoById};

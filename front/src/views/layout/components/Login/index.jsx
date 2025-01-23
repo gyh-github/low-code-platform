@@ -1,27 +1,33 @@
-import { defineComponent, reactive, ref } from "vue";
+import { defineComponent, reactive, ref, onMounted } from "vue";
 import './index.less';
 import { message } from 'ant-design-vue';
 import { parseInt } from "lodash";
 import { login, getUserByToken } from "@/apis/user";
-import { setUser,setToken,setRefreshToken} from '@/utils/sessionStor'
+import { setUser, setToken, setRefreshToken, getUser, clearSessStor } from '@/utils/sessionStor';
+import profilePicture from '@/assets/images/profile-picture.jpg';
 
 export default defineComponent({
     setup(_, { expose }) {
         const showLogin = ref(false);
-        const role = ref('normal');
+        const userInfo = reactive({
+            user_name: ''
+        });
         const flag = ref('login');
         const interval = ref(null);
         const times = ref(120);
         const code = ref('');
         const loginInfo = reactive({
-            username: 'test1',
-            password: 'test',
+            username: 'admin',
+            password: 'admin@2025',
             code: ''
         })
         expose({
-            showLogin,
-            role
+            showLogin
         });
+        onMounted(() => {
+            const _user = getUser();
+            userInfo.user_name = _user?.user_name
+        })
 
         //获取验证码
         const getCodeFn = () => {
@@ -48,7 +54,7 @@ export default defineComponent({
             const res = await login(params);
             if (res) {
                 setToken(res?.accessToken);
-                setRefreshToken( res?.refreshToken); 
+                setRefreshToken(res?.refreshToken);
                 const userInfo = await getUserByToken();
                 setUser(userInfo)
                 clearInterval(interval.value);
@@ -66,9 +72,22 @@ export default defineComponent({
             interval.value = null;
             times.value = 120;
         };
+        //退出登录
+        const logOut = () => {
+            clearSessStor();
+            location.href = '/home'
+        };
 
         return () => (<>
-            <button className="btn" onClick={() => (showLogin.value = true)}>登录 / 注册</button>
+            {
+                userInfo?.user_name ?
+                    <div className="user">
+                        <img src={userInfo?.user_photo || profilePicture} alt="" />
+                        {userInfo?.user_name}
+                        <small onClick={() => logOut()}>退出</small>
+                    </div> : <button className="btn" onClick={() => (showLogin.value = true)}>
+                        登录</button>
+            }
             {
                 showLogin.value && <div className="login">
                     <div className="login-content animate__animated animate__zoomInDown">

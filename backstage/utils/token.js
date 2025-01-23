@@ -5,13 +5,11 @@ const refreshTokenTime = '20s';//用于备用的token过期时间
 
 //生产accessToken
 const setAccessToken = (payload = {}) => {
-    console.log(payload, '----payload')
     return jwt.sign(payload, secret, { expiresIn: accessTokenTime });
 };
 
 //生产refreshToken
 const setRefreshToken = (payload = {}) => {
-    console.log(payload, '----payload')
     return jwt.sign(payload, secret, { expiresIn: refreshTokenTime });
 };
 //解析token

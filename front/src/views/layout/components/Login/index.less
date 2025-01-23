@@ -12,6 +12,35 @@ button.btn {
     border: thin solid #eac9c9;
 }
 
+.user{
+    width: 120px;
+    height: 25px;
+    line-height: 25px;
+    position: absolute;
+    color: #41de0c;
+    text-shadow: 0 0 4px #41de0c;
+    top: 10px;
+    right: 50px;
+    & > img{
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        vertical-align: middle;
+        margin-right: 10px;
+        border: thin solid #ffffff;
+        box-shadow: 0 0 4px #ffffff;
+    }
+    & > small{
+        font-size: 10px;
+        color: #b7e4ed;
+        margin-left: 5px;
+        cursor: pointer;
+        &:hover{
+            color: #841d3f;
+        }
+    }
+}
+
 .login {
     display: flex;
     justify-content: center;
