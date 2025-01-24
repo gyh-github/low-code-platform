@@ -1,5 +1,6 @@
 const userService = require('./../services/userService');
 const { setAccessToken, setRefreshToken, getTokenInfo } = require('../utils/token');
+const { decryptFn } = require('../utils/crypt');
 
 //获取所有用户数据
 const getUsersAll = async (req, res) => {
@@ -17,8 +18,9 @@ const getUsersAll = async (req, res) => {
 //获取用户数据
 const getUserById = async (req, res) => {
     try {
-        const {user_id} = req.query;
+        const { user_id } = req.query;
         const resService = await userService.getUserById(user_id);
+        delete resService?.[0]['user_password'];
         res.send({
             code: 'T0000',
             msg: '查询成功！',
@@ -62,11 +64,12 @@ const editUser = async (req, res) => {
 const login = async (req, res) => {
     try {
         const params = req.body;
+        params.user_name = decryptFn(params.user_name);
+        params.user_password = decryptFn(params.user_password);
         const resUserInfo = await userService.getUserInfo(Object.values(params));
-        console.log(resUserInfo)
         if (resUserInfo.length > 0) {
             delete resUserInfo[0]['user_password'];
-            const info = {...resUserInfo[0]};
+            const info = { ...resUserInfo[0] };
             res.status(200).json({
                 code: 'T0000',
                 msg: '登录成功！',
@@ -84,7 +87,7 @@ const login = async (req, res) => {
     }
 };
 //通过token获取登录用户信息
-const getUserByToken = async (req, res) => { 
+const getUserByToken = async (req, res) => {
     try {
         const data = await getTokenInfo(req.headers['x-refresh-token']);
         if (data) {
@@ -103,6 +106,28 @@ const getUserByToken = async (req, res) => {
     }
 }
 
+//校验原密码的有效性
+const checkPassword = async (req, res) => {
+    try {
+        const params = req.body;
+        params.user_name = decryptFn(params.user_name);
+        params.user_password = decryptFn(params.user_password);
+        const resUserInfo = await userService.getUserInfo(Object.values(params));
+        if (resUserInfo.length > 0) {
+            res.status(200).json({
+                code: 'T0000',
+                msg: '',
+                data: true
+
+            });
+        } else {
+            res.status(200).json({ code: 'T0001', msg: '原密码错误！' });
+        }
+    } catch (error) {
+        res.status(500).json({ code: 'T0001', msg: '校验失败!' });
+    }
+}
+
 module.exports = {
-    getUsersAll, addUser, editUser, login, getUserByToken, getUserById
+    getUsersAll, addUser, editUser, login, getUserByToken, getUserById, checkPassword
 };

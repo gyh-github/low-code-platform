@@ -1,4 +1,5 @@
-import { createWebHashHistory, createRouter } from 'vue-router'
+import { createWebHashHistory, createRouter } from 'vue-router';
+import { getToken } from '@/utils/sessionStor';
 const routes = [
     {
         path: '/',
@@ -41,5 +42,17 @@ const router = createRouter({
     history: createWebHashHistory(),
     routes
 });
+
+const memberNav = ['/container','/personalCenter'];
+router.beforeEach((to, from, next) => { 
+    const _token = getToken();
+    if (memberNav.includes(to.path) && !_token) {
+        next({
+            path: '/home'
+        })
+    } else { 
+        next();
+    }
+})
 
 export default router;

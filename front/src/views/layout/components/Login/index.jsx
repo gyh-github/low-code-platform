@@ -4,6 +4,7 @@ import { message } from 'ant-design-vue';
 import { parseInt } from "lodash";
 import { login, getUserByToken } from "@/apis/user";
 import { setUser, setToken, setRefreshToken, getUser, clearSessStor } from '@/utils/sessionStor';
+import { encryptFn } from '@/utils/crypt';
 import profilePicture from '@/assets/images/profile-picture.jpg';
 
 export default defineComponent({
@@ -17,8 +18,8 @@ export default defineComponent({
         const times = ref(120);
         const code = ref('');
         const loginInfo = reactive({
-            username: 'admin',
-            password: 'admin@2025',
+            user_name: 'admin',
+            user_password: 'admin@2025',
             code: ''
         })
         expose({
@@ -50,7 +51,7 @@ export default defineComponent({
                 message.error('验证码输入错误，请重新输入！' + code.value);
                 return;
             }
-            const params = { user_name: loginInfo.username, user_password: loginInfo.password };
+            const params = { user_name: encryptFn(loginInfo.user_name), user_password: encryptFn(loginInfo.user_password) };
             const res = await login(params);
             if (res) {
                 setToken(res?.accessToken);
@@ -97,16 +98,16 @@ export default defineComponent({
                         </div>
                         <div className="content">
                             <div className="row">
-                                <label htmlFor="username">用户名 </label>
-                                <input type="text" id="username" placeholder="请输入用户名或手机号" v-model={loginInfo.username} />
+                                <label htmlFor="user_name">用户名 </label>
+                                <input type="text" id="user_name" placeholder="请输入用户名或手机号" v-model={loginInfo.user_name} />
                             </div>
                             <div className="row">
-                                <label htmlFor="username">密码 </label>
-                                <input type="text" id="username" placeholder="请输入用户密码" v-model={loginInfo.password} />
+                                <label htmlFor="user_password">密码 </label>
+                                <input type="password" id="user_password" placeholder="请输入用户密码" v-model={loginInfo.user_password} />
                             </div>
                             <div className="row">
-                                <label htmlFor="username">验证码 </label>
-                                <input type="text" id="username" placeholder="请输入验证码" v-model={loginInfo.code} />
+                                <label htmlFor="code">验证码 </label>
+                                <input type="text" id="code" placeholder="请输入验证码" v-model={loginInfo.code} />
                                 <button className="get_code" disabled={times.value != 120} onClick={() => getCodeFn()}>{times.value != 120 ? '有效期剩余：' + times.value + 's' : '获取验证码'}</button>
                             </div>
                             <div className="row btns">

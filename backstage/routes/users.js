@@ -14,4 +14,6 @@ router.post('/login', userController.login);
 router.get('/getUserByToken', userController.getUserByToken);
 // 通过用户id获取登录用户信息
 router.get('/getUserById', userController.getUserById);
+// 校验原密码有效性
+router.post('/checkPassword', userController.checkPassword);
 module.exports = router;

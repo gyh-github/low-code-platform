@@ -3,8 +3,8 @@ const sessStor = window.sessionStorage;
 
 //保存当前用户信息
 export const setUser = (params) => {
-    delete params?.exp;
-    delete params?.iat;
+    // delete params?.exp;
+    // delete params?.iat;
     sessStor.setItem('userInfo', encryptFn(JSON.stringify(params)))
 }
 //获取当前用户信息

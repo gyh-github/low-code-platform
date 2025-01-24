@@ -23,3 +23,7 @@ export function getUserByToken(params) {
 export function getUserById(params) {
     return server.get(`/users/getUserById?user_id=${params}`);
 }
+//校验原密码有效性
+export function checkPassword(params) {
+    return server.post('/users/checkPassword', params);
+}

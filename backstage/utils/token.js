@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const secret = '20241214_low_code_backstage_token_qwertyuiop';//密钥
-const accessTokenTime = '10s';//token过期时间
-const refreshTokenTime = '20s';//用于备用的token过期时间
+const accessTokenTime = '60s';//token过期时间
+const refreshTokenTime = '180s';//用于备用的token过期时间
 
 //生产accessToken
 const setAccessToken = (payload = {}) => {

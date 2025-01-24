@@ -1,8 +1,10 @@
 import { defineComponent, onMounted, reactive, ref } from "vue";
 import './index.less';
-import { getUser,setUser  } from '@/utils/sessionStor';
-import { editUser,getUserById } from "@/apis/user";
-import { uploadFile} from '@/apis/common';
+import { getUser, setUser } from '@/utils/sessionStor';
+import { editUser, getUserById, checkPassword } from "@/apis/user";
+import { uploadFile } from '@/apis/common';
+import { encryptFn } from '@/utils/crypt';
+import msgFn from '@/utils/message';
 import perfilePicture from '@/assets/images/profile-picture.jpg';
 
 export default defineComponent({
@@ -37,7 +39,7 @@ export default defineComponent({
                 user_photo: uploadRes || ''
             })
             const userRes = await getUserById(userInfo.user_id);
-            setUser(userRes)
+            userRes && setUser(userRes)
 
         }
         //inputChange
@@ -47,9 +49,18 @@ export default defineComponent({
         //修改信息
         const editFn = (key) => {
             editKey.value = key;
+            key === 'user_password' && (userInfo[key] = '******');
+
         }
         //确认修改信息
         const confirmEditFn = async (key) => {
+            if (key === 'user_password') {
+                const proVal = window.prompt('请输入您的原密码！');
+                if (!proVal) {
+                    window.alert('原密码不能为空！')
+                }
+                return proVal && checkPasswordFn(proVal);
+            }
             editKey.value = '';
             await editUser({
                 user_id: userInfo.user_id,
@@ -57,8 +68,20 @@ export default defineComponent({
                 [key]: userInfo[key]
             })
             const userRes = await getUserById(userInfo.user_id);
-                setUser(userRes)
+            userRes && setUser(userRes);
+            userRes && msgFn(key);
         }
+        //取消修改信息
+        const cancelEditFn = (key) => {
+            const _user = getUser();
+            userInfo[key] = _user[key];
+            editKey.value = '';
+        }
+        //修改密码时校验密码的有效性
+        const checkPasswordFn = async (val) => {
+            const params = { user_name: encryptFn(userInfo.user_name), user_password: encryptFn(val) };
+            return await checkPassword(params);
+        };
         onMounted(() => {
             const _user = getUser();
             for (let key in _user) {
@@ -87,6 +110,8 @@ export default defineComponent({
                                 <>
                                     <input type="text" value={userInfo?.['user_name']} onChange={(e) => inputChangeFn(e, 'user_name')} />
                                     <span className="btn" onClick={() => confirmEditFn('user_name')}>确认</span>
+                                    <span className="btn cancel" onClick={() => cancelEditFn('user_name')}>取消</span>
+
                                 </>
                                 :
                                 <>
@@ -104,6 +129,7 @@ export default defineComponent({
                                 <>
                                     <input type="text" value={userInfo?.['user_real_name']} onChange={(e) => inputChangeFn(e, 'user_real_name')} />
                                     <span className="btn" onClick={() => confirmEditFn('user_real_name')}>确认</span>
+                                    <span className="btn cancel" onClick={() => cancelEditFn('user_real_name')}>取消</span>
                                 </>
                                 :
                                 <>
@@ -121,6 +147,7 @@ export default defineComponent({
                                 <>
                                     <input type="text" value={userInfo?.['user_phone']} onChange={(e) => inputChangeFn(e, 'user_phone')} />
                                     <span className="btn" onClick={() => confirmEditFn('user_phone')}>确认</span>
+                                    <span className="btn cancel" onClick={() => cancelEditFn('user_phone')}>取消</span>
                                 </>
                                 :
                                 <>
@@ -136,8 +163,9 @@ export default defineComponent({
                         {
                             editKey.value === 'user_password' ?
                                 <>
-                                    <input type="text" value={userInfo?.['user_password']} onChange={(e) => inputChangeFn(e, 'user_password')} />
+                                    <input type="password" value={userInfo?.['user_password']} onChange={(e) => inputChangeFn(e, 'user_password')} />
                                     <span className="btn" onClick={() => confirmEditFn('user_password')}>确认</span>
+                                    <span className="btn cancel" onClick={() => cancelEditFn('user_password')}>取消</span>
                                 </>
                                 :
                                 <>
@@ -153,8 +181,15 @@ export default defineComponent({
                         <textarea rows={10} cols={50} value={userInfo?.['user_self_introduction']} onChange={(e) => inputChangeFn(e, 'user_self_introduction')}></textarea>
                         {
                             editKey.value === 'user_self_introduction' ?
-                                <span className="btn" onClick={() => confirmEditFn('user_self_introduction')}>确认</span> :
+                                <>
+                                    <span className="btn" onClick={() => confirmEditFn('user_self_introduction')}>确认</span>
+                                    <span className="btn cancel" onClick={() => cancelEditFn('user_self_introduction')}>取消</span>
+                                </>
+                                :
+
                                 <span className="btn" onClick={() => editFn('user_self_introduction')}>修改</span>
+
+
                         }
                     </div>
                 </van-col>
