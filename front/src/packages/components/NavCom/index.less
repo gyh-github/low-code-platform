@@ -1,5 +1,5 @@
 .nav {
-    width: 50px;
+    width: 35px;
     height: 100%;
     padding: 5px;
     background: #61606076;
@@ -9,15 +9,25 @@
         line-height: 45px;
         color: #f8f5f5;
         text-align: center;
+        font-size: 12px;
     }
 
     &-item {
         text-align: center;
         color: #f8f5f5;
-        padding: 15px 0;
+        padding: 5px;
         cursor: pointer;
         border-radius: 4px;
+        & > .van-icon{
+            font-size: 16px;
+        }
+        & > span{
         font-size: 12px;
+        display: block;
+        transform: scale(0.75);
+
+        }
+
 
         &:hover,
         &.active {

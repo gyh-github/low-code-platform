@@ -132,7 +132,7 @@ export default defineComponent({
             </div>
             <div className="container-left">
                 <div className="container-left-title">
-                    导航<van-icon name="wap-nav" />
+                    导航
                 </div>
                 <div className="container-left-content">
                     <NavCom />
