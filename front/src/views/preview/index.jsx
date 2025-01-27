@@ -24,6 +24,7 @@ export default defineComponent({
             });
         } else {
             const _storage_state = JSON.parse(sessionStorage.getItem('state'));
+            console.log(window,_storage_state,'---')
             _state.container = _storage_state.container;
             _state.plates = _storage_state.plates;
             mainStyle.width = _state?.container.width + 'px';

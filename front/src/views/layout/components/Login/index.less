@@ -55,17 +55,16 @@ button.btn {
     &-content {
         width: 320px;
         border-radius: 4px;
-        background: url('@/assets/images/login-bg.jpg') center no-repeat;
+        background: var(--lcp-login-bg-color);
         padding: 10px;
-        box-shadow: 0 0 10px #ffffff;
 
         &>.title {
             text-align: center;
-            padding: 10px 0;
-            color: #efefef;
+            padding: 10px;
+            color: var(--lcp-n-color);
 
             &>span {
-                font-size: 12px;
+                font-size: 16px;
                 cursor: pointer;
 
                 &.active {
@@ -77,17 +76,21 @@ button.btn {
 
         &>.content {
             border-radius: 4px;
-            padding: 10px;
-            margin-top: 10px;
             border: thin solid rgba(0, 0, 255, 0.1);
             overflow: hidden;
 
             &>.row {
                 font-size: 12px;
-                border-bottom: thin solid #efefef;
                 padding: 10px;
                 position: relative;
-                color: #ffffff;
+                color: var(--lcp-n-color);
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+
+                &:nth-last-child(1){
+                    border: none;
+                }
 
                 &.btns {
                     text-align: center;
@@ -97,14 +100,16 @@ button.btn {
                     display: inline-block;
                     vertical-align: middle;
                     width: 50px;
+                    flex: 0 0 auto;
                 }
 
                 &>input {
-                    background: none;
+                    background: var(--lcp-n-bg-color);
                     border: none;
                     border-radius: 4px;
-                    line-height: 30px;
-                    padding: 0 10px;
+                    line-height: 40px;
+                    padding: 0 15px;
+                    flex: 1 0 auto;
                 }
 
                 &>button {
@@ -113,14 +118,16 @@ button.btn {
                     border: none;
                     border-radius: 4px;
                     cursor: pointer;
-                    color: #cbe80e;
+                    color: var(--lcp-cancel-color);
+                    &:hover{
+                        background: var( --lcp-active-bg-color);
+                    }
 
                     &.get_code {
                         position: absolute;
-                        top: 12px;
-                        right: 0;
-                        background: #5197ff;
-                        color: #ffffff;
+                        top: 16px;
+                        right: 16px;
+                        color: var(--lcp-n-color);
 
                         &:disabled {
                             opacity: 0.75;
@@ -128,8 +135,7 @@ button.btn {
                     }
 
                     &.backg {
-                        background: #5197ff;
-                        color: #ffffff;
+                        color: var(--lcp-confirm-color);
                     }
                 }
             }

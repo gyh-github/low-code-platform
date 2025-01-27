@@ -13,7 +13,6 @@ export default defineComponent({
         const userInfo = reactive({
             user_name: ''
         });
-        const flag = ref('login');
         const interval = ref(null);
         const times = ref(120);
         const code = ref('');
@@ -93,8 +92,7 @@ export default defineComponent({
                 showLogin.value && <div className="login">
                     <div className="login-content animate__animated animate__zoomInDown">
                         <div className="title">
-                            <span className={flag.value === 'login' && 'active'} onClick={() => (flag.value = 'login')}>登录账号 </span> |
-                            <span className={flag.value === 'register' && 'active'} onClick={() => (flag.value = 'register')}> 账号注册</span>
+                            <span>登录账号</span>
                         </div>
                         <div className="content">
                             <div className="row">
@@ -111,8 +109,7 @@ export default defineComponent({
                                 <button className="get_code" disabled={times.value != 120} onClick={() => getCodeFn()}>{times.value != 120 ? '有效期剩余：' + times.value + 's' : '获取验证码'}</button>
                             </div>
                             <div className="row btns">
-                                {flag.value === 'login' && <button className="backg" onClick={() => loginFn()}>登录</button>}
-                                {flag.value === 'register' && <button className="backg">确定</button>}
+                                <button className="backg" onClick={() => loginFn()}>登录</button>
                                 <button onClick={() => cancelFn()}>取消</button>
                             </div>
                         </div>

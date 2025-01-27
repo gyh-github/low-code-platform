@@ -167,8 +167,10 @@ export default defineComponent({
                     {lineData.vType && <div className="line v" style={{ left: lineData.vLeft + 'px' }}></div>}
                     {
                         guideData.value.map(item => (item.type === 'h' ?
-                            <div className="line h" style={{ top: item.top + 'px' }} onmousedown={(e) => selectGuideFn(e, item)}></div>
-                            : <div className="line v" style={{ left: item.left + 'px' }} onmousedown={(e) => selectGuideFn(e, item)} ></div>))
+                            <div className="line h" style={{ top: item.top + 'px' }} onmousedown={(e) => selectGuideFn(e, item)}>
+                                <span className="tip" style={{ top: (item.top) + 'px',left: (600) + 'px' }}>xxxx</span>
+                            </div>
+                            : <div className="line v" style={{ left: item.left + 'px' }} onmousedown={(e) => selectGuideFn(e, item)} >xxxx</div>))
                     }
                 </div>
             </div>

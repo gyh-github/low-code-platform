@@ -63,12 +63,12 @@ export default defineComponent({
         };
         //媒体查询
         const screenWidthChange = (e) => {
-            console.log(e.target.innerWidth)
             screenWidth.value = e.target.innerWidth;
         };
         onMounted(() => {
             const userInfo = getUser();
             user.user_name = userInfo?.user_name;
+            screenWidth.value = window.innerWidth;
             window.addEventListener('resize', debounce(screenWidthChange, 150));
         });
         onUnmounted(() => {

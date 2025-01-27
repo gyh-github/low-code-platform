@@ -1,7 +1,6 @@
 .navs {
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--lcp-n-bg-color);
     position: relative;
-    box-shadow: 0 2px 2px #ffffff32;
 
     &-content {
         display: flex;
@@ -15,36 +14,16 @@
             width: 100px;
             height: 60px;
             flex: 1 1 auto;
-            color: #ffffff87;
+            color: var(--lcp-n-color);
             font-size: 12px;
             text-align: center;
             position: relative;
             cursor: pointer;
-            text-shadow: 0 0 2px #217ad4;
 
             &:hover,
             &.active {
                 font-size: 16px;
-                color: #ffffff;
                 font-weight: 700;
-            }
-
-            &::after {
-                content: '';
-                display: block;
-                position: absolute;
-                height: 16px;
-                width: 2px;
-                top: 20px;
-                left: 99%;
-                border-radius: 4px;
-                background: #fff;
-            }
-
-            &:nth-last-child(1) {
-                &::after {
-                    content: none;
-                }
             }
         }
 
@@ -56,7 +35,7 @@
 
         &>.van-icon {
             font-size: 32px;
-            color: #ffffff32;
+            color: var(--lcp-n-color);
             margin: 15px 0;
         }
 
@@ -68,10 +47,9 @@
 
             &-item {
                 padding: 15px;
-                background: rgba(255, 255, 255, 0.2);
-                border-top: thin solid #efefef23;
-                color: #ffffff87;
+                background: var(--lcp-n-bg-color);
                 font-size: 14px;
+                color: var(--lcp-n-color);
 
                 &:nth-child(1) {
                     border-top: none;
@@ -80,7 +58,6 @@
                 &:hover,
                 &.active {
                     font-size: 16px;
-                    color: #ffffff;
                     font-weight: 700;
                 }
             }
