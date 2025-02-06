@@ -7,6 +7,7 @@ import './container.less';
 import EditPlate from "./components/EditPlate";
 import ScaleX from "./components/ScaleX";
 import ScaleY from "./components/ScaleY";
+import DividinRule from "./components/DividinRule";
 import Attribute from "./components/Attribute";
 import NavCom from "./components/NavCom";
 import SmallNavCom from "./components/SmallNavCom";
@@ -32,7 +33,7 @@ export default defineComponent({
         const workspace = ref(null);
         const layerShow = ref(false);
         const dragShow = ref(true);
-        const detailShow = ref(true);
+        const detailShow = ref(false);
         const scaleTop = ref(2);//顶部标尺
         const scaleLeft = ref(2);//左侧标尺
         const plateData = reactive({
@@ -97,8 +98,8 @@ export default defineComponent({
             }
         }
 
-        const { dragstartFn, dragendFn } = usePlateDrag(plates, workspace);
-        const { mousedownFn, mouseupFn } = useWorkspace(plates, plateData, workspace, lineData);
+        const { dragstartFn, dragendFn } = usePlateDrag(plates, containerCenterC);
+        const { mousedownFn, mouseupFn } = useWorkspace(plates, plateData, containerCenterC, lineData);
         const { addGuideFn, selectGuideFn, releaseGuideFn } = useGuide(guideData, containerCenterC);
 
         onMounted(() => {
@@ -158,17 +159,17 @@ export default defineComponent({
                     <div className="container-center-container-workspace"
                         ref={workspace}
                         style={workspaceStyle.value}>
+                    </div>
                         {
                             plates.value.map(item =>
                                 <EditPlate data={item} onmousedown={(e) => mousedownFn(e, item)} onmouseup={mouseupFn}
                                 ></EditPlate>)}
-                    </div>
                     {lineData.hType && <div className="line h" style={{ top: lineData.hTop + 'px' }}></div>}
                     {lineData.vType && <div className="line v" style={{ left: lineData.vLeft + 'px' }}></div>}
                     {
                         guideData.value.map(item => (item.type === 'h' ?
                             <div className="line h" style={{ top: item.top + 'px' }} onmousedown={(e) => selectGuideFn(e, item)}>
-                                <span className="tip" style={{ top: (item.top) + 'px',left: (600) + 'px' }}>xxxx</span>
+                               222 {/* <span className="tip" style={{ top: (item.top) + 'px',left: (600) + 'px' }}>xxxx</span> */}
                             </div>
                             : <div className="line v" style={{ left: item.left + 'px' }} onmousedown={(e) => selectGuideFn(e, item)} >xxxx</div>))
                     }
@@ -179,6 +180,8 @@ export default defineComponent({
             </div>
             <div className="direction right" style={{ right: detailShow.value ? '300px' : 0 }} onClick={() => handleActionFn('right')}>
                 <span> {'<'} </span></div>
+            {/* 刻度尺 */}
+            <DividinRule/>
         </div >)
     }
 })

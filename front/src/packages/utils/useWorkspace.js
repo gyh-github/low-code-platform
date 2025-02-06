@@ -54,6 +54,7 @@ export default (plates, plateData, workspace, lineData) => {
         e.preventDefault();
         e.stopPropagation();
         handlePositionFn();
+        console.log(e,'---------------useWorkspace-mouseupFn')
         workspace.value.removeEventListener('mousemove', mousemoveFn);
     }
     const handlePositionFn = () => {

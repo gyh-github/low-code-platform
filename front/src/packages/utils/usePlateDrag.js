@@ -18,6 +18,7 @@ export default function (plates, workspace) {
     }
     const dropFn = (e) => {
         e.stopPropagation();
+        console.log(e,'-----usePlateDrag-e')
         if (!_cur) return;
         plates.value = [...plates.value, {
             top: e.layerY,

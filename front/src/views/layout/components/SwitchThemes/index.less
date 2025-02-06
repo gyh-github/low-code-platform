@@ -1,0 +1,22 @@
+.theme {
+    position: fixed;
+    top: 50%;
+    right: 20px;
+    height: 50px;
+    width: 50px;
+    transform: translateY(-50%);
+    &>input{
+        opacity: 0;
+    }
+    &>label{
+        display: block;
+        height: 100%;
+        width: 100%;
+        margin-top: -25px;
+        background: var(--lcp-bg-color);
+        position: relative;
+        z-index: 2;
+        box-shadow: 0 0 4px #eee;
+    }
+
+}
