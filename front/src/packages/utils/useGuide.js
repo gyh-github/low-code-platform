@@ -1,5 +1,6 @@
 import { ref } from "vue";
 import _ from 'lodash';
+import { createDropMenuFn,deleteDropMenuFn } from "./index";
 
 export default (guides, containerCenterC) => {
     const curGuide = ref(null);
@@ -13,20 +14,31 @@ export default (guides, containerCenterC) => {
         type === 'v' ? _list.push({
             id: new Date().getTime(),
             type: 'v',
-            left: 750 + (_list.length - 1) * 20
+            left: 750 + (_list.length - 1) * 50
         }) : _list.push({
             id: new Date().getTime(),
             type: 'h',
-            top: 750 + (_list.length - 1) * 20
+            top: 750 + (_list.length - 1) * 50
         })
         guides.value = _list;
     };
     //选中辅助线
     const selectGuideFn = (e, item) => {
-        e.stopPropagation();
         e.preventDefault();
+        e.stopPropagation();
         curGuide.value = _.cloneDeep(item);
-        containerCenterC.value.addEventListener('mousemove', moveGuideFn);
+        if (e.button == 2) {
+            const dropMenus = [{ label: '删除', key: 'delete' },{ label: '删除其他', key: 'delete-other' },{ label: '删除所有', key: 'delete-all' }];
+            const _arr = document.getElementsByClassName('drop-menu-action')
+            if (_arr?.length > 0) {
+                _arr[0].style.top = e.clientY + 'px';
+                _arr[0].style.left = e.clientX + 'px';
+            } else { 
+                createDropMenuFn(dropMenus, { top: e.clientY, left: e.clientX }, handleClickFn)
+            }
+        } else {
+            containerCenterC.value.addEventListener('mousemove', moveGuideFn);
+        }
     }
     //移动辅助线
     const moveGuideFn = (e) => {
@@ -39,9 +51,31 @@ export default (guides, containerCenterC) => {
     const releaseGuideFn = (e) => {
         e.stopPropagation();
         e.preventDefault();
-        curGuide.value = null;
+        // curGuide.value = null;
         containerCenterC.value.removeEventListener('mousemove', moveGuideFn);
     };
+    //点击事件
+    const handleClickFn = (e) => {
+        const _key = e.target.dataset['item'];
+        const _cur = curGuide.value;
+        let _list =  _.clone(guides.value);
+        switch (_key) {
+            case 'delete':
+                _list = _list.filter(item => item.id != _cur.id);
+                guides.value = _list;
+                break;
+            case 'delete-other':
+                _list = _list.filter(item => item.id === _cur.id);
+                guides.value = _list;
+                break;
+            case 'delete-all':
+                guides.value = [];
+                break;
+            default:
+                return;
+        }
+        deleteDropMenuFn();
+     };
     return {
         addGuideFn,
         selectGuideFn,

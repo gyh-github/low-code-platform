@@ -1,5 +1,4 @@
-import { defineComponent, reactive, onMounted, onUnmounted } from 'vue';
-import _ from 'lodash';
+import { defineComponent, ref, onMounted, onUnmounted } from 'vue';
 import './index.less'
 export default defineComponent({
     setup() {
@@ -30,28 +29,27 @@ export default defineComponent({
                 })
             }
         }
-        const styleRule = reactive({
-            top: 100,
-            left: 100
-        });
+        const ruleRef = ref(null);
         let dfference = {
             x: 0,
             y: 0
         };
+        const rotateFn = () => {
+            ruleRef.value.style.transform = ruleRef.value.style.transform === `rotate(90deg)` ? `rotate(0deg)` : `rotate(90deg)`;
+        };
         const mousedownFn = (e) => {
-            console.log(e, '---mousedown');
-            dfference.x = e.offsetX - styleRule.left;
-            dfference.y = e.offsetY - styleRule.top;
+            if (e.target.className != 'dividing-rule-cover') return;
+            dfference.x = e.pageX - parseInt(ruleRef.value.style.left.replace('px', ''));
+            dfference.y = e.pageY - parseInt(ruleRef.value.style.top.replace('px', ''));
+            ruleRef.value.style.top = (e.pageY - dfference.y) + 'px';
+            ruleRef.value.style.left = (e.pageX - dfference.x) + 'px';
             window.addEventListener('mousemove', mousemoveFn);
         };
         const mousemoveFn = (e) => {
-            styleRule.top = e.offsetY - dfference.y;
-            styleRule.left = e.offsetX - dfference.x;
-
+            ruleRef.value.style.top = (e.pageY - dfference.y) + 'px';
+            ruleRef.value.style.left = (e.pageX - dfference.x) + 'px';
         };
         const mouseupFn = (e) => {
-            styleRule.top = e.offsetY - dfference.y;
-            styleRule.left = e.offsetX - dfference.x;
             window.removeEventListener('mousemove', mousemoveFn);
         };
         onMounted(() => {
@@ -62,8 +60,8 @@ export default defineComponent({
             window.removeEventListener('mousedown', mousedownFn);
             window.removeEventListener('mouseup', mouseupFn);
         })
-        return () => <div className='dividing-rule' style={{ top: styleRule.top + 'px', left: styleRule.left + 'px' }}>
-            <div className="dividing-rule-cover"></div>
+        return () => <div className='dividing-rule' ref={ruleRef} style={{ top: '200px', left: '200px' }}>
+            <div className="dividing-rule-cover"><span onClick={() => rotateFn()}>⇵</span></div>
             <div className="dividing-rule-scale">
                 {
                     scales.map((item) => (<div className='dividing-rule-scale-item'>

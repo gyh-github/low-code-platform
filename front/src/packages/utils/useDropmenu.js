@@ -1,6 +1,6 @@
 import _ from 'lodash';
 export default (plates) => {
-    let curIten = null;
+    let curItem = null;
 
     let dropMenus = [{
         label: '删除',
@@ -21,17 +21,17 @@ export default (plates) => {
 
     const contextmenuFn = (e, item) => {
         e.preventDefault();
-        curIten = _.cloneDeep(item);
-        if (curIten.show) {
+        curItem = _.cloneDeep(item);
+        if (curItem.show) {
             dropMenus = dropMenus.filter(ite => ite.key != 'show');
         }
-        if (!curIten.show) {
+        if (!curItem.show) {
             dropMenus = dropMenus.filter(ite => ite.key != 'hide');
         }
-        if (curIten.lock) {
+        if (curItem.lock) {
             dropMenus = dropMenus.filter(ite => ite.key != 'lock');
         }
-        if (!curIten.lock) {
+        if (!curItem.lock) {
             dropMenus = dropMenus.filter(ite => ite.key != 'unlock');
         }
         handleDropMenuHTMLFn(e)
@@ -43,29 +43,29 @@ export default (plates) => {
             let _plates = _.cloneDeep(plates.value);
             switch (e.target.dataset['item']) {
                 case 'delete':
-                    _plates = _plates.filter(item => item.id != curIten.id);
+                    _plates = _plates.filter(item => item.id != curItem.id);
                     break;
                 case 'hide':
                     _plates = _plates.map(item => {
-                        item.show = item.id === curIten.id ? !item.show : item.show;
+                        item.show = item.id === curItem.id ? !item.show : item.show;
                         return item;
                     });
                     break;
                 case 'show':
                     _plates = _plates.map(item => {
-                        item.show = item.id === curIten.id ? !item.show : item.show;;
+                        item.show = item.id === curItem.id ? !item.show : item.show;;
                         return item;
                     });
                     break;
                 case 'lock':
                     _plates = _plates.map(item => {
-                        item.lock = item.id === curIten.id ? !item.lock : item.lock;
+                        item.lock = item.id === curItem.id ? !item.lock : item.lock;
                         return item;
                     });
                     break;
                 case 'unlock':
                     _plates = _plates.map(item => {
-                        item.lock = item.id === curIten.id ? !item.lock : item.lock;
+                        item.lock = item.id === curItem.id ? !item.lock : item.lock;
                         return item;
                     });
                     break;

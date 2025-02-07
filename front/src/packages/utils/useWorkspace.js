@@ -54,13 +54,12 @@ export default (plates, plateData, workspace, lineData) => {
         e.preventDefault();
         e.stopPropagation();
         handlePositionFn();
-        console.log(e,'---------------useWorkspace-mouseupFn')
+        console.log(plates.value,'---------------useWorkspace-mouseupFn')
         workspace.value.removeEventListener('mousemove', mousemoveFn);
     }
     const handlePositionFn = () => {
         const hTypes = ['bottom-top', 'top-top', 'middle-middle', 'top-bottom', 'bottom-bottom'];
         const vTypes = ['right-left', 'left-left', 'middle-middle', 'right-right', 'left-right'];
-        console.log(lineData)
         if (hTypes.includes(lineData.hType)) {
             let _distanceTop = 0;
             switch (lineData.hType) {

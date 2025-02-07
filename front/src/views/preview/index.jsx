@@ -24,7 +24,7 @@ export default defineComponent({
             });
         } else {
             const _storage_state = JSON.parse(sessionStorage.getItem('state'));
-            console.log(window,_storage_state,'---')
+            console.log(window, _storage_state, '---')
             _state.container = _storage_state.container;
             _state.plates = _storage_state.plates;
             mainStyle.width = _state?.container.width + 'px';
@@ -36,6 +36,7 @@ export default defineComponent({
             const arr = ['width', 'height', 'top', 'left', 'bottom', 'right'];
             let _props = _.cloneDeep(ele.attribute);
             if (_props.style) {
+                _props.style.position = 'absolute';
                 _props.style.top = ele.top - 1000 + _state.container.height / 2;
                 _props.style.left = ele.left - 1000 + _state.container.width / 2;
                 for (let key in _props.style) {
