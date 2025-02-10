@@ -13,7 +13,7 @@ export default (plates, plateData, workspace, lineData) => {
     });
 
     const clearFocusFn = () => {
-        plates.value = plates.value.map(item => {
+        plates.value = plates?.value?.map(item => {
             item.focused = false;
             return item;
         });
@@ -51,10 +51,9 @@ export default (plates, plateData, workspace, lineData) => {
         handleLineFn();
     }
     const mouseupFn = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+        // e.preventDefault();
+        // e.stopPropagation();
         handlePositionFn();
-        console.log(plates.value,'---------------useWorkspace-mouseupFn')
         workspace.value.removeEventListener('mousemove', mousemoveFn);
     }
     const handlePositionFn = () => {

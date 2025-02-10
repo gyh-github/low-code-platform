@@ -12,7 +12,7 @@ const vanSwipe = {
     </van-swipe>,
     render: (props) =>
         <van-swipe {...props}>
-            {props?.swipes.map((swipe, index) => (<van-swipe-item key={"swipe_" + index}>
+            {props?.swipes?.map((swipe, index) => (<van-swipe-item key={"swipe_" + index}>
                 <div style={{ background: `url(${swipe}) no-repeat center`, backgroundSize: 'cover', height: props.height + 'px', width: props.width + 'px' }}></div>
             </van-swipe-item>))}
         </van-swipe>,
