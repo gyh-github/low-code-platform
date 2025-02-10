@@ -58,8 +58,9 @@ export default defineComponent({
                     props.data.attribute.style.height = props.data.attribute.style?.height - e.movementY;
                     break;
                 case 'top-right':
+                    props.data.top = props.data.top + e.movementY;
                     props.data.attribute.style.width = props.data.attribute.style?.width + e.movementX;
-                    props.data.attribute.style.height = props.data.attribute.style?.height + e.movementY;
+                    props.data.attribute.style.height = props.data.attribute.style?.height - e.movementY;
                     break;
                 case 'right-center':
                     props.data.attribute.style.width = props.data.attribute.style?.width + e.movementX;
