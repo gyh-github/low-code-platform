@@ -36,10 +36,8 @@ export default defineComponent({
             'bottom-center', 'bottom-left', 'left-center'
         ]
         const sizeMouseDownFn = (e) => {
-            console.log(e.target)
             e.stopPropagation();
             curArea.value = e.target.dataset['key'];
-            console.log(e.target.dataset['key'])
             if (areaList.includes(curArea.value)) {
                 window.addEventListener('mousemove', sizeMouseMoveFn);
             }

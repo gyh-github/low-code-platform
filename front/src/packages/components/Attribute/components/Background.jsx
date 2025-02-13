@@ -28,7 +28,7 @@ export default defineComponent({
             state.container.background = `url(${file.content})`;
         };
         const beforeDeleteFn = () => {
-            state.container.background = "#302e2edb";
+            state.container.background = "#1c1c24";
             return true;
         };
         return () => <div className="background">

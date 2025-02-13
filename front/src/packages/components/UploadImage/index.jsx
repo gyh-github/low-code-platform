@@ -1,6 +1,6 @@
 import { defineComponent } from "vue";
 import './index.less';
-import { uploadFile } from './../../utils/apis';
+import { uploadFile } from '@/apis/common';
 export default defineComponent({
     props: ['file'],
     emits: ['callback'],
@@ -19,7 +19,7 @@ export default defineComponent({
             var formData = new FormData();
             formData.append('file', file);
             const uploadRes = await uploadFile(formData);
-            emit('callback', { url: uploadRes?.data, index: _index });
+            emit('callback', { url: uploadRes, index: _index });
         }
         return () => <div className="uploader" onClick={() => handleUploadFn()}>
             <img src={props.file.url} alt="" style="height:100%;width:100%" />

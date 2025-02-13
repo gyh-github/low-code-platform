@@ -50,8 +50,8 @@ export default defineComponent({
         const guideData = ref([]);//辅助线信息
 
         const centerContainerLeft = computed(() => {
-            const _l = layerShow.value ? 110 : 0;
-            const _d = dragShow.value ? 200 : 0;
+            const _l = layerShow.value ? 160 : 0;
+            const _d = dragShow.value ? 270 : 0;
             return _l + _d;
         })
 
@@ -111,7 +111,7 @@ export default defineComponent({
             document.oncontextmenu = function () {
                 return false;
             }
-            document.onclick = () => { 
+            document.onclick = () => {
                 const _drop = document.querySelector('.drop-menu-action');
                 _drop && document.body.removeChild(_drop);
             }
@@ -145,8 +145,8 @@ export default defineComponent({
                     导航
                 </div>
                 <div className="container-left-content">
-                    {dragShow.value &&<>
-                    <NavCom /> <SmallNavCom /></>}
+                    <NavCom />
+                    {dragShow.value && <><SmallNavCom /></>}
                     {dragShow.value && <div className="container-left-dragContainer">
                         {componentList.map(item => (<div
                             className="container-left-item"
@@ -174,7 +174,7 @@ export default defineComponent({
                             <EditPlate data={item} onmousedown={(e) => mousedownFn(e, item)} onmouseup={mouseupFn}
                             ></EditPlate>)}
                     {lineData.hType && <div className="line h" style={{ top: lineData.hTop + 'px' }}>
-                         <span className="tip" style={{ left: (scaleLeft.value + 30) + 'px' }}>{lineData.hTop}</span>
+                        <span className="tip" style={{ left: (scaleLeft.value + 30) + 'px' }}>{lineData.hTop}</span>
                     </div>}
                     {lineData.vType && <div className="line v" style={{ left: lineData.vLeft + 'px' }}>
                         <span className="tip" style={{ top: (scaleTop.value + 55) + 'px' }}>{lineData.vLeft}</span>
