@@ -18,7 +18,7 @@ const checkAuth = async (req, res, next) => {
                         if (refreshError) {
                             return res.send({
                                 code: 'T0003',
-                                msg: 'token失效！',
+                                msg: 'token缺失！接口异常！',
                                 data: null
                             });
 

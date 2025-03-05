@@ -1,3 +1,4 @@
+import { message } from 'ant-design-vue';
 export default function (url = "", method = "GET", body = {}) {
     return new Promise((resolve, reject) => {
         console.log(body);
@@ -15,7 +16,13 @@ export default function (url = "", method = "GET", body = {}) {
         try {
             fetch(url, { ...config }).then((response) => response.json()).then(res => {
                 console.log(res)
-                resolve(res)
+                const { code, data, msg } = res;
+                if (code === 'T0003') { 
+                    message.warning(msg)
+                    reject(msg)
+                    return;
+                }
+                resolve(data)
             }).catch(err => {
                 console.error(err)
                 reject(err)

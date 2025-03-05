@@ -9,8 +9,8 @@ router.post('/dataProcessing', function (req, res) {
         if (err) {
             console.log(err)
         } else {
-            res.send({ code: 'T0001' });
-            console.log('success!!!')
+            res.send({ code: 'T0000',data:true });
+            console.log('success!!!',body)
         }
     })
 });
@@ -29,7 +29,7 @@ router.get('/generate', (req, res) => {
     child.on('close', (code) => {
         console.log(`子进程退出，退出码${code}`)
     })
-    res.send({ code: 'T0001' })
+    res.send({ code: 'T0000',data:true  })
 });
 
 

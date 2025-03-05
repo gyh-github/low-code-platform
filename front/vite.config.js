@@ -8,6 +8,11 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [vue(), vueJsx()],
     base: env.VITE_MODE === 'generate' ? './' : '/',
+    build: {
+      rollupOptions: {
+        input: env.VITE_MODE === 'generate' ? 'index.generate.html' : 'index.html',
+      }
+    },
     server: {
       port: 8091,
       host: '0.0.0.0',

@@ -92,7 +92,7 @@ export default defineComponent({
         //发版
         const publishFn = async () => {
             const res = await dataProcessing(state);
-            if (res?.code === 'T0001') {
+            if (res) {
                 console.log(res)
                 const resG = await generate({ xxx: 'as' });
                 console.log(resG)
