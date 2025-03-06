@@ -1,6 +1,6 @@
 import {
     defineComponent, ref, provide, reactive, onMounted,
-    onBeforeUnmount, nextTick, toRef, computed
+    onBeforeUnmount, nextTick, toRef, computed, watch
 } from "vue";
 import data from './../packages/data.json';
 import './container.less';
@@ -128,6 +128,10 @@ export default defineComponent({
             window.removeEventListener('mouseup', releaseGuideFn)
 
         })
+        watch(() => state.plates, () => {
+            console.log(state.plates)
+
+        })
 
         return () => (<div className="container">
             <div class="container-top">
@@ -196,7 +200,7 @@ export default defineComponent({
                 </div>
             </div>
             <div className="container-right" style={{ right: detailShow.value ? 0 : '-300px' }}>
-                <Attribute />
+                {detailShow.value && <Attribute />}
             </div>
             <div className="direction right" style={{ right: detailShow.value ? '300px' : 0 }} onClick={() => handleActionFn('right')}>
                 <span> {'<'} </span></div>

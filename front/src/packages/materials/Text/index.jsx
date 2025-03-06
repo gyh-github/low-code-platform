@@ -3,16 +3,18 @@ import useMaterialsStore from '@/packages/store/materials';
 const materials = useMaterialsStore(pinia);
 const { register } = materials;
 register({
-    label: '原生按钮',
-    preview: () => <span>纯文字</span>,
+    label: '纯文字',
+    preview: () => <span style="color:#ee0000">纯文字</span>,
     render: (props) =>
         <span {...props}>纯文字</span>,
     key: "Text",
     attribute: {
         style: {
             display: 'inline-block',
-            height: 50,
-            width: 100
+            padding: '10px 15px',
+            color: '#ee0000',
+            'font-size': 16,
+            'font-weight': 400,
         }
     }
 });

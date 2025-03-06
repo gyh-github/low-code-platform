@@ -1,79 +1,69 @@
-import { defineComponent, inject, computed, ref } from "vue";
-import '@/packages/components/Attribute/index.less';
+import { defineComponent, inject, computed, ref, watch, watchEffect } from "vue";
+import '@/packages/materials/index.less';
+import { cloneDeep } from "lodash";
 
 const fontSizeList = [12, 14, 16, 20, 22, 24, 32];
+const fontWeightList = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000];
+const fontFamilyList = ['Times, "Times New Roman", Georgia, serif',
+    'Verdana, Arial, Helvetica, sans-serif',
+    '"Lucida Console", Courier, monospace',
+    'cursive',
+    'fantasy',
+    'emoji',
+    'math',
+    'fangsong',
+];
 
 export default defineComponent({
     setup() {
         const state = inject('state');
-        const plate = computed(() => state.plates.find(item => item.focused));
+        const platexxx = computed(() => state.plates.find(item => item.focused));
+        const plate = ref(cloneDeep({ ...platexxx.value }))
+        watch(plate.value, () => {
+            console.log(plate.value)
+            state.plates = state.plates.map(item => item.id === plate.value.id ? plate.value : item)
+        })
+        watchEffect(() => {
+            console.log('---------------')
+        })
         console.log(plate)
-        const fileList = ref([]);
-        const afterReadFn = (file, plate) => {
-            plate.value.attribute.style.backgroundImage = `url(${file.content})`;
-            plate.value.attribute.style.backgroundSize = 'cover';
-        };
-
         return () => (<>
-            <van-row align="center" justify="space-between">
-                <van-col span={4}>
-                    <span className="label">文案</span>
-                </van-col>
-                <van-col span={20}>
-                    <van-field v-model={plate.value.attribute['innerText']} /></van-col>
-            </van-row>
-            <van-row align="center" justify="space-between">
-                <van-col span={12}>
-                    <van-row align="center" justify="space-between">
-                        <van-col>
-                            <span className="label">字体大小</span></van-col>
-                        <van-col>
-                            <select name="fontSize" id="fontSize" v-model={plate.value.attribute.style['font-size']}
-                                className="font-size-select">
-                                {fontSizeList.map(item => <option value={item} >{item}px</option>)}
-
-                            </select></van-col>
-                    </van-row></van-col>
-                <van-col span={12}>
-                    <van-row align="center" justify="space-between">
-                        <van-col>
-                            <span className="label">&nbsp;&nbsp;&nbsp;字体颜色</span></van-col>
-                        <van-col>
-                            <input type="color" value="#ffffff" v-model={plate.value.attribute.style['color']} style="width:60px !important" /></van-col>
-                    </van-row></van-col>
-            </van-row><van-row align="center" justify="space-between">
-                <van-col span={4}>
-                    <span className="label">尺寸</span>
-                </van-col>
-                <van-col span={20} >
-                    <div className="small-row">
-                        <span className="label">宽</span><van-stepper v-model={plate.value.attribute.style['width']}
-                            input-width="40px" button-size="25px" />
-                        <span className="label">高</span><van-stepper v-model={plate.value.attribute.style['height']}
-                            input-width="40px" button-size="25px" />
-                    </div>
-                </van-col>
-            </van-row><van-row>
-                <van-col>
-                    <span className="label">背景色</span>
-                    <input type="color" value="#ffffff" v-model={plate.value.attribute.style['background']} />
-                </van-col>
-            </van-row>
-            <div className="background-bg-img">
-                <van-uploader
-                    v-model={fileList.value}
-                    reupload
-                    max-count="1"
-                    after-read={(file) => afterReadFn(file, plate)}
-                    deletable={false}
-                    preview-size={['150px', '150px']}
-                >
-                    <van-empty description="界面背景图" image-size="69" />
-                    {plate.value.attribute.style?.backgroundImage &&
-                        <van-image className="default-img"
-                            src={plate.value.attribute.style?.backgroundImage?.replace('url(', '')?.replace(')', '')}></van-image>}
-                </van-uploader>
+            <div className="row">
+                <div className="col col-8">文案</div>
+                <div className="col col-16">
+                    <textarea rows={5} style="width:86%" v-model={plate.value.attribute['innerText']}></textarea>
+                </div>
             </div>
+            <div className="row">
+                <div className="col col-8">文字大小</div>
+                <div className="col col-16">
+                    <select name="fontSize" id="fontSize" v-model={plate.value.attribute.style['font-size']}
+                        className="font-size-select">
+                        {fontSizeList.map(item => <option value={item} >{item}px</option>)}
+                    </select></div>
+            </div>
+            <div className="row">
+                <div className="col col-8">文字样式</div>
+                <div className="col col-16">
+                    <select name="fontFamily" id="fontFamily" v-model={plate.value.attribute.style['font-family']}
+                        className="font-size-select">
+                        {fontFamilyList.map(item => <option value={item} >{item}</option>)}
+                    </select></div>
+            </div>
+            <div className="row">
+                <div className="col col-8">文字粗细</div>
+                <div className="col col-16">
+                    <select name="fontWeight" id="fontWeight" v-model={plate.value.attribute.style['font-weight']}
+                        className="font-size-select">
+                        {fontWeightList.map(item => <option value={item} >{item}</option>)}
+                    </select></div>
+            </div>
+            <div className="row">
+                <div className="col col-8">文字颜色</div>
+                <div className="col col-16">
+                    <input type="color" value="#ffffff" v-model={plate.value.attribute.style['color']} style="width:100% !important" /></div>
+            </div>
+            {JSON.stringify(plate.value)}
         </>)
     }
 })
