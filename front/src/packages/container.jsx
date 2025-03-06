@@ -16,7 +16,7 @@ import useWorkspace from "./utils/useWorkspace";
 import usePlateDrag from "./utils/usePlateDrag";
 import useGuide from "./utils/useGuide";
 import { previewFn, exportJSONFn } from './utils/index.js';
-import { dataProcessing, generate } from "@/packages/utils/apis";
+import { jsondataProcessing, jsdataProcessing, generate } from "@/packages/utils/apis";
 import useMaterialsStore from "./store/materials.js";
 
 
@@ -91,11 +91,16 @@ export default defineComponent({
 
         //发版
         const publishFn = async () => {
-            const res = await dataProcessing(state);
-            if (res) {
-                console.log(res)
-                const resG = await generate({ xxx: 'as' });
-                console.log(resG)
+            const resJson = await jsondataProcessing(state);
+            if (resJson) {
+                console.log(resJson)
+                const _arr = state.plates?.map(item => `import '@/packages/materials/${item.key}';\n`);
+                const _plates = [...new Set(_arr)]?.join('')
+                const resJs = await jsdataProcessing({ plates: _plates });
+                if (resJs) {
+                    const resG = await generate({ xxx: 'as' });
+                    console.log(resG)
+                }
             }
         }
 

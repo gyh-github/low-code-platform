@@ -1,10 +1,9 @@
 
 import _ from 'lodash';
-import { dataProcessing } from './apis';
+import { jsondataProcessing } from './apis';
 //导出数据
 export async function exportJSONFn(data) {
-    console.log(data)
-    const res = await dataProcessing(data);
+    const res = await jsondataProcessing(data);
     if (res) {
         alert('导出成功！')
     }

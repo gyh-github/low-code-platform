@@ -1,11 +1,10 @@
 import { defineComponent, reactive } from "vue";
-import useMaterialsStore from "../../packages/store/materials";
-const flag = import.meta.env.VITE_MODE === 'generate';
+import useMaterialsStore from "@/packages/store/materials";
 import _ from 'lodash';
 
 export default defineComponent({
     setup() {
-        document.title = flag ? "H5" : "预览";
+        document.title = "H5";
         const { componentMap } = useMaterialsStore();
         const _state = reactive({ container: {}, plates: [] });
         const mainStyle = reactive({
@@ -13,13 +12,14 @@ export default defineComponent({
             height: '',
             background: '',
         });
-        const _storage_state = JSON.parse(sessionStorage.getItem('state'));
-        console.log(window, _storage_state, '---')
-        _state.container = _storage_state.container;
-        _state.plates = _storage_state.plates;
-        mainStyle.width = _state?.container.width + 'px';
-        mainStyle.height = _state?.container.height + 'px';
-        mainStyle.background = _state?.container.background;
+        import('./data.json').then(res => {
+            const _def = JSON.parse(JSON.stringify(res.default));
+            _state.container = _def.container;
+            _state.plates = _def.plates;
+            mainStyle.width = _state?.container.width + 'px';
+            mainStyle.height = _state?.container.height + 'px';
+            mainStyle.background = _state?.container.background;
+        });
         const _componentMap = componentMap;
         const renderProps = (ele) => {
             const arr = ['width', 'height', 'top', 'left', 'bottom', 'right'];

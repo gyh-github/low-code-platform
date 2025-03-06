@@ -1,6 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var json = express.json({ type: "*/json" });
+var json = express.json({ type: "*/json" ,limit:"10MB"});
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const { secret } = require('./utils/token');
@@ -24,7 +24,7 @@ app.use(cookieParser());//开启session
 //配置session
 app.use(session({
     secret,
-    cookie: { maxAge: 80 * 1000 },
+    cookie: { maxAge: 10 * 60 * 1000 },
     resave: true,
     saveUninitialized: false
 }));

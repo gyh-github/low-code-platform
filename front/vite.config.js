@@ -7,8 +7,9 @@ export default defineConfig(({ mode }) => {
   console.log('------------------环境变量:', env.VITE_MODE, '--------------------')
   return {
     plugins: [vue(), vueJsx()],
-    base: env.VITE_MODE === 'generate' ? './' : '/',
+    // base: env.VITE_MODE === 'generate' ? './' : '/',
     build: {
+      outDir:env.VITE_MODE === 'generate' ? 'generate' : 'dist',
       rollupOptions: {
         input: env.VITE_MODE === 'generate' ? 'index.generate.html' : 'index.html',
       }

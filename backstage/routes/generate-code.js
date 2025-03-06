@@ -3,18 +3,35 @@ var router = express.Router();
 const fs = require('node:fs');
 const { exec } = require('child_process');
 
-router.post('/dataProcessing', function (req, res) {
+//json文件内容编辑
+router.post('/jsondataProcessing', function (req, res) {
     const body = req.body;
-    fs.writeFile('../front/src/generate-data.json', JSON.stringify(body), (err) => {
+    fs.writeFile('../front/src/generate/data.json', JSON.stringify(body), (err) => {
         if (err) {
-            console.log(err)
+            res.send({ code: 'T0001', data:false });
+            console.log('error!!!', err)
         } else {
-            res.send({ code: 'T0000',data:true });
-            console.log('success!!!',body)
+            res.send({ code: 'T0000', data:true });
+            console.log('success!!!', body)
         }
     })
 });
 
+//依赖js文件内容编辑
+router.post('/jsdataProcessing', function (req, res) {
+    const body = req.body?.plates;
+    fs.writeFile('../front/src/generate/materialsIndex.js', body, (err) => {
+        if (err) {
+            res.send({ code: 'T0001', data:false });
+            console.log('error!!!', err)
+        } else {
+            res.send({ code: 'T0000', data:true });
+            console.log('success!!!', body)
+        }
+    })
+});
+
+//代码打包环节
 router.get('/generate', (req, res) => {
     const child = exec('npm run build:generate', {
         cwd: '../front'
