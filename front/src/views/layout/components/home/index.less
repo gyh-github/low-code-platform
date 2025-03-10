@@ -12,8 +12,8 @@
             height: 40px;
             width: 50%;
             background: none;
-            border: 2px solid #163172;
-            box-shadow: 0 0 4px #163172;
+            border: thin solid #d6e4f0;
+            box-shadow: 0 0 10px #163172;
             border-radius: 20px;
             color: #f6f6f6;
             font-weight: 500;
@@ -48,14 +48,16 @@
         }
         &-content{
             display: flex;
-            justify-content: space-around;
+            justify-content:space-around;
             align-items: center;
+            flex-wrap: wrap;
             font-size: 12px;
             padding: 10px;
             &-item{
-                width: 25%;
+                min-width: 183px;
+                max-width: 220px;
                 padding: 10px;
-                flex: 0 0 auto;
+                flex: 1 0 auto;
             }
         }
     }

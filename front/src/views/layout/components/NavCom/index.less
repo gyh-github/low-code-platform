@@ -1,10 +1,11 @@
 .navs {
-    background:rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.4);
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     height: 60px;
+    z-index: 999;
 
     &-content {
         display: flex;
@@ -19,7 +20,7 @@
             width: 100px;
             height: 60px;
             flex: 0 1 auto;
-            color:#163172;
+            color: #d6e4f0;
             font-size: 12px;
             text-align: center;
             position: relative;
@@ -68,19 +69,36 @@
             }
         }
     }
-    &-user{
+
+    &-user {
         position: absolute;
         right: 20px;
-        top: 20px;
-        background-color: #1e56a0;
-        border-radius:20px;
-        padding: 6px 20px;
-        font-size: 12px;
-        cursor: pointer;
-        color: #fff;
-        &:hover{
-            background-color: #d6e4f0;
-            color: #163172;
+        top: 12px;
+        & > button{
+            background: none;
+            border-radius: 20px;
+            border: thin solid #1e56a0;
+            padding: 0 30px;
+            font-size: 12px;
+            cursor: pointer;
+            color: #fff;
+            height: 35px;
+            line-height: 35px;
+            margin-right: 10px;
+            &:hover {
+                color: #d6e4f0;
+                box-shadow: 0 0 4px #163172;
+            }
+        }
+
+        &-info {
+            &>img {
+                height: 25px;
+                width: 25px;
+                border-radius: 50%;
+                vertical-align: middle;
+                margin: -2px 10px 0 0;
+            }
         }
     }
 }

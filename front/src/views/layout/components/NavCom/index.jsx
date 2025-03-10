@@ -1,13 +1,18 @@
 import { defineComponent, reactive, onMounted, onUnmounted, ref } from "vue";
 import './index.less';
 import { useRouter, useRoute } from "vue-router";
-import { getUser } from '@/utils/sessionStor'
-import Login from "../Login";
+import { getUser, clearSessStor } from '@/utils/sessionStor'
+import profilePicture from '@/assets/images/profile-picture.jpg';
 import { debounce } from 'lodash';
+import { message } from 'ant-design-vue';
 const generalNavs = [
     {
         label: '源平台',
         value: '/home'
+    },
+    {
+        label: '工作台',
+        value: '/container'
     },
     // {
     //     label: '发现',
@@ -28,13 +33,13 @@ const memberNav = [
         label: '源平台',
         value: '/home'
     },
+    {
+        label: '工作台',
+        value: '/container'
+    },
     // {
     //     label: '发现',
     //     value: '/materials'
-    // },
-    // {
-    //     label: '工作台',
-    //     value: '/container'
     // },
     // {
     //     label: '关于',
@@ -66,6 +71,28 @@ export default defineComponent({
         const screenWidthChange = (e) => {
             screenWidth.value = e.target.innerWidth;
         };
+        //登陆或退出
+        const userClick = () => {
+            if (user.user_name) {
+                clearSessStor();
+                location.reload();
+            } else {
+                router.push({
+                    path: '/login',
+                    query: {
+                        redirectUrl: route.path
+                    }
+                })
+            }
+        };
+        //创建模板
+        const createTemplateFn = () => {
+            if (!user.user_name) {
+                message.warning('请先登陆，谢谢！');
+                return;
+            }
+            router.push('/workbenches');
+        }
         onMounted(() => {
             const userInfo = getUser();
             user.user_name = userInfo?.user_name;
@@ -101,12 +128,15 @@ export default defineComponent({
                                         <span>{item.label}</span>
                                     </div>))
                             }
-                            <div className="navs-user">
-                                <span>{user.user_name || '登陆'}</span>
-                            </div>
                         </div>
                 }
-                <Login />
+                <div className="navs-user">
+                    <button onClick={() => createTemplateFn()}>创建模板</button>
+                    <button onClick={() => userClick()} className="navs-user-info">
+                        {user.user_name && <img src={user?.photo || profilePicture} alt="" />}
+                        <span>{user.user_name || '去登陆'}</span>
+                    </button>
+                </div>
             </div>)
     }
 })

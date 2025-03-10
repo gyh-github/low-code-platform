@@ -11,6 +11,10 @@ const routes = [
                 component: () => import('@/views/layout/components/home')
             },
             {
+                path: '/workbenches',
+                component: () => import('@/views/layout/components/workbenches')
+            },
+            {
                 path: '/personalCenter',
                 component: () => import('@/views/layout/components/personalCenter')
             },
@@ -33,6 +37,10 @@ const routes = [
         component: () => import('@/packages/container.jsx')
     },
     {
+        path: '/login',
+        component: () => import('@/views/login')
+    },
+    {
         path: '/preview',
         component: () => import('@/views/preview/index.jsx')
     }
@@ -43,14 +51,17 @@ const router = createRouter({
     routes
 });
 
-const memberNav = ['/container','/personalCenter'];
-router.beforeEach((to, from, next) => { 
+const memberNav = ['/container', '/personalCenter','/workbenches'];
+router.beforeEach((to, from, next) => {
     const _token = getToken();
     if (memberNav.includes(to.path) && !_token) {
         next({
-            path: '/home'
+            path: '/login',
+            query: {
+                redirectUrl:to.path
+            }
         })
-    } else { 
+    } else {
         next();
     }
 })

@@ -5,7 +5,6 @@ import { parseInt } from "lodash";
 import { login, getUserByToken } from "@/apis/user";
 import { setUser, setToken, setRefreshToken, getUser, clearSessStor } from '@/utils/sessionStor';
 import { encryptFn } from '@/utils/crypt';
-import profilePicture from '@/assets/images/profile-picture.jpg';
 
 export default defineComponent({
     setup(_, { expose }) {
@@ -22,7 +21,9 @@ export default defineComponent({
             code: ''
         })
         expose({
-            showLogin
+            showLogin,
+            logOut: () => logOut()
+
         });
         onMounted(() => {
             const _user = getUser();
