@@ -128,9 +128,13 @@ export default defineComponent({
             window.removeEventListener('mouseup', releaseGuideFn)
 
         })
-        watch(() => state.plates, () => {
-            console.log(state.plates)
-
+        watch(() => state.plates.find(item => item.focused)?.id, () => {
+            if (detailShow.value) {
+                detailShow.value = false;
+                setTimeout(() => {
+                    detailShow.value = true;
+                }, 200);
+            }
         })
 
         return () => (<div className="container">

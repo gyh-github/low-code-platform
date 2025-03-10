@@ -17,16 +17,11 @@ const fontFamilyList = ['Times, "Times New Roman", Georgia, serif',
 export default defineComponent({
     setup() {
         const state = inject('state');
-        const platexxx = computed(() => state.plates.find(item => item.focused));
-        const plate = ref(cloneDeep({ ...platexxx.value }))
+        const plateState = computed(() => state.plates.find(item => item.focused));
+        const plate = ref(cloneDeep({ ...plateState.value }))
         watch(plate.value, () => {
-            console.log(plate.value)
-            state.plates = state.plates.map(item => item.id === plate.value.id ? plate.value : item)
+            state.plates = state.plates.map(item => item.focused ? plate.value : item)
         })
-        watchEffect(() => {
-            console.log('---------------')
-        })
-        console.log(plate)
         return () => (<>
             <div className="row">
                 <div className="col col-8">文案</div>
@@ -61,7 +56,7 @@ export default defineComponent({
             <div className="row">
                 <div className="col col-8">文字颜色</div>
                 <div className="col col-16">
-                    <input type="color" value="#ffffff" v-model={plate.value.attribute.style['color']} style="width:100% !important" /></div>
+                    <input type="color" v-model={plate.value.attribute.style['color']} style="width:100% !important" /></div>
             </div>
             {JSON.stringify(plate.value)}
         </>)

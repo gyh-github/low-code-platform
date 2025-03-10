@@ -6,44 +6,45 @@ import Login from "../Login";
 import { debounce } from 'lodash';
 const generalNavs = [
     {
-        label: '首页',
+        label: '源平台',
         value: '/home'
     },
-    {
-        label: '发现',
-        value: '/materials'
-    },
-    {
-        label: '关于',
-        value: '/about'
-    },
-    {
-        label: '加入我们',
-        value: '/join'
-    },
+    // {
+    //     label: '发现',
+    //     value: '/materials'
+    // },
+    // {
+    //     label: '关于',
+    //     value: '/about'
+    // },
+    // {
+    //     label: '加入我们',
+    //     value: '/join'
+    // },
 ];
 
 const memberNav = [
     {
-        label: '首页',
+        label: '源平台',
         value: '/home'
     },
-    {
-        label: '发现',
-        value: '/materials'
-    },
-    {
-        label: '工作台',
-        value: '/container'
-    },
-    {
-        label: '关于',
-        value: '/about'
-    },
-    {
-        label: '个人中心',
-        value: '/personalCenter'
-    },]
+    // {
+    //     label: '发现',
+    //     value: '/materials'
+    // },
+    // {
+    //     label: '工作台',
+    //     value: '/container'
+    // },
+    // {
+    //     label: '关于',
+    //     value: '/about'
+    // },
+    // {
+    //     label: '个人中心',
+    //     value: '/personalCenter'
+    // },
+]
 
 export default defineComponent({
     setup() {
@@ -80,7 +81,7 @@ export default defineComponent({
                 {
                     screenWidth.value - 600 < 0 ?
                         <div className="navs-drop">
-                            <van-icon name="wap-nav" onClick={ ()=>openDrop.value = !openDrop.value} />
+                            <van-icon name="wap-nav" onClick={() => openDrop.value = !openDrop.value} />
                             {
                                 openDrop.value &&
                                 <div className="navs-drop-content">
@@ -100,6 +101,9 @@ export default defineComponent({
                                         <span>{item.label}</span>
                                     </div>))
                             }
+                            <div className="navs-user">
+                                <span>{user.user_name || '登陆'}</span>
+                            </div>
                         </div>
                 }
                 <Login />

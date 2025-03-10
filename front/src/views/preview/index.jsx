@@ -22,7 +22,7 @@ export default defineComponent({
         mainStyle.background = _state?.container.background;
         const _componentMap = componentMap;
         const renderProps = (ele) => {
-            const arr = ['width', 'height', 'top', 'left', 'bottom', 'right'];
+            const arr = ['width', 'height', 'top', 'left', 'bottom', 'right', 'font-size'];
             let _props = _.cloneDeep(ele.attribute);
             if (_props.style) {
                 _props.style.position = 'absolute';

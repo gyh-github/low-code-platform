@@ -80,15 +80,6 @@ export default defineComponent({
 
         return () => (<>
             {
-                userInfo?.user_name ?
-                    <div className="user">
-                        <img src={userInfo?.user_photo || profilePicture} alt="" />
-                        {userInfo?.user_name}
-                        <small onClick={() => logOut()}>退出</small>
-                    </div> : <button className="btn" onClick={() => (showLogin.value = true)}>
-                        登录</button>
-            }
-            {
                 showLogin.value && <div className="login">
                     <div className="login-content animate__animated animate__zoomInDown">
                         <div className="title">

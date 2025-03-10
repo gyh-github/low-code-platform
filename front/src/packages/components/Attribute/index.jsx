@@ -13,7 +13,6 @@ export default defineComponent({
         return () => (<div className="attribute">
             {!plate.value && <Background />}
             {plate.value && <AttributeCom />}
-
         </div>)
     }
 })
