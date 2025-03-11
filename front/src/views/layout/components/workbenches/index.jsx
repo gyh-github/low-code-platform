@@ -1,14 +1,13 @@
 import { defineComponent } from "vue";
 import './index.less';
 import Module from "./components/Module";
+import Container from "./components/ContainerW";
 
 export default defineComponent({
     setup() {
         return () => (<div className="workbenches">
-            <Module className="positionCenter left" />
-            <div className="container positionCenter">
-
-            </div>
+            <Module />
+            <Container />
 
         </div>)
     }
