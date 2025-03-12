@@ -1,4 +1,10 @@
-.pack{
-    border: thin solid red;
+.pack {
     position: absolute;
+    cursor: move;
+    z-index: 2;
+    background-color: aqua;
+
+    &.selected {
+        border: thin solid red;
+    }
 }

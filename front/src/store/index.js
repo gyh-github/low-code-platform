@@ -25,7 +25,7 @@ export const useStore = defineStore('main', {
                 obj[element.key] = element;
             });
             return obj;
-         }
+        }
     },
     actions: { 
         setCurrentModuleId(id) {
@@ -34,8 +34,6 @@ export const useStore = defineStore('main', {
         setContainerModules(type,module) { 
             switch (type) { 
                 case 'add':
-                    console.log(module, '-----');
-
                     this.containerModules.push(module);
                     break;
                 case 'del':

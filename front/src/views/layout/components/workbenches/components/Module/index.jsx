@@ -11,7 +11,7 @@ export default defineComponent({
                 const ModuleCom = defineAsyncComponent({
                     loader: () => import(`./../../../../../../components/modules/${element['type']}/index.jsx`)
                 })
-                element['preview'] = () => <ModuleCom onDragstart={(e) => dragstartFn(e, element)} />;
+                element['preview'] = () => <ModuleCom />;
                 element['render'] = (props) => <ModuleCom {...props} />;
                 setModuleList('update', element);
             });
@@ -22,7 +22,7 @@ export default defineComponent({
         }
         return () => (<div className="module">
             {
-                moduleList.map(ele => ele.preview())
+                moduleList.map(ele => <div draggable onDragstart={(e) => dragstartFn(e, ele)} >{ele.preview()}</div>)
             }
         </div>)
     }

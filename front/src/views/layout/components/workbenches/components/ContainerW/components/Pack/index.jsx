@@ -1,23 +1,43 @@
-import { defineComponent } from "vue";
+import { defineComponent, computed, ref } from "vue";
+import { usePack } from '@/hooks/usePack';
 import './index.less';
 
 export default defineComponent({
     props: ['data'],
     setup({ data }) {
-        let renderData = {};
-        const style = {};
-        Object.entries(data).forEach(ele => {
-            if (ele[0].indexOf('ui:') != -1) {
-                style[ele[0].replace('ui:', '')] = ele[1];
-            } else {
-                renderData[ele[0]] = ele[1];
-            }
-        })
-        delete renderData.render;
-        delete renderData.preview;
-        renderData['style'] = { ...style };
-        return () => (<div className="pack" style={{ ...style }}>
-            {data.render(renderData)}
+        const eleRef = ref(null);
+        usePack(data, eleRef);
+        let renderData = computed(() => {
+            const _renderData = {};
+            const _style = {};
+            Object.entries(data).forEach(ele => {
+                if (ele[0].indexOf('ui:') != -1) {
+                    _style[ele[0].replace('ui:', '')] = ele[1];
+                } else {
+                    _renderData[ele[0]] = ele[1];
+                }
+            })
+            delete _renderData.render;
+            delete _renderData.preview;
+            _renderData['style'] = { ...style };
+            return _renderData;
+        });
+        const style = computed(() => {
+            const _style = {};
+            Object.entries(data).forEach(ele => {
+                if (ele[0].indexOf('ui:') != -1) {
+                    _style[ele[0].replace('ui:', '')] = ele[1];
+                }
+            })
+            return _style;
+        });
+        return () => (<div className={data.selected ? 'pack selected' : 'pack'}
+            draggable
+            ref={eleRef}
+            style={{ ...style.value, position: 'absolute' }}
+
+        >
+            {data.render(renderData.value)}
         </div>)
     }
 })
