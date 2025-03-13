@@ -3,31 +3,19 @@ import './index.less';
 import { useStore } from '@/store';
 import { cloneDeep } from 'lodash';
 import Pack from "./components/Pack";
+import { storeToRefs } from "pinia";
 
 export default defineComponent({
     setup() {
-        const { moduleMap, setContainerModules, containerModules } = useStore();
+        const { setContainerModules } = useStore();
+        const store = useStore();
+        const { moduleMap, containerModules } = storeToRefs(store)
 
         //拖拽元素被放下时回调
         const dropFn = (e) => {
             e.preventDefault();
-            if (e.dataTransfer.getData('moduleKey')) {
-                dropOutFn(e);
-            }
-            // if (e.dataTransfer.getData('moduleId')) {
-            //     dropInFn(e);
-            // }
-        }
-        //元素内部组件拖拽放下时回调
-        const dropInFn = (e) => {
-            const _id = e.dataTransfer.getData('moduleId');
-            const _module = cloneDeep(moduleMap[_id]);
-            setContainerModules('update', _module);
-        }
-        //从外部拖拽到当前区域放下时回调
-        const dropOutFn = (e) => {
             const _key = e.dataTransfer.getData('moduleKey');
-            const _module = cloneDeep(moduleMap[_key]);
+            const _module = cloneDeep(moduleMap['value'][_key]);
             _module['id'] = new Date().getTime().toString();
             _module['selected'] = true;
             _module['ui:top'] = e.offsetY + 'px';
@@ -80,9 +68,8 @@ export default defineComponent({
         return () => (<div className="container" style={{ transform: `scale(${scaleWork.value})` }}>
             <div className="container-main" draggable onDragover={(e) => dragOverFn(e)} onDrop={(e) => dropFn(e)}>
                 {
-                    containerModules.map(ele => (<Pack data={ele} />))
+                    containerModules.value.map(ele => (<Pack data={ele} />))
                 }
-                {JSON.stringify(containerModules)}
             </div>
         </div>)
     }

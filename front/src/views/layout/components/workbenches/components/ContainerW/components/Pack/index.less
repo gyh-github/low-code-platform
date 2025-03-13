@@ -1,9 +1,13 @@
 .pack {
     position: absolute;
-    cursor: move;
-    z-index: 2;
+    cursor: grab;
     background-color: aqua;
-
+    z-index: inherit;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+ transition: none !important;
     &.selected {
         border: thin solid red;
     }

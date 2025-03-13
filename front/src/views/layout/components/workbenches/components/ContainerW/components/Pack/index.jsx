@@ -1,12 +1,14 @@
 import { defineComponent, computed, ref } from "vue";
-import { usePack } from '@/hooks/usePack';
+import { usePackDrag } from '@/hooks/usePackDrag';
 import './index.less';
+import { useStore } from '@/store';
 
 export default defineComponent({
     props: ['data'],
     setup({ data }) {
         const eleRef = ref(null);
-        usePack(data, eleRef);
+        const { handleMousedown } = usePackDrag(data, eleRef);
+        const { setContainerModules } = useStore();
         let renderData = computed(() => {
             const _renderData = {};
             const _style = {};
@@ -31,11 +33,14 @@ export default defineComponent({
             })
             return _style;
         });
+        const handleClick = () => {
+            setContainerModules('select', data);
+        }
         return () => (<div className={data.selected ? 'pack selected' : 'pack'}
-            draggable
             ref={eleRef}
             style={{ ...style.value, position: 'absolute' }}
-
+            onMousedown={handleMousedown}
+            onClick={handleClick}
         >
             {data.render(renderData.value)}
         </div>)

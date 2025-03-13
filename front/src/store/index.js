@@ -1,19 +1,20 @@
 import { defineStore } from "pinia";
 
 export const useStore = defineStore('main', {
-    state: () => { 
+    state: () => {
         return {
             containerModules: [],//图层组件
-            currentModuleId:'',//当前组件id
+            currentModuleId: '',//当前组件id
             moduleList: [
                 {
                     type: 'Text',
-                    key:'text-1',
+                    key: 'text-1',
                     label: '文字',
+                    text: '文字',
                     'ui:color': 'red',
-                    'ui:fontSize':'32px',
-                    'ui:width':'100px',
-                    'ui:height':'35px'
+                    'ui:fontSize': '32px',
+                    'ui:width': '100px',
+                    'ui:height': '35px'
                 }
             ]//所有组件数据
         }
@@ -27,29 +28,38 @@ export const useStore = defineStore('main', {
             return obj;
         }
     },
-    actions: { 
+    actions: {
         setCurrentModuleId(id) {
             this.currentModuleId = id;
         },
-        setContainerModules(type,module) { 
-            switch (type) { 
+        setContainerModules(type, module) {
+            let _list = [...this.containerModules];
+            switch (type) {
                 case 'add':
-                    this.containerModules.push(module);
+                    _list.forEach(item => item.selected = false)
+                    _list.push(module);
                     break;
                 case 'del':
-                    this.containerModules = this.containerModules.filter(item => item.id != module.id);
+                    _list = _list.filter(item => item.id != module.id);
                     break;
                 case 'update':
-                    this.containerModules = this.containerModules.map(item => item.id === module.id ? module : item);
+                    _list = _list.map(item => item.id === module.id ? module : item);
+                    break;
+                case 'select':
+                    _list.forEach(item => item.selected = item.id === module.id)
                     break;
                 case 'clear':
-                    this.containerModules = [];
+                    _list = [];
                 default:
                     return;
             }
+            this.$patch(state => {
+                state.containerModules = _list; // ✅ 通过 $patch 安全替换
+            });
+            console.log(this.containerModules, '------setContainerModules的结果！')
         },
-        setModuleList(type,module) { 
-            switch (type) { 
+        setModuleList(type, module) {
+            switch (type) {
                 case 'add':
                     this.moduleList.push(module);
                     break;

@@ -2,38 +2,37 @@ import { useStore } from '@/store';
 import { cloneDeep } from 'lodash';
 import { onBeforeUnmount, onMounted } from 'vue';
 
-export function usePack(data,element) {
+export function usePackDrag(data,element) {
     const { setContainerModules } = useStore();
     const eleData = cloneDeep(data);
+    let initY = 0;
+    let initX = 0;
 
     //开始拖拽
     const handleMousedown = (e) => {
         e.preventDefault();
-        console.log(e, '开始拖拽')
+        initY = e.clientY - element.value.offsetTop;
+        initX = e.clientX - element.value.offsetLeft;
         window.addEventListener('mousemove', handleMousemove);
-
-        element.value.style.top = e.offsetY + 'px';
-        element.value.style.left = e.offsetX + 'px';
+        element.value.style.zIndex = 999;
     }
     //拖拽中
     const handleMousemove = (e) => {
-        console.log(e, '拖拽中')
-        element.value.style.top = e.offsetY + 'px';
-        element.value.style.left = e.offsetX + 'px';
-        setContainerModules('update',eleData);
-        
+        e.preventDefault();
+        element.value.style.top = (e.clientY - initY) + 'px';
+        element.value.style.left = (e.clientX - initX) + 'px';
+        eleData['ui:top'] = (e.clientY -  initY) + 'px';
+        eleData['ui:left'] = (e.clientX  - initX) + 'px';
+        setContainerModules('update', eleData);
     }
     //拖拽结束
     const handleMouseup = (e) => {
-        console.log(e, '拖拽结束')
-        eleData['ui:top'] = e.offsetY + 'px';
-        eleData['ui:left'] = e.offsetX + 'px';
-        setContainerModules('update',eleData);
+        e.preventDefault();
+        element.value.style.zIndex = 'inherit';
         window.removeEventListener('mousemove', handleMousemove);
         
     }
     onMounted(() => { 
-        element.value.addEventListener('mousedown', handleMousedown);
         window.addEventListener('mouseup', handleMouseup);
     })
     onBeforeUnmount(() => { 
