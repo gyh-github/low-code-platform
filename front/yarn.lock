@@ -228,7 +228,7 @@
     "@babel/plugin-syntax-typescript" "^7.25.7"
 
 "@babel/runtime@^7.10.5":
-  version "7.26.0"
+  version "7.26.10"
   dependencies:
     regenerator-runtime "^0.14.0"
 
@@ -537,6 +537,12 @@ browserslist@^4.24.0, "browserslist@>= 4.21.0":
     node-releases "^2.0.18"
     update-browserslist-db "^1.1.0"
 
+call-bind-apply-helpers@^1.0.1, call-bind-apply-helpers@^1.0.2:
+  version "1.0.2"
+  dependencies:
+    es-errors "^1.3.0"
+    function-bind "^1.1.2"
+
 caniuse-lite@^1.0.30001663:
   version "1.0.30001667"
   resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001667.tgz"
@@ -584,7 +590,7 @@ copy-anything@^2.0.1:
     is-what "^3.14.1"
 
 core-js@^3.15.1:
-  version "3.39.0"
+  version "3.41.0"
 
 crypto-js@^4.2.0:
   version "4.2.0"
@@ -615,6 +621,13 @@ dom-align@^1.12.1:
 dom-scroll-into-view@^2.0.0:
   version "2.0.1"
 
+dunder-proto@^1.0.1:
+  version "1.0.1"
+  dependencies:
+    call-bind-apply-helpers "^1.0.1"
+    es-errors "^1.3.0"
+    gopd "^1.2.0"
+
 electron-to-chromium@^1.5.28:
   version "1.5.33"
   resolved "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.33.tgz"
@@ -631,6 +644,25 @@ errno@^0.1.1:
   integrity sha512-dJ6oBr5SQ1VSd9qkk7ByRgb/1SH4JZjCHSW/mr63/QcXO9zLVxvJ6Oy13nio03rxpSnVDDjFor75SjVeZWPW/A==
   dependencies:
     prr "~1.0.1"
+
+es-define-property@^1.0.1:
+  version "1.0.1"
+
+es-errors@^1.3.0:
+  version "1.3.0"
+
+es-object-atoms@^1.0.0, es-object-atoms@^1.1.1:
+  version "1.1.1"
+  dependencies:
+    es-errors "^1.3.0"
+
+es-set-tostringtag@^2.1.0:
+  version "2.1.0"
+  dependencies:
+    es-errors "^1.3.0"
+    get-intrinsic "^1.2.6"
+    has-tostringtag "^1.0.2"
+    hasown "^2.0.2"
 
 esbuild@^0.21.3:
   version "0.21.5"
@@ -680,21 +712,48 @@ follow-redirects@^1.15.6:
   version "1.15.9"
 
 form-data@^4.0.0:
-  version "4.0.1"
+  version "4.0.2"
   dependencies:
     asynckit "^0.4.0"
     combined-stream "^1.0.8"
+    es-set-tostringtag "^2.1.0"
     mime-types "^2.1.12"
+
+function-bind@^1.1.2:
+  version "1.1.2"
 
 gensync@^1.0.0-beta.2:
   version "1.0.0-beta.2"
   resolved "https://registry.npmjs.org/gensync/-/gensync-1.0.0-beta.2.tgz"
   integrity sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==
 
+get-intrinsic@^1.2.6:
+  version "1.3.0"
+  dependencies:
+    call-bind-apply-helpers "^1.0.2"
+    es-define-property "^1.0.1"
+    es-errors "^1.3.0"
+    es-object-atoms "^1.1.1"
+    function-bind "^1.1.2"
+    get-proto "^1.0.1"
+    gopd "^1.2.0"
+    has-symbols "^1.1.0"
+    hasown "^2.0.2"
+    math-intrinsics "^1.1.0"
+
+get-proto@^1.0.1:
+  version "1.0.1"
+  dependencies:
+    dunder-proto "^1.0.1"
+    es-object-atoms "^1.0.0"
+
 globals@^11.1.0:
   version "11.12.0"
   resolved "https://registry.npmjs.org/globals/-/globals-11.12.0.tgz"
   integrity sha512-WOBp/EEGUiIsJSp7wcv/y6MO+lV9UoncWqxuFfm8eBwzWNgyfBd6Gz+IeKQ9jCmyhoH99g15M3T+QaVHFjizVA==
+
+gopd@^1.2.0:
+  version "1.2.0"
 
 graceful-fs@^4.1.2:
   version "4.2.11"
@@ -705,6 +764,19 @@ has-flag@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npmjs.org/has-flag/-/has-flag-3.0.0.tgz"
   integrity sha512-sKJf1+ceQBr4SMkvQnBDNDtf4TXpVhVGateu0t918bl30FnbE2m4vNLX+VWe/dpjlb+HugGYzW7uQXH98HPEYw==
+
+has-symbols@^1.0.3, has-symbols@^1.1.0:
+  version "1.1.0"
+
+has-tostringtag@^1.0.2:
+  version "1.0.2"
+  dependencies:
+    has-symbols "^1.0.3"
+
+hasown@^2.0.2:
+  version "2.0.2"
+  dependencies:
+    function-bind "^1.1.2"
 
 html-tags@^3.3.1:
   version "3.3.1"
@@ -809,6 +881,9 @@ make-dir@^2.1.0:
   dependencies:
     pify "^4.0.1"
     semver "^5.6.0"
+
+math-intrinsics@^1.1.0:
+  version "1.1.0"
 
 mime-db@1.52.0:
   version "1.52.0"
@@ -948,6 +1023,11 @@ semver@^6.3.1:
 shallow-equal@^1.0.0:
   version "1.2.1"
 
+sortablejs@^1.14.0:
+  version "1.15.6"
+  resolved "https://registry.npmmirror.com/sortablejs/-/sortablejs-1.15.6.tgz"
+  integrity sha512-aNfiuwMEpfBM/CN6LY0ibyhxPfPbyFeBTYJKCvzkJ2GkUpazIt3H+QIPAMHwqQ7tMKaHz1Qj+rJJCqljnf4p3A==
+
 source-map-js@^1.2.0, source-map-js@^1.2.1:
   version "1.2.1"
   resolved "https://registry.npmjs.org/source-map-js/-/source-map-js-1.2.1.tgz"
@@ -959,7 +1039,7 @@ source-map@~0.6.0:
   integrity sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==
 
 stylis@^4.1.3:
-  version "4.3.4"
+  version "4.3.6"
 
 supports-color@^5.3.0:
   version "5.5.0"
@@ -1022,6 +1102,11 @@ vite@^5.0.0, vite@^5.4.1:
 vue-demi@*:
   version "0.14.10"
 
+vue-draggable-next@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.npmmirror.com/vue-draggable-next/-/vue-draggable-next-2.2.1.tgz"
+  integrity sha512-EAMS1IRHF0kZO0o5PMOinsQsXIqsrKT1hKmbICxG3UEtn7zLFkLxlAtajcCcUTisNvQ6TtCB5COjD9a1raNADw==
+
 vue-router@^4.5.0:
   version "4.5.0"
   resolved "https://registry.npmjs.org/vue-router/-/vue-router-4.5.0.tgz"
@@ -1034,7 +1119,7 @@ vue-types@^3.0.0:
   dependencies:
     is-plain-object "3.0.1"
 
-"vue@^2.6.14 || ^3.2.0", vue@^3.0.0, "vue@^3.0.0-0 || ^2.6.0", vue@^3.2.0, vue@^3.2.25, vue@^3.4.37, vue@>=3.0.3, vue@>=3.2.0, vue@3.5.9:
+"vue@^2.6.14 || ^3.2.0", vue@^3.0.0, "vue@^3.0.0-0 || ^2.6.0", vue@^3.2.0, vue@^3.2.2, vue@^3.2.25, vue@^3.4.37, vue@>=3.0.3, vue@>=3.2.0, vue@3.5.9:
   version "3.5.9"
   resolved "https://registry.npmjs.org/vue/-/vue-3.5.9.tgz"
   integrity sha512-nHzQhZ5cjFKynAY2beAm7XtJ5C13VKAFTLTgRYXy+Id1KEKBeiK6hO2RcW1hUjdbHMadz1YzxyHgQigOC54wug==

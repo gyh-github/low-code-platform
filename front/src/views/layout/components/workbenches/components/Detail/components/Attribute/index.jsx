@@ -30,7 +30,7 @@ export default defineComponent({
 
         watch(() => detail, () => { 
             store.setContainerModules('update', detail['value']);
-            sliderVal.value = detail.value?.['ui:lineHeight']?.replace('px', '')-0;
+            sliderVal.value = detail.value?.['ui:lineHeight']?.replace('px', '') || 10;
         }, { deep: true })
         
         return () => (<div className="attribute">

@@ -17,6 +17,7 @@ export default defineComponent({
             const _key = e.dataTransfer.getData('moduleKey');
             const _module = cloneDeep(moduleMap['value'][_key]);
             _module['id'] = new Date().getTime().toString();
+            _module['layerName'] = `图层（${containerModules.value.length + 1}）`;
             _module['selected'] = true;
             _module['ui:top'] = e.offsetY + 'px';
             _module['ui:left'] = e.offsetX + 'px';
@@ -27,7 +28,7 @@ export default defineComponent({
             e.preventDefault();
         }
         //缩放组件
-        const scaleWork = ref(0.75);
+        const scaleWork = ref(1);
         //监听页面尺寸变化
         const screenChange = (e) => {
             const totalHeight = document.documentElement.scrollHeight;
