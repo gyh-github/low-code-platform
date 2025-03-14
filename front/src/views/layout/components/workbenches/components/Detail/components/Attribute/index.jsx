@@ -1,21 +1,56 @@
-import { defineComponent, computed } from "vue";
+import { defineComponent, computed, watch,ref } from "vue";
 import './index.less';
 import { useStore } from "@/store";
 import { storeToRefs } from "pinia";
+import { Form, Input, Select, Textarea, Slider } from 'ant-design-vue';
+import NoData from "@/components/NoData";
+
 export default defineComponent({
 
     setup() {
         const store = useStore();
         const { containerModules } = storeToRefs(store);
         const detail = computed(() => containerModules.value?.find(item => item.selected));
+        const sliderVal = ref(10);
+
+        const fontSizeOptions = [
+            { label: '12px', value: '12px' },
+            { label: '14px',value:'14px'},
+            {label: '16px',value:'16px'},
+            {label: '18px',value:'18px'},
+            {label: '20px',value:'20px'},
+            { label: '24px', value: '24px' },
+            { label: '32px', value: '32px' },
+        ];
+
+        //行高改变时回调
+        const sliderChange = (val) => {
+            detail['value']['ui:lineHeight'] = val + 'px';
+         }
+
+        watch(() => detail, () => { 
+            store.setContainerModules('update', detail['value']);
+            sliderVal.value = detail.value?.['ui:lineHeight']?.replace('px', '')-0;
+        }, { deep: true })
+        
         return () => (<div className="attribute">
-            <div className="row">
-                <label htmlFor="content">文案</label>
-                <textarea name="content" id="content" cols="30" rows="10" value={detail['value']?.['text']}></textarea>
-            </div>
-            <div className="row">
-                <label htmlFor="fontSize">文字大小</label>{JSON.stringify(detail.value)}
-            </div>
+            {detail['value'] && <Form>
+                <Form.Item label="文案内容">
+                    <Textarea rows={4}  v-model:value={detail['value']['text']} />
+                </Form.Item>
+                <Form.Item label="文字大小">
+                    <Select v-model:value={detail['value']['ui:fontSize']}
+                        options={fontSizeOptions} />
+                </Form.Item>
+                <Form.Item label="文字颜色">
+                    <Input type="color" style={{ inlineSize:'100%  !important'}} v-model:value={detail['value']['ui:color']} />
+                </Form.Item>
+                <Form.Item label="文字行高">
+                    {sliderVal.value}
+                    <Slider min={10} max={ 150 } v-model:value={sliderVal.value} onChange={sliderChange} />
+                </Form.Item>
+            </Form>}
+            {!detail['value'] &&<NoData/>}
         </div>)
     }
 })

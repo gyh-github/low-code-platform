@@ -11,10 +11,8 @@ export const useStore = defineStore('main', {
                     key: 'text-1',
                     label: '文字',
                     text: '文字',
-                    'ui:color': 'red',
-                    'ui:fontSize': '32px',
-                    'ui:width': '100px',
-                    'ui:height': '35px'
+                    'ui:color': '#ee0066',
+                    'ui:fontSize': '32px'
                 }
             ]//所有组件数据
         }
@@ -43,10 +41,23 @@ export const useStore = defineStore('main', {
                     _list = _list.filter(item => item.id != module.id);
                     break;
                 case 'update':
-                    _list = _list.map(item => item.id === module.id ? module : item);
+                    _list = _list.map((item) => { 
+                        if (item.id === module.id) {
+                            return module;
+                        } else { 
+                            return item;
+                        }
+                    })
                     break;
                 case 'select':
-                    _list.forEach(item => item.selected = item.id === module.id)
+                    _list = _list.map((item) => { 
+                        if (item.id === module.id) {
+                            item.selected = true;
+                        } else { 
+                            item.selected = false;
+                        }
+                        return item;
+                    })
                     break;
                 case 'clear':
                     _list = [];
@@ -57,6 +68,7 @@ export const useStore = defineStore('main', {
                 state.containerModules = _list; // ✅ 通过 $patch 安全替换
             });
             console.log(this.containerModules, '------setContainerModules的结果！')
+            console.log(module, '------setContainerModules的结果！module')
         },
         setModuleList(type, module) {
             switch (type) {

@@ -68,7 +68,7 @@ export default defineComponent({
         return () => (<div className="container" style={{ transform: `scale(${scaleWork.value})` }}>
             <div className="container-main" draggable onDragover={(e) => dragOverFn(e)} onDrop={(e) => dropFn(e)}>
                 {
-                    containerModules.value.map(ele => (<Pack data={ele} />))
+                    containerModules.value.map((elem) => (<Pack data={elem} />))
                 }
             </div>
         </div>)
