@@ -9,7 +9,8 @@ export default defineComponent({
     setup() {
         const { setContainerModules } = useStore();
         const store = useStore();
-        const { moduleMap, containerModules } = storeToRefs(store)
+        const { moduleMap, containerModules, pageInfo } = storeToRefs(store)
+        const targetRef = ref(null);
 
         //拖拽元素被放下时回调
         const dropFn = (e) => {
@@ -19,6 +20,7 @@ export default defineComponent({
             _module['id'] = new Date().getTime().toString();
             _module['layerName'] = `图层（${containerModules.value.length + 1}）`;
             _module['selected'] = true;
+            _module['locked'] = false;
             _module['ui:top'] = e.offsetY + 'px';
             _module['ui:left'] = e.offsetX + 'px';
             setContainerModules('add', _module);
@@ -54,20 +56,38 @@ export default defineComponent({
             scaleWork.value = e.deltaY < 0 ? scaleWork.value * 0.9 : scaleWork.value * 1.1;
             scaleWork.value = Math.min(Math.max(0.75, scaleWork.value), 1.25);
         }
+        // 监听点击事件的回调函数
+        const handleClick = (event) => {
+            event.preventDefault();
+            if (targetRef.value && targetRef.value.contains(event.target)) {
+                store.setContainerModules('clearSelect');
+            }
+        };
+
         onMounted(() => {
             screenChange();
             window.addEventListener('resize', screenChange);
+            document.addEventListener('click', handleClick);
             // const workDemo = document.getElementsByClassName('workbenches')[0];
             // workDemo.addEventListener('wheel', wheelChange);
         })
         onBeforeUnmount(() => {
             window.removeEventListener('resize', screenChange);
+            document.removeEventListener('click', handleClick);
             // const workDemo = document.getElementsByClassName('workbenches')[0];
             // workDemo.removeEventListener('wheel', wheelChange);
 
         })
         return () => (<div className="container" style={{ transform: `scale(${scaleWork.value})` }}>
-            <div className="container-main" draggable onDragover={(e) => dragOverFn(e)} onDrop={(e) => dropFn(e)}>
+            <div className="container-main"
+                ref={targetRef}
+                style={{
+                    width: pageInfo.value['width'],
+                    height: pageInfo.value['height'],
+                    backgroundColor: pageInfo.value['backgroundColor'],
+                    backgroundImage: `url(${pageInfo.value['backgroundImage']})`
+                }}
+                draggable onDragover={(e) => dragOverFn(e)} onDrop={(e) => dropFn(e)}>
                 {
                     containerModules.value.map((elem) => (<Pack data={elem} />))
                 }

@@ -3,6 +3,12 @@ import { defineStore } from "pinia";
 export const useStore = defineStore('main', {
     state: () => {
         return {
+            pageInfo: {
+                width: '375px',
+                height: '667px',
+                backgroundColor: '#ffffff',
+                backgroundImage:''
+            },
             containerModules: [],//图层组件
             currentModuleId: '',//当前组件id
             moduleList: [
@@ -30,7 +36,7 @@ export const useStore = defineStore('main', {
         setCurrentModuleId(id) {
             this.currentModuleId = id;
         },
-        setContainerModules(type, module) {
+        setContainerModules(type, module=null) {
             let _list = [...this.containerModules];
             switch (type) {
                 case 'add':
@@ -38,11 +44,11 @@ export const useStore = defineStore('main', {
                     _list.push(module);
                     break;
                 case 'del':
-                    _list = _list.filter(item => item.id != module.id);
+                    _list = _list.filter(item => item.id != module?.id);
                     break;
                 case 'update':
                     _list = _list.map((item) => { 
-                        if (item.id === module.id) {
+                        if (item.id === module?.id) {
                             return module;
                         } else { 
                             return item;
@@ -51,13 +57,16 @@ export const useStore = defineStore('main', {
                     break;
                 case 'select':
                     _list = _list.map((item) => { 
-                        if (item.id === module.id) {
+                        if (item.id === module?.id) {
                             item.selected = true;
                         } else { 
                             item.selected = false;
                         }
                         return item;
                     })
+                    break;
+                case 'clearSelect':
+                    _list.forEach(item => item.selected = false)
                     break;
                 case 'clear':
                     _list = [];
@@ -67,8 +76,8 @@ export const useStore = defineStore('main', {
             this.$patch(state => {
                 state.containerModules = _list; // ✅ 通过 $patch 安全替换
             });
-            console.log(this.containerModules, '------setContainerModules的结果！')
-            console.log(module, '------setContainerModules的结果！module')
+            // console.log(this.containerModules, '------setContainerModules的结果！')
+            // console.log(module, '------setContainerModules的结果！module')
         },
         setModuleList(type, module) {
             switch (type) {
@@ -86,6 +95,11 @@ export const useStore = defineStore('main', {
                 default:
                     return;
             }
+        },
+        setPageInfo(page) { 
+            this.$patch(state => { 
+                state.pageInfo = page;
+            })
         }
     }
 })

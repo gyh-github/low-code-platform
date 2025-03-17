@@ -31,7 +31,6 @@ export function usePackDrag(data, element) {
         e.preventDefault();
         element.value.style.zIndex = 'inherit';
         window.removeEventListener('mousemove', handleMousemove);
-        
     }
     onMounted(() => { 
         window.addEventListener('mouseup', handleMouseup);

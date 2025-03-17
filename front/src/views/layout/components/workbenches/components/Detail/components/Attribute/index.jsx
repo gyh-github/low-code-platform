@@ -46,7 +46,6 @@ export default defineComponent({
                     <Input type="color" style={{ inlineSize:'100%  !important'}} v-model:value={detail['value']['ui:color']} />
                 </Form.Item>
                 <Form.Item label="文字行高">
-                    {sliderVal.value}
                     <Slider min={10} max={ 150 } v-model:value={sliderVal.value} onChange={sliderChange} />
                 </Form.Item>
             </Form>}

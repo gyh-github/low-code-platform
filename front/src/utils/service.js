@@ -1,6 +1,7 @@
 import Axios from 'axios';
 import { message } from 'ant-design-vue';
-import { setToken,getToken,setRefreshToken,getRefreshToken } from './sessionStor'
+import router from "@/router";
+import { setToken, getToken, setRefreshToken, getRefreshToken, clearSessStor } from './sessionStor';
 
 const service = Axios.create({
     baseURL: '/api',
@@ -33,16 +34,25 @@ service.interceptors.request.use(config => {
 //响应拦截
 service.interceptors.response.use(res => {
     message.destroy();
-    const { data: { code, msg, data },headers } = res;
+    const { data: { code, msg, data }, headers } = res;
     if (headers['authorization']) {
         setToken(headers['authorization']);
         setRefreshToken(headers['x-refresh-token']);
     }
-    
+
     if (code === 'T0000') {
         return data;
     }
-    if (['T0001','T0003'].includes(code)) {
+    if (code === 'T0003') {
+        clearSessStor();
+        router.push({
+            path: '/login',
+            query: {
+                redirectUrl: router.currentRoute.value?.path
+            }
+        })
+    }
+    if (['T0001', 'T0003'].includes(code)) {
         message.error(msg);
         return null;
     }

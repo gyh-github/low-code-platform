@@ -18,10 +18,15 @@ export default defineComponent({
         });
         const { handleMousedown } = usePackDrag(element.value, eleRef);
 
+        const handleClick = (e) => {
+            e.stopPropagation();
+        }
+
         return () => (<div className={element.value.selected ? 'pack selected' : 'pack'}
             ref={eleRef}
-            style={{ ...style.value }}
+            style={style.value}
             onMousedown={handleMousedown}
+            onClick={handleClick}
         >
             {element.value['render']({ ...element.value, style: style.value })}
         </div>)
