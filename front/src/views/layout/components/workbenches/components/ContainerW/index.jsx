@@ -5,6 +5,7 @@ import { cloneDeep } from 'lodash';
 import Pack from "./components/Pack";
 import { storeToRefs } from "pinia";
 import { onBeforeRouteLeave } from "vue-router";
+import { useProject } from "@/hooks/useProject";
 
 export default defineComponent({
     setup() {
@@ -12,7 +13,7 @@ export default defineComponent({
         const store = useStore();
         const { moduleMap, containerModules, pageInfo } = storeToRefs(store)
         const targetRef = ref(null);
-
+        const { createThumbnail } = useProject(targetRef)
         //拖拽元素被放下时回调
         const dropFn = (e) => {
             e.preventDefault();
@@ -86,6 +87,7 @@ export default defineComponent({
         return () => (<div className="container" style={{ transform: `scale(${scaleWork.value})` }}>
             <div className="container-main"
                 ref={targetRef}
+                id="containerMain"
                 style={{
                     width: pageInfo.value['width'],
                     height: pageInfo.value['height'],

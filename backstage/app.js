@@ -9,6 +9,7 @@ var authMiddleware = require('./middlewares/authMiddleware');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var projectRouter = require('./routes/project');
 var generateCodesRouter = require('./routes/generate-code');
 var uploadRouter = require('./routes/upload');
 
@@ -32,6 +33,7 @@ app.use(session({
 //接口路由
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/project', projectRouter);
 app.use('/code', generateCodesRouter);
 app.use('/upload', uploadRouter);
 

@@ -21,7 +21,7 @@ export default defineComponent({
             const { file, onError } = options;
             try {
                 const formData = new FormData();
-                formData.append('file', file);
+                formData.append('file', file);console.log(file)
                 const data = await uploadFile(formData);
                 data && (page['backgroundImage'] = data);
             } catch (error) {
