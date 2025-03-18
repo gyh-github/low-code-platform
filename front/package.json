@@ -15,6 +15,7 @@
     "animate.css": "^4.1.1",
     "ant-design-vue": "^4.2.6",
     "axios": "^1.7.9",
+    "colorpicker-v3": "^2.10.2",
     "crypto-js": "^4.2.0",
     "json2html": "^0.0.8",
     "lodash": "^4.17.21",

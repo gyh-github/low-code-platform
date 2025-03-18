@@ -43,7 +43,7 @@ export default defineComponent({
                         options={fontSizeOptions} />
                 </Form.Item>
                 <Form.Item label="文字颜色">
-                    <Input type="color" style={{ inlineSize:'100%  !important'}} v-model:value={detail['value']['ui:color']} />
+                    <color-picker v-model:hex={detail['value']['ui:color']}></color-picker>
                 </Form.Item>
                 <Form.Item label="文字行高">
                     <Slider min={10} max={ 150 } v-model:value={sliderVal.value} onChange={sliderChange} />

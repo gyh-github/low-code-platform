@@ -49,7 +49,7 @@ export default defineComponent({
                     <InputNumber v-model:value={page['height']} style={{width:'100%'}}/>
                 </Form.Item>
                 <Form.Item label="背景颜色">
-                    <Input type="color" v-model:value={page['backgroundColor']} style={{ inlineSize:'100% !important'}}/>
+                    <color-picker v-model:hex={page['backgroundColor']}></color-picker>
                 </Form.Item>
                 <Form.Item label="背景图片">
                      <Upload

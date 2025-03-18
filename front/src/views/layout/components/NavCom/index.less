@@ -5,7 +5,7 @@
     left: 0;
     right: 0;
     height: 60px;
-    z-index: 999;
+    z-index: 9999;
 
     &-content {
         display: flex;
@@ -25,6 +25,11 @@
             text-align: center;
             position: relative;
             cursor: pointer;
+            &:nth-child(1){
+                font-size: 20px;
+                font-weight: 700;
+                color: rgb(53, 175, 51);
+            }
 
             &:hover,
             &.active {
@@ -41,7 +46,7 @@
 
         &>.van-icon {
             font-size: 32px;
-            color: var(--lcp-n-color);
+            color: #d6e4f0;
             margin: 15px 0;
         }
 
@@ -53,9 +58,9 @@
 
             &-item {
                 padding: 15px;
-                background: var(--lcp-n-bg-color);
+                background:#163172;
                 font-size: 14px;
-                color: var(--lcp-n-color);
+                color: #d6e4f0;
 
                 &:nth-child(1) {
                     border-top: none;
@@ -75,13 +80,13 @@
         right: 20px;
         top: 12px;
         & > button{
-            background: none;
+            background: #1e56a0;
             border-radius: 20px;
             border: thin solid #1e56a0;
-            padding: 0 30px;
+            padding: 0 20px;
             font-size: 12px;
             cursor: pointer;
-            color: #fff;
+            color: #d6e4f0;
             height: 35px;
             line-height: 35px;
             margin-right: 10px;

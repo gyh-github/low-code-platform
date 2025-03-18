@@ -1,4 +1,4 @@
-import { defineComponent, reactive, onMounted, onUnmounted, ref } from "vue";
+import { defineComponent, reactive, onMounted, onUnmounted, ref, computed } from "vue";
 import './index.less';
 import { useRouter, useRoute } from "vue-router";
 import { getUser, clearSessStor } from '@/utils/sessionStor'
@@ -60,6 +60,8 @@ export default defineComponent({
         });
         const screenWidth = ref(0);
         const openDrop = ref(false);
+        const routerPath = computed(() => (route.path));
+
         //导航跳转
         const handleClickFn = (item) => {
             openDrop.value = false;
@@ -131,7 +133,8 @@ export default defineComponent({
                         </div>
                 }
                 <div className="navs-user">
-                    <button onClick={() => createTemplateFn()}>创建模板</button>
+                    {routerPath.value != '/workbenches' && <button onClick={() => createTemplateFn()}>创建模板</button>}
+
                     <button onClick={() => userClick()} className="navs-user-info">
                         {user.user_name && <img src={user?.photo || profilePicture} alt="" />}
                         <span>{user.user_name || '去登陆'}</span>

@@ -4,6 +4,7 @@ import { useStore } from '@/store';
 import { cloneDeep } from 'lodash';
 import Pack from "./components/Pack";
 import { storeToRefs } from "pinia";
+import { onBeforeRouteLeave } from "vue-router";
 
 export default defineComponent({
     setup() {
@@ -16,6 +17,7 @@ export default defineComponent({
         const dropFn = (e) => {
             e.preventDefault();
             const _key = e.dataTransfer.getData('moduleKey');
+            if (!_key) return;
             const _module = cloneDeep(moduleMap['value'][_key]);
             _module['id'] = new Date().getTime().toString();
             _module['layerName'] = `图层（${containerModules.value.length + 1}）`;
@@ -77,6 +79,9 @@ export default defineComponent({
             // const workDemo = document.getElementsByClassName('workbenches')[0];
             // workDemo.removeEventListener('wheel', wheelChange);
 
+        })
+        onBeforeRouteLeave((to, from, next) => {
+            console.log(to, from, next)
         })
         return () => (<div className="container" style={{ transform: `scale(${scaleWork.value})` }}>
             <div className="container-main"
