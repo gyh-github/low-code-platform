@@ -8,8 +8,9 @@ export const useStore = defineStore('main', {
                 height: '667px',
                 backgroundColor: '#ffffff',
                 backgroundImage:''
-            },
+            },//页面信息
             containerModules: [],//图层组件
+            projectTitle:'',//项目标题
             currentModuleId: '',//当前组件id
             moduleList: [
                 {
@@ -35,6 +36,9 @@ export const useStore = defineStore('main', {
     actions: {
         setCurrentModuleId(id) {
             this.currentModuleId = id;
+        },
+        setProjectTitle(title) {
+            this.projectTitle = title;
         },
         setContainerModules(type, module=null) {
             let _list = [...this.containerModules];

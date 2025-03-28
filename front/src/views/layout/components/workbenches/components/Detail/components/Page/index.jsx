@@ -21,9 +21,17 @@ export default defineComponent({
             const { file, onError } = options;
             try {
                 const formData = new FormData();
-                formData.append('file', file);console.log(file)
+                formData.append('file', file);
                 const data = await uploadFile(formData);
                 data && (page['backgroundImage'] = data);
+                new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => resolve(reader.result); // 读取完成时返回 Base64
+                    reader.onerror = reject; // 读取失败时抛出错误
+                    reader.readAsDataURL(file); // 将 Blob 转换为 Base64
+                }).then(res => { 
+                    sessionStorage.setItem('pageBackgroundImage',res)
+                })
             } catch (error) {
                 onError(error, file); // 上传失败
             }
@@ -31,7 +39,6 @@ export default defineComponent({
 
 
         watch(()=>page, (val) => {
-            console.log(val, '-----')
             const _page = {
                 width: val.width + 'px',
                 height: val.height + 'px',

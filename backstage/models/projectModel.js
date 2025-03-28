@@ -16,13 +16,12 @@ const all = () => {
 //新增
 const add = (params) => {
     return new Promise((resolve, reject) => {
-        connection.query("insert into project(title,thumbnail_url,author_id,author_name,create_time,status,module_id,cited_num,view_num) values(?,?,?,?,?,?,?,?,?)", params, (error, data) => {
+        connection.query("insert into project(title,json_data,thumbnail_url,author_id,author_name,create_time,status,module_id,cited_num,view_num) values(?,?,?,?,?,?,?,?,?,?)", params, (error, data) => {
             if (error) {
                 reject(error);
             } else {
                 resolve(data);
             }
-
         })
     })
 }

@@ -31,6 +31,12 @@ const infoById = async (req, res) => {
 const add = async (req, res) => {
     try {
         const params = req.body;
+        params.create_time = new Date();
+        params.status = params.status || 0;
+        params.module_id = params.module_id || 0;
+        params.cited_num = params.cited_num || 0;
+        params.view_num = params.view_num || 0;
+        params.json_data = JSON.stringify(params.json_data)
         await service.add(Object.values(params));
         res.status(200).json({
             code: 'T0000',
@@ -39,6 +45,7 @@ const add = async (req, res) => {
 
         });
     } catch (error) {
+        console.error(error)
         res.status(500).json({ code: 'T0001', msg: '添加失败!' });
     }
 };

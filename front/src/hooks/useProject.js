@@ -1,6 +1,8 @@
 import { useStore } from '@/store';
 import { uploadFile } from '@/apis/common';
+import { add } from '@/apis/project';
 import { storeToRefs } from 'pinia';
+import { getUser } from '@/utils/sessionStor';
 import html2canvas from 'html2canvas';
 
 // 将 Base64 转换为 Blob
@@ -18,15 +20,22 @@ const dataURLtoBlob = (dataURL) => {
 
 export function useProject(demo) {
     const store = useStore();
-    const { pageInfo, containerModules } = storeToRefs(store);
-
-    //创建缩略图
-    const createThumbnail = () => {
-        const containerHTML = demo.value || document.getElementById('containerMain');
+    const { pageInfo, containerModules, projectTitle } = storeToRefs(store);
+    //保存
+    const saveProject = async () => {
+        const userInfo = getUser();
+        const containerHTML = demo?.value || document.getElementById('containerMain');
         if (containerHTML) {
             html2canvas(containerHTML, {
                 scale: 2, // 提高分辨率
                 useCORS: true, // 允许跨域图片
+                allowTaint: false, // 禁止污染 Canvas
+                onclone: () => {
+                    containerHTML.style.backgroundImage = `url(${sessionStorage.getItem('pageBackgroundImage')})`;
+                    containerHTML.querySelectorAll('.selected').forEach(element => {
+                        element.style.boder = 'none';
+                    });
+                }
             }).then(async (canvas) => {
                 // 将 Canvas 转换为图片 URL
                 const imgData = canvas.toDataURL('image/png');
@@ -34,12 +43,19 @@ export function useProject(demo) {
                 const fileName = 'project_thumbnail_' + new Date().getTime().toString() + '.png'
                 formData.append('file', dataURLtoBlob(imgData), fileName);
                 const uploadRes = await uploadFile(formData);
-                console.log(uploadRes, imgData)
+                await add({
+                    title: projectTitle.value,
+                    json_data: {
+                        pageInfo: pageInfo.value,
+                        modules: containerModules.value
+                    },
+                    thumbnail_url: uploadRes,
+                    author_id: userInfo?.user_id,
+                    author_name: userInfo?.user_name
+                })
             });
         }
     };
-    //保存
-    const saveProject = () => { };
     //设置为模板
     const setProjectModule = () => { };
     //设置为作品
@@ -48,7 +64,6 @@ export function useProject(demo) {
     return {
         saveProject,
         setProjectModule,
-        saveProjectCreation,
-        createThumbnail
+        saveProjectCreation
     };
 }

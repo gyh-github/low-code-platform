@@ -62,7 +62,7 @@ export default defineComponent({
         const screenWidth = ref(0);
         const openDrop = ref(false);
         const routerPath = computed(() => (route.path));
-        const { createThumbnail } = useProject();
+        const { saveProject } = useProject();
 
         //导航跳转
         const handleClickFn = (item) => {
@@ -98,8 +98,8 @@ export default defineComponent({
             router.push('/workbenches');
         }
         //保存项目
-        const saveProject = () => {
-            createThumbnail();
+        const saveProjectFn = () => {
+            saveProject();
         };
         onMounted(() => {
             const userInfo = getUser();
@@ -140,7 +140,7 @@ export default defineComponent({
                 }
                 <div className="navs-user">
                     {routerPath.value != '/workbenches' && <button onClick={() => createTemplateFn()}>创建模板</button>}
-                    {routerPath.value === '/workbenches' && <button onClick={() => saveProject()}>保存</button>}
+                    {routerPath.value === '/workbenches' && <button onClick={() => saveProjectFn()}>保存</button>}
                     <button onClick={() => userClick()} className="navs-user-info">
                         {user.user_name && <img src={user?.photo || profilePicture} alt="" />}
                         <span>{user.user_name || '去登陆'}</span>
