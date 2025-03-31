@@ -13,10 +13,37 @@ const all = async (req, res) => {
         res.status(500).json({ code: 'T0001', msg: '查询失败!' });
     }
 }
+//获取热门项目
+const popular = async (req, res) => {
+    try {
+        const resService = await service.popular();
+        res.send({
+            code: 'T0000',
+            msg: '查询成功！',
+            data: resService
+        });
+    } catch (error) {
+        res.status(500).json({ code: 'T0001', msg: '查询失败!' });
+    }
+}
+//获取私有项目
+const privatePage = async (req, res) => {
+    const params = req.body;
+    try {
+        const resService = await service.privatePage(params);
+        res.send({
+            code: 'T0000',
+            msg: '查询成功！',
+            data: resService
+        });
+    } catch (error) {
+        res.status(500).json({ code: 'T0001', msg: '查询失败!' });
+    }
+}
 //根据id获取数据
 const infoById = async (req, res) => {
     try {
-        const { id } = req.query;
+        const { id } = req.body;
         const resService = await service.infoById(id);
         res.send({
             code: 'T0000',
@@ -81,5 +108,5 @@ const del = async (req, res) => {
 };
 
 module.exports = {
-    all, add, edit, infoById, del
+    all, add, edit, infoById, del,privatePage,popular
 };

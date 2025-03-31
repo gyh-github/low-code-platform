@@ -1,21 +1,16 @@
-import { defineComponent, onMounted, onBeforeUnmount, ref, createVNode } from "vue";
+import { defineComponent, onMounted, onBeforeUnmount, ref } from "vue";
 import './index.less';
 import { useStore } from '@/store';
 import { cloneDeep } from 'lodash';
 import Pack from "./components/Pack";
 import { storeToRefs } from "pinia";
-import { onBeforeRouteLeave } from "vue-router";
-import { useProject } from "@/hooks/useProject";
-import { Modal } from "ant-design-vue";
-import { ExclamationCircleFilled } from '@ant-design/icons-vue';
 
 export default defineComponent({
     setup() {
+        const targetRef = ref(null);
         const { setContainerModules } = useStore();
         const store = useStore();
-        const { moduleMap, containerModules, pageInfo, projectTitle } = storeToRefs(store)
-        const targetRef = ref(null);
-        const { saveProject } = useProject(targetRef)
+        const { moduleMap, containerModules, pageInfo } = storeToRefs(store)
         //拖拽元素被放下时回调
         const dropFn = (e) => {
             e.preventDefault();
@@ -81,26 +76,6 @@ export default defineComponent({
             // const workDemo = document.getElementsByClassName('workbenches')[0];
             // workDemo.removeEventListener('wheel', wheelChange);'即将离开该页面，是否保存本次修改？'
 
-        })
-        onBeforeRouteLeave((to, from, next) => {
-            Modal.confirm({
-                title: '温馨提示',
-                centered: 'true',
-                icon: createVNode(ExclamationCircleFilled),
-                content: createVNode('div', { padding: '30px' }, [
-                    createVNode('p', { style: 'color:#ee0000;font-weight:600;' }, '即将离开该页面，是否保存本次修改？'),
-                    createVNode('span', {}, '项目名称：'),
-                    createVNode('input', { value: projectTitle.value, onChange: (e) => store.setProjectTitle(e.target.value) })]),
-                okText: '保存后离开',
-                cancelText: '直接离开',
-                onOk() {
-                    saveProject();
-                    next()
-                },
-                onCancel() {
-                    next()
-                },
-            });
         })
         return () => (<div className="container" style={{ transform: `scale(${scaleWork.value})` }}>
             <div className="container-main"

@@ -11,6 +11,7 @@ export const useStore = defineStore('main', {
             },//页面信息
             containerModules: [],//图层组件
             projectTitle:'',//项目标题
+            projectId:'',//项目Id
             currentModuleId: '',//当前组件id
             moduleList: [
                 {
@@ -36,6 +37,9 @@ export const useStore = defineStore('main', {
     actions: {
         setCurrentModuleId(id) {
             this.currentModuleId = id;
+        },
+        setProjectId(id) {
+            this.projectId = id;
         },
         setProjectTitle(title) {
             this.projectTitle = title;
@@ -70,10 +74,11 @@ export const useStore = defineStore('main', {
                     })
                     break;
                 case 'clearSelect':
-                    _list.forEach(item => item.selected = false)
+                    _list.forEach(item => item.selected = false);
                     break;
                 case 'clear':
                     _list = [];
+                    break;
                 default:
                     return;
             }

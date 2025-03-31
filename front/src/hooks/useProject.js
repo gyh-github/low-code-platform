@@ -1,6 +1,6 @@
 import { useStore } from '@/store';
 import { uploadFile } from '@/apis/common';
-import { add } from '@/apis/project';
+import { add,edit } from '@/apis/project';
 import { storeToRefs } from 'pinia';
 import { getUser } from '@/utils/sessionStor';
 import html2canvas from 'html2canvas';
@@ -33,7 +33,7 @@ export function useProject(demo) {
                 onclone: () => {
                     containerHTML.style.backgroundImage = `url(${sessionStorage.getItem('pageBackgroundImage')})`;
                     containerHTML.querySelectorAll('.selected').forEach(element => {
-                        element.style.boder = 'none';
+                        element.classList.remove('selected');
                     });
                 }
             }).then(async (canvas) => {

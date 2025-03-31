@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken');
 const { secret, setAccessToken, setRefreshToken } = require('../utils/token');
-const whiteList = ['/users/login', '/refresh'];
+const whiteList = ['/users/login', '/refresh','/project/all','/project/popular'];
 const isWhiteList = (url) => {
-    return whiteList.find(item => item === url);
+    return whiteList.find(item =>url.indexOf(item)>-1 );
 };
 const checkAuth = async (req, res, next) => {
     if (isWhiteList(req.url) || req.url.indexOf('/uploads') != -1) {

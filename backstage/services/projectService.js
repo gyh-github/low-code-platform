@@ -1,8 +1,16 @@
 const projectModel = require('./../models/projectModel');
 
-//获取用户列表所有数据
+//获取所有项目数据
 const all = async () => {
     return await projectModel.all();
+}
+//获取热门项目数据
+const popular = async () => {
+    return await projectModel.popular();
+}
+//获取用户私有项目数据
+const privatePage = async (data) => {
+    return await projectModel.privatePage(data);
 }
 //新增
 const add = async (data) => {
@@ -20,4 +28,4 @@ const del= async (data) => {
 const infoById = async (data) => { 
     return await projectModel.infoById(data)
 };
-module.exports = { all, add, infoById, edit, del };
+module.exports = { all, add, infoById, edit, del, privatePage, popular };

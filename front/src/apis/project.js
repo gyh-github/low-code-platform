@@ -3,6 +3,14 @@ import server from '@/utils/service';
 export function all() {
     return server.get('/project/all');
 }
+//获取热门项目
+export function popular() {
+    return server.get('/project/popular');
+}
+//获取私有项目带分页
+export function privatePage(params) {
+    return server.post('/project/privatePage', params);
+}
 //新增
 export function add(params) {
     return server.post('/project/add', params);

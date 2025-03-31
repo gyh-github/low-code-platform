@@ -3,7 +3,33 @@ const connection = require('./../config/db');
 //查询所有数据
 const all = () => {
     return new Promise((resolve, reject) => {
-        connection.query("select * from project", (error, data) => {
+        connection.query("select * from project order by create_time desc", (error, data) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(data);
+            }
+
+        })
+    })
+};
+//分页查询热门项目数据
+const popular = () => {
+    return new Promise((resolve, reject) => {
+        connection.query( `select * from project  order by create_time desc limit 0,3`, (error, data) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(data);
+            }
+
+        })
+    })
+};
+//分页查询私有项目数据
+const privatePage = (params) => {
+    return new Promise((resolve, reject) => {
+        connection.query( `select * from project where author_id=${params.author_id}  order by create_time desc limit ${params.pageCurrent-1}, ${params.pageSize-1}`, (error, data) => {
             if (error) {
                 reject(error);
             } else {
@@ -28,7 +54,7 @@ const add = (params) => {
 //修改
 const edit = (params) => {
     return new Promise((resolve, reject) => {
-        connection.query(`update users set ${params['column_key']}='${params[params['column_key']]}' where user_id=${params['id']}`, (error, data) => {
+        connection.query(`update project set ${params['column_key']}='${params[params['column_key']]}' where user_id=${params['id']}`, (error, data) => {
             if (error) {
                 reject(error);
             } else {
@@ -41,7 +67,7 @@ const edit = (params) => {
 //删除
 const del = (params) => {
     return new Promise((resolve, reject) => {
-        connection.query("delete from project where id=?", params, (error, data) => {
+        connection.query(`delete from project where id=${params.id}`, (error, data) => {
             if (error) {
                 reject(error);
             } else {
@@ -64,4 +90,4 @@ const infoById = (params) => {
     })
 }
 
-module.exports = { all, add, del, edit, infoById };
+module.exports = { all, add, del, edit, infoById,privatePage,popular };
