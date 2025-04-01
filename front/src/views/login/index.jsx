@@ -71,6 +71,10 @@ export default defineComponent({
             interval.value = null;
             times.value = 120;
         };
+        //注册
+        const registerFn = () => {
+            router.push('/join');
+        }
 
         return () => (
             <div className="login">
@@ -95,6 +99,7 @@ export default defineComponent({
                         </div>
                         <div className="row btns">
                             <button className="backg" onClick={() => loginFn()}>登录</button>
+                            <button onClick={() => registerFn()}>注册</button>
                             <button onClick={() => cancelFn()}>取消</button>
                         </div>
                     </div>

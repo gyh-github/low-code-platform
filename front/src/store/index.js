@@ -11,7 +11,8 @@ export const useStore = defineStore('main', {
             },//页面信息
             containerModules: [],//图层组件
             projectTitle:'',//项目标题
-            projectId:'',//项目Id
+            projectId: '',//项目Id
+            projectOperate:'',//操作项目 add新增；edit修改；copy引用
             currentModuleId: '',//当前组件id
             moduleList: [
                 {
@@ -40,6 +41,9 @@ export const useStore = defineStore('main', {
         },
         setProjectId(id) {
             this.projectId = id;
+        },
+        setProjectOperate(active) {
+            this.projectOperate = active;
         },
         setProjectTitle(title) {
             this.projectTitle = title;

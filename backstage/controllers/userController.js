@@ -34,6 +34,9 @@ const getUserById = async (req, res) => {
 const addUser = async (req, res) => {
     try {
         const params = req.body;
+        console.log(params)
+        delete params['code'];
+        params['user_role'] = 'normal';
         await userService.addUser(Object.values(params));
         res.status(200).json({
             code: 'T0000',

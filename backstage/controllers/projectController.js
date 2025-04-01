@@ -71,6 +71,9 @@ const add = async (req, res) => {
             data: true
 
         });
+        if (params.module_id) { 
+            service.resetCitedNum(params.module_id)
+        }
     } catch (error) {
         console.error(error)
         res.status(500).json({ code: 'T0001', msg: '添加失败!' });
@@ -80,6 +83,7 @@ const add = async (req, res) => {
 const edit = async (req, res) => {
     try {
         const params = req.body;
+        params.json_data = JSON.stringify(params.json_data)
         await service.edit(params);
         res.status(200).json({
             code: 'T0000',

@@ -4,7 +4,7 @@ import { useRouter, useRoute } from "vue-router";
 import { getUser, clearSessStor } from '@/utils/sessionStor'
 import profilePicture from '@/assets/images/profile-picture.jpg';
 import { debounce } from 'lodash';
-import { message } from 'ant-design-vue';
+import { message, DropdownButton, Menu } from 'ant-design-vue';
 import { useProject } from "@/hooks/useProject";
 const generalNavs = [
     {
@@ -62,7 +62,7 @@ export default defineComponent({
         const screenWidth = ref(0);
         const openDrop = ref(false);
         const routerPath = computed(() => (route.path));
-        const { saveProject } = useProject();
+        const { saveConfirm } = useProject();
 
         //导航跳转
         const handleClickFn = (item) => {
@@ -95,11 +95,20 @@ export default defineComponent({
                 message.warning('请先登陆，谢谢！');
                 return;
             }
-            router.push('/workbenches');
+            router.push({
+                path: '/workbenches',
+                query: {
+                    actionKey: 'add'
+                }
+            });
         }
         //保存项目
         const saveProjectFn = () => {
-            saveProject();
+            saveConfirm({
+                content: '请完善项目名称',
+                okText: '确认',
+                cancelText: '取消'
+            });
         };
         onMounted(() => {
             const userInfo = getUser();
@@ -110,6 +119,13 @@ export default defineComponent({
         onUnmounted(() => {
             window.removeEventListener('resize', debounce(screenWidthChange, 150));
         })
+
+        // 定义下拉菜单的内容
+        const menu = (
+            <Menu style="width:100px">
+                <Menu.Item key="1" onClick={() => userClick()}>退出</Menu.Item>
+            </Menu>
+        );
 
         return () => (
             <div className="navs">
@@ -141,11 +157,16 @@ export default defineComponent({
                 <div className="navs-user">
                     {routerPath.value != '/workbenches' && <button onClick={() => createTemplateFn()}>创建模板</button>}
                     {routerPath.value === '/workbenches' && <button onClick={() => saveProjectFn()}>保存</button>}
-                    <button onClick={() => userClick()} className="navs-user-info">
-                        {user.user_name && <img src={user?.photo || profilePicture} alt="" />}
-                        <span>{user.user_name || '去登陆'}</span>
-                    </button>
+                    {!user.user_name && <button onClick={() => userClick()}>去登陆</button>}
+                    {user.user_name &&
+                        <DropdownButton overlay={menu} >
+                            <button className="navs-user-info">
+                                <img src={user?.photo || profilePicture} alt="" />
+                                <span>{user.user_name}</span>
+                            </button>
+                        </DropdownButton>}
                 </div>
+
             </div>)
     }
 })

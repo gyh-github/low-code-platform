@@ -1,9 +1,8 @@
 import { defineComponent, ref, reactive } from "vue";
 import './index.less';
-import { Steps, Step } from 'ant-design-vue';
+import { Steps, Step, message } from 'ant-design-vue';
 import { addUser } from '@/apis/user';
-import { message } from "ant-design-vue";
-import Login from "../Login";
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
     setup() {
@@ -11,22 +10,22 @@ export default defineComponent({
         const userInfo = reactive({
             user_name: '',
             user_password: '',
+            user_photo: '',
             user_phone: '',
             code: '',
             user_real_name: '',
             user_self_introduction: ''
         });
         const current = ref(0);
-        const loginRef = ref(null);
+        const router = useRouter();
         //确认注册
         const confirmFn = async () => {
-            console.log(userInfo);
             if (!userInfo.user_name || !userInfo.user_password || !userInfo.user_phone) {
                 message.warning('必填信息有遗漏，请确认是否填写，用户名、登录密码及用户手机号等信息~');
                 return;
             }
             const res = await addUser(userInfo);
-            if (res?.code === 'T0000') {
+            if (res) {
                 message.success('注册成功！');
                 current.value = 2;
             } else { 
@@ -50,7 +49,7 @@ export default defineComponent({
         };
         //去登录
         const loginFn = () => {
-            loginRef.value.showLogin = true;
+            router.push('/login');
         };
         return () => (<div className="join">
             <div className="join-steps-content">
@@ -114,7 +113,6 @@ export default defineComponent({
                     current.value === 2 && <button onClick={() => loginFn()}>去登录</button>
                 }
             </div>
-            <Login ref={loginRef} />
         </div>)
     }
 })

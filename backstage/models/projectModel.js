@@ -16,7 +16,7 @@ const all = () => {
 //分页查询热门项目数据
 const popular = () => {
     return new Promise((resolve, reject) => {
-        connection.query( `select * from project  order by create_time desc limit 0,3`, (error, data) => {
+        connection.query( `select * from project order by cited_num desc limit 0,3`, (error, data) => {
             if (error) {
                 reject(error);
             } else {
@@ -41,7 +41,7 @@ const privatePage = (params) => {
 };
 //新增
 const add = (params) => {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         connection.query("insert into project(title,json_data,thumbnail_url,author_id,author_name,create_time,status,module_id,cited_num,view_num) values(?,?,?,?,?,?,?,?,?,?)", params, (error, data) => {
             if (error) {
                 reject(error);
@@ -51,10 +51,28 @@ const add = (params) => {
         })
     })
 }
+//重置被引用次数
+const resetCitedNum = (id) => {
+    return new Promise((resolve, reject) => {
+        connection.query(`select * from project where module_id=${id}`, (error, data) => {
+            if (error) {
+                reject(error);
+            } else {
+                connection.query(`update project set cited_num=${data.length} where id=${id}`, (updateError, updateData) => { 
+                    if (updateError) {
+                        reject(updateError);
+                    } else { 
+                        resolve(updateData);
+                    }
+                })
+            }
+        })
+    })
+}
 //修改
 const edit = (params) => {
     return new Promise((resolve, reject) => {
-        connection.query(`update project set ${params['column_key']}='${params[params['column_key']]}' where user_id=${params['id']}`, (error, data) => {
+        connection.query(`update project set title='${params['title']}', json_data='${params['json_data']}' where id=${params['id']}`, (error, data) => {
             if (error) {
                 reject(error);
             } else {
@@ -90,4 +108,4 @@ const infoById = (params) => {
     })
 }
 
-module.exports = { all, add, del, edit, infoById,privatePage,popular };
+module.exports = { all, add, del, edit, infoById,privatePage,popular,resetCitedNum };

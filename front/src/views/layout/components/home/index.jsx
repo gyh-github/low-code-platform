@@ -43,7 +43,7 @@ export default defineComponent({
 
 
         return () => (<div className="home">
-            <div className="home-search" style={{ background: `url(${homeImg}) no-repeat center` }}>
+            <div className="home-search" style={{ background: `url(${homeImg}) no-repeat center`, backgroundSize: 'cover' }}>
                 <div className="home-search-content" >
                     <input type="text" />
                     <button>搜</button>

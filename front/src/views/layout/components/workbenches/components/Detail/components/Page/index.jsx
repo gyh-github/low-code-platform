@@ -5,6 +5,7 @@ import { storeToRefs } from "pinia";
 import { Form, InputNumber, Input, Upload, Image } from 'ant-design-vue';
 import NoData from '@/assets/images/no-data.png';
 import { uploadFile } from '@/apis/common';
+import { imgUrlToBase64 } from "@/utils";
 export default defineComponent({
     setup() {
         const store = useStore();
@@ -24,14 +25,14 @@ export default defineComponent({
                 formData.append('file', file);
                 const data = await uploadFile(formData);
                 data && (page['backgroundImage'] = data);
-                new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.onloadend = () => resolve(reader.result); // 读取完成时返回 Base64
-                    reader.onerror = reject; // 读取失败时抛出错误
-                    reader.readAsDataURL(file); // 将 Blob 转换为 Base64
-                }).then(res => { 
-                    sessionStorage.setItem('pageBackgroundImage',res)
-                })
+                // new Promise((resolve, reject) => {
+                //     const reader = new FileReader();
+                //     reader.onloadend = () => resolve(reader.result); // 读取完成时返回 Base64
+                //     reader.onerror = reject; // 读取失败时抛出错误
+                //     reader.readAsDataURL(file); // 将 Blob 转换为 Base64
+                // }).then(res => { 
+                //     sessionStorage.setItem('pageBackgroundImage',res)
+                // })
             } catch (error) {
                 onError(error, file); // 上传失败
             }
@@ -46,7 +47,8 @@ export default defineComponent({
                 backgroundImage: val.backgroundImage,
             };
             store.setPageInfo(_page);
-        }, {deep:true})
+            val.backgroundImage && imgUrlToBase64(val.backgroundImage);
+        }, { deep: true, immediate:true})
         return () => (<div className="page">
             <Form>
                 <Form.Item label="页面宽度">

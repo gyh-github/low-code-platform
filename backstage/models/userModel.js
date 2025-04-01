@@ -15,9 +15,11 @@ const query = () => {
 };
 //新增
 const add = (params) => {
+    console.log(params)
     return new Promise((resolve, reject) => {
-        connection.query("insert into users(user_name,user_password,user_phone) values(?,?,?)", params, (error, data) => {
+        connection.query("insert into users(user_name,user_password,user_photo,user_phone,user_real_name,user_self_introduction,user_role) values(?,?,?,?,?,?,?)", params, (error, data) => {
             if (error) {
+                console.log(error)
                 reject(error);
             } else {
                 resolve(data);

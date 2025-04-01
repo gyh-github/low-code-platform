@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { secret, setAccessToken, setRefreshToken } = require('../utils/token');
-const whiteList = ['/users/login', '/refresh','/project/all','/project/popular'];
+const whiteList = ['/users/login','/users/add', '/refresh','/project/all','/project/popular'];
 const isWhiteList = (url) => {
     return whiteList.find(item =>url.indexOf(item)>-1 );
 };
