@@ -16,6 +16,7 @@ export default defineComponent({
             e.preventDefault();
             const _key = e.dataTransfer.getData('moduleKey');
             if (!_key) return;
+            setContainerModules('clearSelect');
             const _module = cloneDeep(moduleMap['value'][_key]);
             _module['id'] = new Date().getTime().toString();
             _module['layerName'] = `图层（${containerModules.value.length + 1}）`;

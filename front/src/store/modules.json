@@ -1,0 +1,22 @@
+{
+    "data": [
+        {
+            "category": "text",
+            "type": "Text",
+            "key": "text-1",
+            "label": "文字",
+            "text": "文字",
+            "ui:color": "#ee0066",
+            "ui:fontSize": "32px"
+        },
+        {
+            "category": "text",
+            "type": "Link",
+            "key": "link-1",
+            "label": "超链接",
+            "text": "超链接",
+            "ui:color": "#0000ee",
+            "ui:fontSize": "20px"
+        }
+    ]
+}

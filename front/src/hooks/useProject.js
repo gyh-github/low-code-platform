@@ -114,7 +114,9 @@ export function useProject(demo) {
             author_name: userInfo?.user_name,
             create_time: '',
             status: 0,
-            module_id: projectOperate.value === 'copy' ? projectId.value : ''
+            module_id: projectOperate.value === 'copy' ? projectId.value : '',
+            cited_num: 0,
+            view_num:0
         });
         if (res) {
             message.success('新增项目成功！');

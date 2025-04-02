@@ -45,6 +45,7 @@ const add = (params) => {
         connection.query("insert into project(title,json_data,thumbnail_url,author_id,author_name,create_time,status,module_id,cited_num,view_num) values(?,?,?,?,?,?,?,?,?,?)", params, (error, data) => {
             if (error) {
                 reject(error);
+                console.error('错误：', error);
             } else {
                 resolve(data);
             }

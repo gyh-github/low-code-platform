@@ -12,7 +12,7 @@ export default defineComponent({
             activeKey.value = e.target.name;
         }
         return () => (<div className="detail">
-            <div className="detail-tabs" onClick={handleTabClick}>
+            <div className="workbenches-tabs" onClick={handleTabClick}>
                 <button name="attribute" className={activeKey.value === 'attribute' && 'active'}>属性设置</button>
                 <button name="layer" className={activeKey.value === 'layer' && 'active'}>图层设置</button>
                 <button name="page" className={activeKey.value === 'page' && 'active'}>页面设置</button>

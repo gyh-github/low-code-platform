@@ -7,29 +7,21 @@ export const useStore = defineStore('main', {
                 width: '375px',
                 height: '667px',
                 backgroundColor: '#ffffff',
-                backgroundImage:''
+                backgroundImage: ''
             },//页面信息
             containerModules: [],//图层组件
-            projectTitle:'',//项目标题
+            projectTitle: '',//项目标题
             projectId: '',//项目Id
-            projectOperate:'',//操作项目 add新增；edit修改；copy引用
+            projectOperate: '',//操作项目 add新增；edit修改；copy引用
             currentModuleId: '',//当前组件id
-            moduleList: [
-                {
-                    type: 'Text',
-                    key: 'text-1',
-                    label: '文字',
-                    text: '文字',
-                    'ui:color': '#ee0066',
-                    'ui:fontSize': '32px'
-                }
-            ]//所有组件数据
+            moduleAll: [],//所有组件数据
+            moduleList: []//组件数据
         }
     },
     getters: {
         moduleMap(state) {//所有组件组成的map
             let obj = {};
-            state.moduleList.forEach(element => {
+            state.moduleAll.forEach(element => {
                 obj[element.key] = element;
             });
             return obj;
@@ -48,7 +40,7 @@ export const useStore = defineStore('main', {
         setProjectTitle(title) {
             this.projectTitle = title;
         },
-        setContainerModules(type, module=null) {
+        setContainerModules(type, module = null) {
             let _list = [...this.containerModules];
             switch (type) {
                 case 'add':
@@ -59,19 +51,19 @@ export const useStore = defineStore('main', {
                     _list = _list.filter(item => item.id != module?.id);
                     break;
                 case 'update':
-                    _list = _list.map((item) => { 
+                    _list = _list.map((item) => {
                         if (item.id === module?.id) {
                             return module;
-                        } else { 
+                        } else {
                             return item;
                         }
                     })
                     break;
                 case 'select':
-                    _list = _list.map((item) => { 
+                    _list = _list.map((item) => {
                         if (item.id === module?.id) {
                             item.selected = true;
-                        } else { 
+                        } else {
                             item.selected = false;
                         }
                         return item;
@@ -109,8 +101,11 @@ export const useStore = defineStore('main', {
                     return;
             }
         },
-        setPageInfo(page) { 
-            this.$patch(state => { 
+        setModuleAll(val) {
+            this.moduleAll = val;
+         },
+        setPageInfo(page) {
+            this.$patch(state => {
                 state.pageInfo = page;
             })
         }
