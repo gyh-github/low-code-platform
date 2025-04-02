@@ -8,6 +8,10 @@ import { message, Modal } from 'ant-design-vue';
 import { createVNode } from 'vue';
 import { ExclamationCircleFilled } from '@ant-design/icons-vue';
 
+
+
+const userInfo = getUser();//当前登陆人信息
+
 // 将 Base64 转换为 Blob
 const dataURLtoBlob = (dataURL) => {
     const arr = dataURL.split(',');
@@ -44,25 +48,10 @@ export function useProject(demo) {
 
     //保存
     const saveProject = async () => {
-        if (projectId.value && projectOperate.value === 'edit') {
-            const res = await edit({
-                id: projectId.value,
-                title: projectTitle.value,
-                json_data: {
-                    pageInfo: pageInfo.value,
-                    modules: containerModules.value
-                },
-            });
-            if (res) {
-                message.success('编辑成功！');
-            }
-            return;
-        }
-        const userInfo = getUser();
         const containerHTML = demo?.value || document.getElementById('containerMain');
         if (containerHTML) {
             const img = new Image();
-            const imgUrl = sessionStorage.getItem('pageBackgroundImage') 
+            const imgUrl = sessionStorage.getItem('pageBackgroundImage')
             img.src = imgUrl;
             img.onload = () => {
                 containerHTML.style.backgroundImage = `url(${imgUrl})`;
@@ -80,21 +69,10 @@ export function useProject(demo) {
                     const fileName = 'project_thumbnail_' + new Date().getTime().toString() + '.png'
                     formData.append('file', dataURLtoBlob(imgData), fileName);
                     const uploadRes = await uploadFile(formData);
-                    const res = await add({
-                        title: projectTitle.value,
-                        json_data: {
-                            pageInfo: pageInfo.value,
-                            modules: containerModules.value
-                        },
-                        thumbnail_url: uploadRes,
-                        author_id: userInfo?.user_id,
-                        author_name: userInfo?.user_name,
-                        create_time: '',
-                        status:0,
-                        module_id: projectOperate.value === 'copy' ? projectId.value : ''
-                    });
-                    if (res) {
-                        message.success('新增项目成功！');
+                    if (projectOperate.value === 'edit') {
+                        editProject(uploadRes);
+                    } else {
+                        addProject(uploadRes);
                     }
                 });
 
@@ -108,6 +86,40 @@ export function useProject(demo) {
     const setProjectModule = () => { };
     //设置为作品
     const saveProjectCreation = () => { };
+    //修改
+    const editProject = async (uploadRes) => {
+        const res = await edit({
+            id: projectId.value,
+            title: projectTitle.value,
+            json_data: {
+                pageInfo: pageInfo.value,
+                modules: containerModules.value
+            },
+            thumbnail_url: uploadRes,
+        });
+        if (res) {
+            message.success('编辑成功！');
+        }
+    };
+    //新增
+    const addProject = async (uploadRes) => {
+        const res = await add({
+            title: projectTitle.value,
+            json_data: {
+                pageInfo: pageInfo.value,
+                modules: containerModules.value
+            },
+            thumbnail_url: uploadRes,
+            author_id: userInfo?.user_id,
+            author_name: userInfo?.user_name,
+            create_time: '',
+            status: 0,
+            module_id: projectOperate.value === 'copy' ? projectId.value : ''
+        });
+        if (res) {
+            message.success('新增项目成功！');
+        }
+    };
 
     return {
         saveProject,

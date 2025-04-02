@@ -61,7 +61,7 @@ export default defineComponent({
                 clearInterval(interval.value);
                 interval.value = null;
                 times.value = 120;
-                router.push(redirectUrl.value);
+                router.push(redirectUrl.value || '/home');
             }
 
         };

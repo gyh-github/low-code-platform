@@ -63,7 +63,7 @@ export default defineComponent({
                 }
             })
         };
-        return () => (<div className="item">
+        return () => (<div className="item" >
             <div className="item-title">{info?.title}</div>
             <img src={info?.thumbnail_url || PosterImg} alt="海报" className="item-poster" />
             <div className="item-action">

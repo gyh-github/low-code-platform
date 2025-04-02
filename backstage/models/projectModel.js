@@ -72,7 +72,7 @@ const resetCitedNum = (id) => {
 //修改
 const edit = (params) => {
     return new Promise((resolve, reject) => {
-        connection.query(`update project set title='${params['title']}', json_data='${params['json_data']}' where id=${params['id']}`, (error, data) => {
+        connection.query(`update project set title='${params['title']}', json_data='${params['json_data']}', thumbnail_url='${params['thumbnail_url']}' where id=${params['id']}`, (error, data) => {
             if (error) {
                 reject(error);
             } else {
